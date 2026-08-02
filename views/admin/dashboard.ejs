@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #f8f6f2; color: #333; }
+      .shell { display: flex; min-height: 100vh; }
+      .sidebar { width: 260px; background: #1f2937; color: white; padding: 24px; }
+      .content { flex: 1; padding: 24px; }
+      .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 24px; }
+      .card { background: white; padding: 18px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
+      a { color: #8b5e34; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <h2>Grupo Palmares</h2>
+        <p>Admin</p>
+        <ul>
+          <li><a href="/" style="color:white">&larr; Voltar ao catálogo</a></li>
+          <li><a href="/admin/dashboard" style="color:white">Dashboard</a></li>
+          <li><a href="/admin/products" style="color:white">Produtos</a></li>
+          <li><a href="/admin/categories" style="color:white">Categorias</a></li>
+          <li><a href="/admin/brands" style="color:white">Marcas</a></li>
+          <li><a href="/admin/qr-codes" style="color:white">QR Codes</a></li>
+          <li><a href="/admin/logout" style="color:white">Sair</a></li>
+        </ul>
+      </aside>
+      <main class="content">
+        <h1>Dashboard</h1>
+        <p>Bem-vindo, <%= user.name %>.</p>
+        <div class="cards">
+          <div class="card"><strong><%= stats.products %></strong><br/>Produtos</div>
+          <div class="card"><strong><%= stats.activeProducts %></strong><br/>Ativos</div>
+          <div class="card"><strong><%= stats.categories %></strong><br/>Categorias</div>
+          <div class="card"><strong><%= stats.brands %></strong><br/>Marcas</div>
+          <div class="card"><strong><%= stats.launches %></strong><br/>Lançamentos</div>
+          <div class="card"><strong><%= stats.views %></strong><br/>Visualizações</div>
+          <div class="card"><strong><%= stats.qrScans %></strong><br/>QRs lidos</div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

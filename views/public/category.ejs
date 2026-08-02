@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/animations.css?v=4.0">
+    <style>.category-page{padding-top:150px}
+      .category-banner{position:relative;border-radius:24px;overflow:hidden;padding:44px;margin-bottom:34px;color:#fff;box-shadow:0 30px 70px rgba(6,20,38,.25)}
+      .category-banner .cat-tile-art{position:absolute;inset:0}
+      .category-banner .cat-tile-scrim{position:absolute;inset:0;background:linear-gradient(100deg, rgba(4,10,20,.92) 30%, rgba(4,10,20,.4))}
+      .category-banner .banner-content{position:relative;z-index:2;max-width:560px}
+      .category-banner .cat-tile-art svg{width:120px;position:absolute;right:40px;bottom:-10px;opacity:.35}
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/header', { categories: categories }) %>
+
+    <main class="container category-page">
+      <div class="category-banner tone-<%= category.slug %>">
+        <div class="cat-tile-art" style="background-image:url('/images/categories/<%= category.slug %>.jpg')"></div>
+        <div class="cat-tile-scrim"></div>
+        <div class="banner-content">
+          <span class="cat-tile-count"><%= products.length %> produto<%= products.length === 1 ? '' : 's' %></span>
+          <h1 style="margin:10px 0 8px;font-size:32px">Categoria <%= category.name %></h1>
+          <p class="muted" style="color:#c3d0e0"><%= category.description %></p>
+        </div>
+      </div>
+
+      <div class="products-grid">
+        <% products.forEach(function(product, i){ %>
+          <div class="product-card<%= product.is_launch === 'yes' ? ' card-holo' : '' %>" style="--stagger:<%= i %>">
+            <div class="card-media"><%- include('../partials/visual', { image: product.main_image, alt: product.name, slug: category.slug }) %></div>
+            <div class="quick-actions">
+              <button type="button" data-qr-sku="<%= product.sku %>" aria-label="Gerar QR Code">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg>
+              </button>
+              <a href="https://api.whatsapp.com/send?phone=5535991710177&text=<%= encodeURIComponent('Tenho interesse em: ' + product.name) %>" target="_blank" rel="noopener" aria-label="Perguntar no WhatsApp">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg>
+              </a>
+            </div>
+            <div class="info">
+              <h3><%= product.name %></h3>
+              <p class="muted" style="margin:0;font-size:.9rem">SKU: <%= product.sku %></p>
+              <div style="margin-top:12px"><a class="btn" href="/produto/<%= product.slug %>">Ver detalhes</a></div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <% if (!products.length) { %>
+        <p class="muted" style="margin-top:24px">Nenhum produto cadastrado nesta categoria.</p>
+      <% } %>
+    </main>
+
+    <%- include('../partials/footer', { categories: categories }) %>
+    <%- include('../partials/qr-modal') %>
+    <script src="/js/animations.js?v=4.0" defer></script>
+  </body>
+</html>

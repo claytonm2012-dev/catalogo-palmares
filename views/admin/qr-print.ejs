@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background: white; }
+      .sheet { text-align: center; padding: 24px; }
+      .sheet img { width: 320px; height: 320px; background: white; padding: 16px; border: 1px solid #eee; }
+      .sheet h1 { font-size: 18px; margin: 16px 0 4px; }
+      .sheet p { font-size: 13px; color: #555; margin: 2px 0; }
+      @media print {
+        .no-print { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sheet">
+      <img src="/qr/<%= product.sku %>?format=png" alt="QR Code do produto <%= product.sku %>" />
+      <h1><%= product.name %></h1>
+      <p>SKU: <%= product.sku %></p>
+      <p><%= publicUrl %></p>
+      <p class="no-print"><button onclick="window.print()">Imprimir</button></p>
+    </div>
+    <script>window.addEventListener('load', function(){ window.print(); });</script>
+  </body>
+</html>

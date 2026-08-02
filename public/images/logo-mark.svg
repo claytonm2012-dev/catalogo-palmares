@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320">
+  <defs>
+    <linearGradient id="navyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16304f"/>
+      <stop offset="1" stop-color="#081426"/>
+    </linearGradient>
+    <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f0d999"/>
+      <stop offset="1" stop-color="#d4af6a"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="320" rx="32" fill="url(#navyGrad)"/>
+  <g stroke="#ffffff" stroke-width="7" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <polyline points="70,150 130,90 190,150" opacity="0.45"/>
+    <polyline points="90,165 150,105 210,165" opacity="0.7"/>
+    <polyline points="110,180 170,120 230,180" opacity="1"/>
+  </g>
+  <rect x="80" y="196" width="160" height="3" rx="1.5" fill="url(#goldLine)"/>
+  <text x="160" y="226" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="16" letter-spacing="5" fill="#d4af6a">GRUPO</text>
+  <text x="160" y="258" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="30" font-weight="800" letter-spacing="1" fill="#ffffff">PALMARES</text>
+</svg>

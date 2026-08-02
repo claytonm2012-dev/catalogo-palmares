@@ -1,0 +1,60 @@
+<%
+  var ftrCategories = typeof categories !== 'undefined' && categories ? categories : [];
+%>
+<footer class="footer" id="siteFooter">
+  <div class="footer-glow-line" aria-hidden="true"></div>
+  <div class="container footer-top">
+    <div class="footer-brand">
+      <img src="/images/logo30-watermark.png" alt="Grupo Palmares" height="40" />
+      <p class="muted">Distribuição de utilidades domésticas, eletrodomésticos e produtos industriais há décadas — agora também em catálogo digital.</p>
+      <div class="footer-social" aria-label="Redes sociais">
+        <a href="#" aria-label="Instagram" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="Facebook" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V12H8v3h2.5v6h3v-6H16l.5-3h-3v-1.5c0-.6.4-1.5 1.5-1.5z"/></svg></a>
+        <a href="https://api.whatsapp.com/send?phone=5535991710177" aria-label="WhatsApp" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg></a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Categorias</h4>
+      <% ftrCategories.slice(0, 7).forEach(function(cat){ %>
+        <a href="/categoria/<%= cat.slug %>"><%= cat.name %></a>
+      <% }) %>
+    </div>
+
+    <div class="footer-col">
+      <h4>Institucional</h4>
+      <a href="/produtos">Catálogo completo</a>
+      <a href="/#institucional">Sobre o Grupo Palmares</a>
+      <a href="/#qr-experiencia">Catálogo por QR Code</a>
+      <a href="/admin">Painel administrativo</a>
+    </div>
+
+    <div class="footer-col footer-contact">
+      <h4>Contato</h4>
+      <p class="muted">contato@grupopalmares.com.br</p>
+      <p class="muted">(35) 3529-0700</p>
+      <a class="btn footer-whatsapp" href="https://api.whatsapp.com/send?phone=5535991710177&text=Ol%C3%A1%2C%20quero%20conhecer%20o%20cat%C3%A1logo%20Grupo%20Palmares" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+
+    <div class="footer-col footer-newsletter">
+      <h4>Novidades</h4>
+      <p class="muted">Receba lançamentos e novidades do catálogo.</p>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="Seu e-mail" aria-label="Seu e-mail" required />
+        <button class="btn" type="submit">Assinar</button>
+      </form>
+      <p class="newsletter-note" id="newsletterNote" hidden>Em breve! Estamos preparando essa novidade.</p>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p class="muted">&copy; <%= new Date().getFullYear() %> Grupo Palmares. Catálogo digital de demonstração.</p>
+  </div>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="Voltar ao topo">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="6,11 12,5 18,11"/></svg>
+  </button>
+</footer>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #f8f6f2; color: #333; }
+      .shell { display: flex; min-height: 100vh; }
+      .sidebar { width: 260px; background: #1f2937; color: white; padding: 24px; }
+      .content { flex: 1; padding: 24px; }
+      form, .card { background: white; padding: 16px; border-radius: 12px; margin-bottom: 16px; }
+      input, textarea, select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; }
+      a { color: #8b5e34; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <h2>Grupo Palmares</h2>
+        <p>Admin</p>
+        <ul>
+          <li><a href="/" style="color:white">&larr; Voltar ao catálogo</a></li>
+          <li><a href="/admin/dashboard" style="color:white">Dashboard</a></li>
+          <li><a href="/admin/products" style="color:white">Produtos</a></li>
+          <li><a href="/admin/categories" style="color:white">Categorias</a></li>
+          <li><a href="/admin/brands" style="color:white">Marcas</a></li>
+          <li><a href="/admin/qr-codes" style="color:white">QR Codes</a></li>
+          <li><a href="/admin/logout" style="color:white">Sair</a></li>
+        </ul>
+      </aside>
+      <main class="content">
+        <h1>Marcas</h1>
+        <form method="post" action="/admin/brands">
+          <input name="name" placeholder="Nome" required />
+          <input name="slug" placeholder="Slug" required />
+          <textarea name="description" placeholder="Descrição"></textarea>
+          <select name="status"><option value="active">Ativa</option><option value="inactive">Inativa</option></select>
+          <button type="submit">Salvar</button>
+        </form>
+        <% brands.forEach(function(brand){ %>
+          <div class="card">
+            <strong><%= brand.name %></strong> — <%= brand.slug %>
+            <form method="post" action="/admin/brands/<%= brand.id %>">
+              <input name="name" value="<%= brand.name %>" />
+              <input name="slug" value="<%= brand.slug %>" />
+              <textarea name="description"><%= brand.description %></textarea>
+              <select name="status"><option value="active" <%= brand.status === 'active' ? 'selected' : '' %>>Ativa</option><option value="inactive" <%= brand.status === 'inactive' ? 'selected' : '' %>>Inativa</option></select>
+              <button type="submit">Atualizar</button>
+            </form>
+            <form method="post" action="/admin/brands/<%= brand.id %>/delete">
+              <button type="submit">Excluir</button>
+            </form>
+          </div>
+        <% }) %>
+      </main>
+    </div>
+  </body>
+</html>

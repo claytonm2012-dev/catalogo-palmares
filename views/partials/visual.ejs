@@ -1,0 +1,15 @@
+<%
+  var v_image = typeof image !== 'undefined' ? image : null;
+  var v_alt = typeof alt !== 'undefined' ? alt : 'Grupo Palmares';
+  var v_slug = typeof slug !== 'undefined' && slug ? slug : 'diversos';
+%>
+<% if (v_image) { %>
+  <img src="<%= v_image %>" alt="<%= v_alt %>" class="pv-img" loading="lazy"/>
+<% } else { %>
+  <div class="ph-visual tone-<%= v_slug %>">
+    <div class="ph-shine" aria-hidden="true"></div>
+    <div class="ph-glow" aria-hidden="true"></div>
+    <%- include('./category-icon', { icon: v_slug }) %>
+    <span class="ph-tag">Imagem demonstrativa</span>
+  </div>
+<% } %>

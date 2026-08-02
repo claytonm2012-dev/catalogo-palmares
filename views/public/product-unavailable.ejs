@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <style>
+      body{display:grid;place-items:center;min-height:100vh}
+      .nf-card{max-width:460px;width:100%;margin:0 20px;padding:44px 36px;background:var(--card);border-radius:var(--radius-card);box-shadow:var(--shadow-card-light);text-align:center;border:1px solid rgba(6,32,59,0.06)}
+      .nf-code{font-size:13px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+      .nf-card h1{font-size:clamp(1.6rem, 1.2rem + 1.2vw, 2.1rem);margin:0 0 10px;color:var(--navy-900);letter-spacing:-.3px}
+      .nf-card p{margin:0 0 26px;color:var(--muted);line-height:1.6}
+      .nf-sku{font-size:13px;color:var(--muted);margin:0 0 20px}
+    </style>
+  </head>
+  <body>
+    <div class="nf-card">
+      <p class="nf-code">Produto indisponível</p>
+      <h1><%= product.name %></h1>
+      <p class="nf-sku">SKU: <%= product.sku %></p>
+      <p>Este produto não está disponível no momento. Ele pode ter sido descontinuado ou estar temporariamente fora do catálogo ativo. Confira outras opções em nosso catálogo.</p>
+      <a class="btn" href="/produtos">Ver catálogo completo</a>
+    </div>
+  </body>
+</html>

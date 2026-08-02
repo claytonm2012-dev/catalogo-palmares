@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s -o /dev/null -w \"categoria:%{http_code}\\\\n\" http://localhost:3000/categoria/importados)",
+      "Bash(curl -s -o /dev/null -w \"produto:%{http_code}\\\\n\" http://localhost:3000/produto/conjunto-de-tacas-premium)",
+      "Bash(chromium-cli --help)",
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Bash(npx --no-install playwright --version)",
+      "Bash(npx --no-install playwright install chromium --dry-run)",
+      "Bash(node -e \"console.log\\(require.resolve\\('playwright-core'\\)\\)\")",
+      "Bash(npm root *)",
+      "Bash(npm ls *)",
+      "Bash(find 'C:\\\\Users\\\\Pichau/.npm/_npx' -maxdepth 3 -iname playwright*)",
+      "mcp__claude-in-chrome__read_console_messages",
+      "PowerShell(Get-Process -Id 1576 -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue)",
+      "Bash(rm -f public/js/floating-lines.js public/js/hero-lines-init.js)",
+      "Bash(rm -rf public/vendor/three)",
+      "Bash(NODE_PATH=\"/c/Users/Pichau/AppData/Local/npm-cache/_npx/7060486260bb23c5/node_modules\" node hvcard-mobile.js)",
+      "Bash(NODE_PATH=\"/c/Users/Pichau/AppData/Local/npm-cache/_npx/7060486260bb23c5/node_modules\" node hvcard-hover.js)",
+      "Bash(curl -sL \"https://scontent.ffrc7-1.fna.fbcdn.net/v/t39.30808-1/304994274_465881155553406_1530126259553724166_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=102&ccb=1-7&_nc_sid=f907e8&_nc_eui2=AeHx2TM-VldEqjXTXQpeJ2b-2e28rqcdO3PZ7byupx07c-1LHwgXbJWARX6aDbUM7M-zaUXMrcAn8lVYPHpp3z0A&_nc_ohc=p9_xscl9kZkQ7kNvwFesIGM&_nc_oc=AdpGTgauH6wemjLAK4oIOkcORBXfvXERF-JKMy52xpAGPuJ6fSDHPJfd3QgTy3PH4Mo&_nc_zt=24&_nc_ht=scontent.ffrc7-1.fna&edm=ADwHzz8EAAAA&_nc_gid=M3Vr31KxIxDuWpdb1UmjxA&oh=00_AQFvVRGnrqXxpHg5urPgabma5pdTbmwbOml6nHmt90JhAw&oe=6A70F38D\" -o public/images/logo-official.jpg -w \"HTTP:%{http_code} SIZE:%{size_download}\\\\n\")",
+      "Bash(curl -s -o /dev/null -w \"http:%{http_code}\\\\n\" http://localhost:3000/images/logo-official.jpg)",
+      "Bash(NODE_PATH=\"/c/Users/Pichau/AppData/Local/npm-cache/_npx/7060486260bb23c5/node_modules\" node hvcard-v2.js)",
+      "Bash(xargs -I{} stat -c \"%Y %n\" {})",
+      "Bash(NODE_PATH=\"/c/Users/Pichau/AppData/Local/npm-cache/_npx/7060486260bb23c5/node_modules\" node coverflow-check.js)",
+      "Bash(NODE_PATH=\"/c/Users/Pichau/AppData/Local/npm-cache/_npx/7060486260bb23c5/node_modules\" node diag-coverflow.js)",
+      "Bash(curl -s -o /dev/null -w \"http:%{http_code}\\\\n\" http://localhost:3000/css/premium.css?v=4.2)"
+    ]
+  }
+}

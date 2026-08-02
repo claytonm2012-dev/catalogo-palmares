@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/animations.css?v=4.0">
+    <style>
+      .products-page{padding-top:150px}
+      .filters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;background:#fff;padding:16px;border-radius:14px;box-shadow:0 14px 34px rgba(6,32,59,0.07);border:1px solid rgba(6,32,59,0.05)}
+      .filters input, .filters select{padding:11px 12px;border-radius:9px;border:1px solid #d8e0e8;font-size:14px;font-family:inherit}
+      .filters input{flex:1;min-width:200px}
+      .filters button{border:none}
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/header', { categories: categories }) %>
+
+    <main class="container products-page">
+      <span class="section-kicker">Catálogo completo</span>
+      <h1 style="color:var(--navy-900);margin:0 0 20px">Produtos</h1>
+      <form class="filters" method="get" action="/produtos">
+        <input class="search-input" name="q" value="<%= query %>" placeholder="Buscar por nome, SKU ou categoria" />
+        <select name="category">
+          <option value="">Categoria</option>
+          <% categories.forEach(function(category){ %>
+            <option value="<%= category.id %>"><%= category.name %></option>
+          <% }) %>
+        </select>
+        <select name="brand">
+          <option value="">Marca</option>
+          <% brands.forEach(function(brand){ %>
+            <option value="<%= brand.id %>"><%= brand.name %></option>
+          <% }) %>
+        </select>
+        <button class="btn" type="submit">Filtrar</button>
+      </form>
+
+      <div class="products-grid">
+        <% products.forEach(function(product, i){
+          var cat = categories.find(function(c){ return c.id === product.category_id; }) || {};
+        %>
+          <div class="product-card<%= product.is_launch === 'yes' ? ' card-holo' : '' %>" style="--stagger:<%= i %>">
+            <div class="card-media"><%- include('../partials/visual', { image: product.main_image, alt: product.name, slug: cat.slug }) %></div>
+            <div class="quick-actions">
+              <button type="button" data-qr-sku="<%= product.sku %>" aria-label="Gerar QR Code">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg>
+              </button>
+              <a href="https://api.whatsapp.com/send?phone=5535991710177&text=<%= encodeURIComponent('Tenho interesse em: ' + product.name) %>" target="_blank" rel="noopener" aria-label="Perguntar no WhatsApp">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg>
+              </a>
+            </div>
+            <div class="info">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+                <h3><%= product.name %></h3>
+                <% if (product.is_launch === 'yes') { %><span class="badge-launch">Lançamento</span><% } %>
+              </div>
+              <p class="muted" style="margin:0;font-size:.9rem">SKU: <%= product.sku %></p>
+              <p class="muted" style="margin:.2rem 0;font-size:.9rem"><%= cat.name || product.category_name || '' %></p>
+              <div style="margin-top:12px"><a class="btn" href="/produto/<%= product.slug %>">Ver detalhes</a></div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+      <% if (!products.length) { %>
+        <p class="muted" style="margin-top:24px">Nenhum produto encontrado para os filtros selecionados.</p>
+      <% } %>
+    </main>
+
+    <%- include('../partials/footer', { categories: categories }) %>
+    <%- include('../partials/qr-modal') %>
+    <script src="/js/animations.js?v=4.0" defer></script>
+  </body>
+</html>

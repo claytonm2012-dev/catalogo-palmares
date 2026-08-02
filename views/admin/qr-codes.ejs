@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #f8f6f2; color: #333; }
+      .shell { display: flex; min-height: 100vh; }
+      .sidebar { width: 260px; background: #1f2937; color: white; padding: 24px; }
+      .content { flex: 1; padding: 24px; }
+      table { width: 100%; border-collapse: collapse; background: white; }
+      th, td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; vertical-align: middle; }
+      a { color: #8b5e34; text-decoration: none; }
+      .actions a, .actions button { margin-right: 6px; font-size: 12px; padding: 5px 8px; border-radius: 6px; border: 1px solid #ddd; background: #fafafa; cursor: pointer; display: inline-block; }
+      .url-cell { font-family: monospace; font-size: 12px; word-break: break-all; }
+      .warn-banner { background: #fdecea; color: #b23b3b; border: 1px solid #f3c2bd; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
+      .status-badge { display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:bold; }
+      .status-ok { background:#e3f5e6; color:#1c7a34; }
+      .status-fail { background:#fdecea; color:#b23b3b; }
+      .status-pending { background:#eee; color:#666; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <h2>Grupo Palmares</h2>
+        <p>Admin</p>
+        <ul>
+          <li><a href="/" style="color:white">&larr; Voltar ao catálogo</a></li>
+          <li><a href="/admin/dashboard" style="color:white">Dashboard</a></li>
+          <li><a href="/admin/products" style="color:white">Produtos</a></li>
+          <li><a href="/admin/categories" style="color:white">Categorias</a></li>
+          <li><a href="/admin/brands" style="color:white">Marcas</a></li>
+          <li><a href="/admin/qr-codes" style="color:white">QR Codes</a></li>
+          <li><a href="/admin/logout" style="color:white">Sair</a></li>
+        </ul>
+      </aside>
+      <main class="content">
+        <h1>QR Codes</h1>
+        <% if (usesLocalhost) { %>
+          <div class="warn-banner">
+            <strong>Atenção:</strong> a URL base configurada (<code><%= baseUrl %></code>) usa <code>localhost</code>. QR Codes gerados agora NÃO devem ser impressos — configure a variável de ambiente <code>PUBLIC_SITE_URL</code> com o domínio de produção antes da exportação final.
+          </div>
+        <% } %>
+        <p style="margin-bottom:16px">
+          Domínio base atual: <code><%= baseUrl %></code>
+          &nbsp;·&nbsp;
+          <a href="/admin/qr-codes/export.csv">Baixar planilha CSV (todos os produtos)</a>
+        </p>
+        <table>
+          <thead>
+            <tr><th>Produto</th><th>SKU</th><th>URL pública</th><th>Status</th><th>Ações</th></tr>
+          </thead>
+          <tbody>
+            <% products.forEach(function(product){ %>
+              <tr id="row-<%= product.sku %>">
+                <td><%= product.name %></td>
+                <td><%= product.sku %></td>
+                <td class="url-cell"><%= product.publicUrl %></td>
+                <td class="test-status" data-sku="<%= product.sku %>"><span class="status-badge status-pending">não testado</span></td>
+                <td class="actions">
+                  <a href="<%= product.publicUrl %>" target="_blank" rel="noopener">Abrir página pública</a>
+                  <button type="button" data-copy="<%= product.publicUrl %>">Copiar link</button>
+                  <a href="/qr/<%= product.sku %>?download=1" target="_blank">Baixar PNG</a>
+                  <a href="/qr/<%= product.sku %>.svg" target="_blank">Baixar SVG</a>
+                  <a href="/admin/qr-codes/<%= product.sku %>/print" target="_blank">Imprimir</a>
+                  <button type="button" data-test-sku="<%= product.sku %>">Testar QR Code</button>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </main>
+    </div>
+    <script>
+      document.querySelectorAll('[data-copy]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          navigator.clipboard.writeText(btn.getAttribute('data-copy')).then(function(){
+            var original = btn.textContent; btn.textContent = 'Copiado!';
+            setTimeout(function(){ btn.textContent = original; }, 1200);
+          });
+        });
+      });
+      document.querySelectorAll('[data-test-sku]').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var sku = btn.getAttribute('data-test-sku');
+          var cell = document.querySelector('.test-status[data-sku="' + sku + '"]');
+          cell.innerHTML = '<span class="status-badge status-pending">testando...</span>';
+          fetch('/admin/qr-codes/' + encodeURIComponent(sku) + '/testar')
+            .then(function(res){ return res.json(); })
+            .then(function(data){
+              if (data.ok) {
+                cell.innerHTML = '<span class="status-badge status-ok">OK — abre o SKU correto</span>';
+              } else {
+                var reason = data.usesLocalhost ? 'aponta para localhost' : (!data.resolvedSameProduct ? 'abre produto diferente' : 'produto inativo');
+                cell.innerHTML = '<span class="status-badge status-fail">Falha: ' + reason + '</span>';
+              }
+            })
+            .catch(function(){ cell.innerHTML = '<span class="status-badge status-fail">Erro ao testar</span>'; });
+        });
+      });
+    </script>
+  </body>
+</html>

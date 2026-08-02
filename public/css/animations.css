@@ -1,0 +1,66 @@
+/* Grid Scan and visual enhancements for Grupo Palmares catalog */
+:root{
+  --brand-500:#d4af6a;
+  --brand-100:#fbf3e2;
+  --muted:#6b6b6b;
+}
+
+/* Basic resets for animated elements */
+.grid-scan-wrap{position:relative;overflow:hidden}
+.grid-scan-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;mix-blend-mode:normal;opacity:0.38}
+.grid-scan-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.85));z-index:1;pointer-events:none}
+.hero-content{position:relative;z-index:2}
+
+/* Hero text entrance */
+.hero-animate-in{opacity:0;transform:translateY(10px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.9,.3,1)}
+.hero-animate-in.show{opacity:1;transform:none}
+
+/* Search field micro interactions */
+.search-input{transition:box-shadow .25s ease, border-color .25s ease, transform .18s ease}
+.search-input:focus{outline:none;box-shadow:0 8px 30px rgba(212,175,106,0.2);border-color:var(--brand-500);transform:translateY(-1px)}
+
+/* Cards */
+.card{transition:transform .28s cubic-bezier(.2,.9,.3,1),box-shadow .28s ease;border-radius:14px}
+.card .card-image{overflow:hidden;border-radius:10px;transition:transform .5s ease, filter .4s ease}
+.card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(0,0,0,0.08)}
+.card:hover .card-image{transform:scale(1.04);filter:brightness(1.03)}
+
+/* subtle animated border */
+.card .animated-border{position:relative}
+.card .animated-border:after{content:'';position:absolute;inset:0;border-radius:14px;pointer-events:none;box-shadow:0 0 0 1px rgba(212,175,106,0.1) inset;transition:box-shadow .28s ease}
+.card:hover .animated-border:after{box-shadow:0 0 0 2px rgba(212,175,106,0.16) inset}
+
+/* Launch badge */
+.badge-launch{display:inline-block;background:linear-gradient(90deg,#f0d999,#d4af6a);color:#1a1305;padding:6px 12px;border-radius:999px;font-weight:700;font-size:.78rem;box-shadow:0 8px 18px rgba(212,175,106,0.24)}
+
+/* Scroll reveal */
+.scroll-reveal{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s cubic-bezier(.2,.9,.3,1)}
+.scroll-reveal.show{opacity:1;transform:none}
+
+/* QR code highlight area */
+.qr-wrap{display:flex;gap:12px;align-items:center}
+.qr-box{position:relative;padding:12px;background:white;border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,0.06);}
+.qr-frame{position:relative}
+.qr-scan-line{position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg, transparent, rgba(212,175,106,0.7), transparent);top:0;animation:scanLine 2.2s linear infinite}
+@keyframes scanLine{0%{top:-12%}100%{top:112%}}
+
+/* Buttons microinteraction */
+.btn-animated{transition:transform .14s ease, box-shadow .14s ease}
+.btn-animated:active{transform:scale(.98)}
+.btn-animated:hover{box-shadow:0 10px 22px rgba(212,175,106,0.16)}
+
+/* Header transparent to solid */
+.header-solid{background:rgba(255,255,255,0.98);backdrop-filter: blur(6px);box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+
+/* Responsive reductions */
+@media (max-width:760px){
+  .grid-scan-canvas{opacity:0.18}
+  .card:hover{transform:none}
+  .card .card-image{transform:none}
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .grid-scan-canvas, .badge-launch{animation: none !important}
+  .hero-animate-in,.scroll-reveal{transition:none;opacity:1;transform:none}
+}

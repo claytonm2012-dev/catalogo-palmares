@@ -1,0 +1,116 @@
+<%
+  var specs = [
+    { k: 'Material', v: product.material },
+    { k: 'Medidas', v: product.measures },
+    { k: 'Origem', v: product.origin },
+    { k: 'Capacidade', v: product.capacity },
+    { k: 'Peso', v: product.weight },
+    { k: 'Peças', v: product.pieces_quantity },
+    { k: 'Cor', v: product.color },
+    { k: 'Qtd. por caixa', v: product.box_quantity }
+  ].filter(function(s){ return s.v && s.v !== '—'; });
+  var catSlug = product.category_slug || 'diversos';
+%>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/animations.css?v=4.0">
+  </head>
+  <body>
+    <%- include('../partials/header', { categories: categories }) %>
+
+    <% if (prevProduct) { %>
+      <div class="product-nav prev"><a href="/produto/<%= prevProduct.slug %>" aria-label="Produto anterior">&#10094;</a></div>
+    <% } %>
+    <% if (nextProduct) { %>
+      <div class="product-nav next"><a href="/produto/<%= nextProduct.slug %>" aria-label="Próximo produto">&#10095;</a></div>
+    <% } %>
+
+    <main class="container">
+      <section class="product-hero">
+        <p class="product-crumb">
+          <a href="/">Início</a> &rsaquo; <a href="/categoria/<%= catSlug %>"><%= product.category_name %></a> &rsaquo; <span><%= product.name %></span>
+        </p>
+        <div class="grid">
+          <div class="content">
+            <h1><%= product.name %></h1>
+            <p class="muted"><strong>SKU:</strong> <%= product.sku %> &bull; <strong>Categoria:</strong> <%= product.category_name %></p>
+            <div style="display:flex;gap:14px;margin-top:18px;flex-wrap:wrap">
+              <a class="btn" href="https://api.whatsapp.com/send?phone=5535991710177&text=Quero%20mais%20informacoes%20sobre%20<%= encodeURIComponent(product.name) %>" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg>
+                WhatsApp
+              </a>
+              <button class="btn ghost" data-qr-sku="<%= product.sku %>" type="button">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg>
+                QR Code
+              </button>
+              <a class="btn ghost" href="/produtos">Ver catálogo</a>
+            </div>
+            <p style="margin-top:22px;line-height:1.7"><%= product.description || product.description_short || 'Descrição não disponível.' %></p>
+
+            <% if (specs.length) { %>
+              <section style="margin-top:20px">
+                <h3 style="margin:0 0 4px">Ficha Técnica</h3>
+                <div class="spec-grid">
+                  <% specs.forEach(function(s){ %>
+                    <div class="spec-item"><span class="k"><%= s.k %></span><span class="v"><%= s.v %></span></div>
+                  <% }) %>
+                </div>
+              </section>
+            <% } %>
+          </div>
+
+          <aside class="hero-visual">
+            <div class="hero-visual-inner">
+              <canvas class="canvas-scan"></canvas>
+              <div id="mainProductImage" class="card-media" style="position:absolute;inset:0;height:100%;border-radius:0">
+                <%- include('../partials/visual', { image: product.main_image, alt: product.name, slug: catSlug }) %>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><div><span class="section-kicker">Galeria</span><h2>Imagens do produto</h2></div></div>
+        <div class="products-grid">
+          <% if (images && images.length) { images.forEach(function(img, i){ %>
+            <div class="product-card gallery-thumb" style="--stagger:<%= i %>" data-full="<%= img.url || img.path %>">
+              <div class="card-media"><%- include('../partials/visual', { image: img.url || img.path, alt: 'Imagem ' + (i+1), slug: catSlug }) %></div>
+            </div>
+          <% }) } else { %>
+            <p class="muted">Sem imagens adicionais além da imagem principal.</p>
+          <% } %>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head"><div><span class="section-kicker">Você também pode gostar</span><h2>Produtos Relacionados</h2></div></div>
+        <div class="products-grid">
+          <% if (related && related.length) { related.forEach(function(item, i){
+            var relCat = categories.find(function(c){ return c.id === item.category_id; }) || {};
+          %>
+            <div class="product-card" style="--stagger:<%= i %>">
+              <div class="card-media"><%- include('../partials/visual', { image: item.main_image, alt: item.name, slug: relCat.slug }) %></div>
+              <div class="info">
+                <h4 style="margin:.4rem 0"><%= item.name %></h4>
+                <p class="muted" style="margin:0;font-size:.9rem"><%= item.sku %></p>
+                <div style="margin-top:12px"><a class="btn" href="/produto/<%= item.slug %>">Ver</a></div>
+              </div>
+            </div>
+          <% }) } else { %>
+            <p class="muted">Nenhum produto relacionado encontrado.</p>
+          <% } %>
+        </div>
+      </section>
+    </main>
+
+    <%- include('../partials/footer', { categories: categories }) %>
+    <%- include('../partials/qr-modal') %>
+    <script src="/js/animations.js?v=4.0" defer></script>
+  </body>
+</html>

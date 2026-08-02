@@ -1,0 +1,277 @@
+<%
+  var pool = [].concat(featured || [], launches || []);
+  function catFor(p) { return (categories.find(function(c){ return c.id === p.category_id; })) || { slug: 'diversos', name: '—' }; }
+  function catBySlug(slug) { return categories.find(function(c){ return c.slug === slug; }) || {}; }
+  function findProductByCat(slug) { var cat = catBySlug(slug); return pool.find(function(p){ return p.category_id === cat.id; }); }
+
+  var slideDefs = [
+    { tone: 'importados', title: 'Produtos e soluções para a casa com <span class="hl">qualidade</span> e tradição', subtitle: 'Explore nosso catálogo com produtos nacionais e importados, selecionados para atender a indústria e o varejo.' },
+    { tone: 'vidro', title: 'Elegância em cada <span class="hl">detalhe</span> de vidro e cristal', subtitle: 'Peças que unem sofisticação e resistência para compor mesas e ambientes memoráveis.' },
+    { tone: 'porcelanas', title: 'Porcelanas que elevam a sua <span class="hl">mesa</span>', subtitle: 'Coleções pensadas para o dia a dia e para ocasiões especiais, com acabamento premium.' },
+    { tone: 'termico', title: 'Tecnologia térmica com <span class="hl">desempenho</span> superior', subtitle: 'Isolamento térmico de alta performance para manter a temperatura por mais tempo.' }
+  ];
+  var heroSlides = slideDefs.map(function(s){ return { tone: s.tone, title: s.title, subtitle: s.subtitle, product: findProductByCat(s.tone), category: catBySlug(s.tone) }; }).filter(function(s){ return s.product; });
+  if (!heroSlides.length) {
+    heroSlides = [{ tone: 'diversos', title: 'Catálogo Virtual <span class="hl">Grupo Palmares</span>', subtitle: 'Explore nosso catálogo digital de utilidades domésticas e produtos industriais.', product: (pool[0] || null), category: { name: 'Catálogo', slug: 'diversos' } }];
+  }
+  var stats = [
+    { value: totals.products, suffix: '+', label: 'Produtos no catálogo' },
+    { value: totals.categories, suffix: '', label: 'Categorias especializadas' },
+    { value: 30, suffix: '+', label: 'Anos de tradição' },
+    { value: 100, suffix: '%', label: 'Atendimento nacional' }
+  ];
+%>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <meta name="description" content="Catálogo virtual do Grupo Palmares — utilidades domésticas, eletrodomésticos e produtos industriais." />
+    <link rel="preload" href="/css/premium.css?v=4.2" as="style">
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/animations.css?v=4.0">
+  </head>
+  <body>
+    <%- include('../partials/header', { categories: categories }) %>
+
+    <main>
+      <section class="hero" id="heroCarousel">
+        <div class="hero-content-overlay" aria-hidden="true"></div>
+
+        <div class="hero-slides">
+          <% heroSlides.forEach(function(slide, i){ %>
+            <div class="hero-slide<%= i === 0 ? ' active' : '' %>" data-index="<%= i %>">
+              <div class="hero-slide-content">
+                <span class="badge hero-anim" style="--d:0">Catálogo Virtual Grupo Palmares</span>
+                <h1 class="hero-anim" style="--d:1"><%- slide.title %></h1>
+                <p class="lead hero-anim" style="--d:2"><%= slide.subtitle %></p>
+                <div class="hero-searchbar hero-anim" style="--d:3">
+                  <div class="searchbar">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+                    <input id="searchInput" placeholder="Buscar por nome, SKU ou categoria" />
+                    <div class="actions">
+                      <button class="btn" onclick="window.location.href='/produtos?q=' + encodeURIComponent(document.getElementById('searchInput').value)">Buscar</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="hero-cta-row hero-anim" style="--d:4">
+                  <a class="btn" href="/produtos">Explorar catálogo</a>
+                  <a class="btn ghost" href="/produtos?filter=launch">Ver lançamentos</a>
+                  <% if (slide.product) { %><a class="btn text-btn" href="/produto/<%= slide.product.slug %>">Ver <%= slide.product.name %> &rarr;</a><% } %>
+                </div>
+                <div class="hero-stats hero-anim" style="--d:5">
+                  <div><strong><%= totals.products %>+</strong><span>Produtos</span></div>
+                  <div><strong><%= totals.categories %></strong><span>Categorias</span></div>
+                  <div><strong>30+</strong><span>Anos de tradição</span></div>
+                </div>
+              </div>
+
+              <div class="hero-visual">
+                <div class="hv-spotlight" aria-hidden="true"></div>
+                <div class="hero-visual-inner"></div>
+
+                <div class="hv-stage">
+                  <div class="hv-stage-glow" aria-hidden="true"></div>
+                  <div class="hv-stage-media">
+                    <%- include('../partials/visual', { image: slide.product.main_image, alt: slide.product.name, slug: slide.tone }) %>
+                  </div>
+                  <div class="hv-stage-info">
+                    <span class="hv-stage-cat"><%= slide.category.name %></span>
+                    <h4 title="<%= slide.product.name %>"><%= slide.product.name %></h4>
+                    <p>SKU <%= slide.product.sku %></p>
+                    <a class="btn text-btn hv-stage-cta" href="/produto/<%= slide.product.slug %>">Ver produto <span class="arrow">&rarr;</span></a>
+                  </div>
+                </div>
+
+                <div class="hv-float hv-float-b">
+                  <img src="/images/logo-official.jpg" alt="" />
+                  <span>Tradição Grupo Palmares</span>
+                </div>
+
+                <div class="hv-chip hv-chip-a">Qualidade</div>
+                <div class="hv-chip hv-chip-b">Inovação</div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+
+        <% if (heroSlides.length > 1) { %>
+          <button class="carousel-arrow prev" id="heroPrev" aria-label="Slide anterior">&#10094;</button>
+          <button class="carousel-arrow next" id="heroNext" aria-label="Próximo slide">&#10095;</button>
+          <div class="hero-dots" id="heroDots">
+            <% heroSlides.forEach(function(slide, i){ %>
+              <button class="hero-dot<%= i === 0 ? ' active' : '' %>" data-index="<%= i %>">
+                <span class="num"><%= i + 1 %></span>
+                <span class="hero-label-text"><%= slide.category.name %></span>
+              </button>
+            <% }) %>
+          </div>
+          <div class="hero-progress" id="heroProgress"><span></span></div>
+        <% } %>
+
+        <div class="hero-scroll-cue" id="heroScrollCue"><span></span>Rolar</div>
+      </section>
+
+      <div class="dark-section-band">
+        <div class="dark-band-watermark" aria-hidden="true"></div>
+        <div class="dark-band-glow" aria-hidden="true"></div>
+
+      <section class="section on-dark container section-first" id="categorias">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Vitrine de categorias</span>
+            <h2>Categorias</h2>
+          </div>
+          <p class="section-sub">Cada linha do Grupo Palmares em uma vitrine própria — explore por especialidade.</p>
+        </div>
+        <div class="categories-bento">
+          <% categories.forEach(function(cat, i){ %>
+            <a class="cat-tile tone-<%= cat.slug %>" style="--stagger:<%= i %>" href="/categoria/<%= cat.slug %>">
+              <div class="cat-tile-art" style="background-image:url('/images/categories/<%= cat.slug %>.jpg')"></div>
+              <div class="cat-tile-scrim"></div>
+              <div class="cat-tile-content">
+                <span class="cat-tile-count"><%= cat.product_count %> produto<%= cat.product_count === 1 ? '' : 's' %></span>
+                <h3><%= cat.name %></h3>
+                <p><%= cat.description || 'Conheça nossos produtos' %></p>
+                <span class="cat-tile-cta">Explorar categoria &rarr;</span>
+              </div>
+            </a>
+          <% }) %>
+        </div>
+      </section>
+
+      <section class="section on-dark container coverflow-section glow-bleed-top">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Novidades</span>
+            <h2>Lançamentos</h2>
+          </div>
+          <% if (launches && launches.length) { %>
+            <div class="coverflow-counter"><strong id="cfCurrent">1</strong> / <%= launches.length %></div>
+          <% } %>
+        </div>
+        <% if (launches && launches.length) { %>
+          <div class="coverflow" id="launchesCoverflow" role="region" aria-roledescription="carrossel" aria-label="Lançamentos" tabindex="0">
+            <div class="coverflow-track">
+              <% launches.forEach(function(p, i){ %>
+                <div class="coverflow-slide<%= i === 0 ? ' is-active' : '' %>" data-index="<%= i %>">
+                  <div class="cf-card">
+                    <div class="card-media"><%- include('../partials/visual', { image: p.main_image, alt: p.name, slug: catFor(p).slug }) %></div>
+                    <div class="cf-card-info">
+                      <span class="cf-badge">Lançamento</span>
+                      <h3><%= p.name %></h3>
+                      <p class="muted">SKU <%= p.sku %> · <%= catFor(p).name %></p>
+                      <p class="cf-desc"><%= p.description_short || '' %></p>
+                      <div class="cf-actions">
+                        <a class="btn" href="/produto/<%= p.slug %>">Ver produto</a>
+                        <button class="icon-btn" data-qr-sku="<%= p.sku %>" aria-label="Gerar QR Code">
+                          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+            <div class="coverflow-controls">
+              <button class="carousel-arrow prev" id="cfPrev" aria-label="Anterior">&#10094;</button>
+              <div class="coverflow-progress"><span id="cfProgressBar"></span></div>
+              <button class="carousel-arrow next" id="cfNext" aria-label="Próximo">&#10095;</button>
+            </div>
+          </div>
+        <% } else { %>
+          <p class="muted">Nenhum lançamento no momento.</p>
+        <% } %>
+      </section>
+
+      <section class="section on-dark container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Seleção editorial</span>
+            <h2>Destaques</h2>
+          </div>
+          <p class="section-sub">Arraste para o lado para ver mais destaques do catálogo.</p>
+        </div>
+        <% if (featured && featured.length) { %>
+          <div class="editorial-row" id="editorialDestaques">
+            <% featured.forEach(function(p, i){ %>
+              <article class="editorial-card" style="--stagger:<%= i %>">
+                <div class="card-media"><%- include('../partials/visual', { image: p.main_image, alt: p.name, slug: catFor(p).slug }) %></div>
+                <div class="editorial-overlay">
+                  <span class="badge">Destaque</span>
+                  <h3><%= p.name %></h3>
+                  <p><%= p.description_short || p.description || '' %></p>
+                  <div class="editorial-actions"><a class="btn ghost" href="/produto/<%= p.slug %>">Ver detalhes</a></div>
+                </div>
+              </article>
+            <% }) %>
+          </div>
+        <% } else { %>
+          <p class="muted">Nenhum destaque no momento.</p>
+        <% } %>
+      </section>
+
+      <section class="section container" id="institucional">
+        <div class="institutional-panel">
+          <div class="container">
+            <span class="section-kicker">Institucional</span>
+            <h2>Décadas de tradição, agora em experiência digital</h2>
+            <p class="section-sub">Grupo Palmares atua há décadas na distribuição de utilidades domésticas, eletrodomésticos e produtos industriais — unindo tradição, variedade e logística nacional a um catálogo digital moderno.</p>
+            <div class="institutional-stats">
+              <% stats.forEach(function(s){ %>
+                <div class="stat-item">
+                  <strong><span class="count-num" data-count-target="<%= s.value %>">0</span><span class="suffix"><%= s.suffix %></span></strong>
+                  <span><%= s.label %></span>
+                </div>
+              <% }) %>
+            </div>
+            <div class="institutional-timeline">
+              <div class="timeline-step"><span class="n">1</span><h4>Tradição</h4><p>Décadas de atuação consolidada no mercado nacional.</p></div>
+              <div class="timeline-step"><span class="n">2</span><h4>Qualidade</h4><p>Produtos selecionados para indústria e varejo.</p></div>
+              <div class="timeline-step"><span class="n">3</span><h4>Variedade</h4><p>Linhas completas em vidro, inox, porcelana e muito mais.</p></div>
+              <div class="timeline-step"><span class="n">4</span><h4>Distribuição</h4><p>Logística e atendimento em todo o território nacional.</p></div>
+              <div class="timeline-step"><span class="n">5</span><h4>Catálogo digital</h4><p>Acesso rápido ao catálogo completo via QR Code.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      </div>
+
+      <section class="qr-section" id="qr-experiencia">
+        <div class="qr-section-glow" aria-hidden="true"></div>
+        <div class="container">
+          <span class="section-kicker">Catálogo por QR Code</span>
+          <h2 style="color:#fff">Do catálogo impresso para uma experiência digital completa</h2>
+          <p class="section-sub" style="color:#9fb0c4;max-width:60ch">Escaneie o QR Code de qualquer produto e acesse fotos, especificações e atendimento direto pelo WhatsApp — tudo em segundos.</p>
+          <div class="qr-showcase">
+            <div class="qr-phone">
+              <div class="qr-phone-screen">
+                <div class="qr-frame-lg">
+                  <div class="qr-glow-ring" aria-hidden="true"></div>
+                  <div class="qr-scan-line"></div>
+                  <img src="/images/logo-official.jpg" alt="Ilustração de QR Code do catálogo Grupo Palmares" />
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="qr-steps">
+                <div class="qr-step"><span class="n">1</span><h4>Escaneie</h4><p>Aponte a câmera do celular para o QR Code do produto.</p></div>
+                <div class="qr-step"><span class="n">2</span><h4>Acesse</h4><p>Abra a ficha completa do produto instantaneamente.</p></div>
+                <div class="qr-step"><span class="n">3</span><h4>Explore</h4><p>Veja especificações e produtos relacionados.</p></div>
+                <div class="qr-step"><span class="n">4</span><h4>Fale conosco</h4><p>Continue a conversa direto pelo WhatsApp.</p></div>
+              </div>
+              <div class="qr-cta"><a class="btn" href="/produtos">Ver catálogo completo</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <%- include('../partials/footer', { categories: categories }) %>
+    </main>
+
+    <%- include('../partials/qr-modal') %>
+    <script src="/js/animations.js?v=4.0" defer></script>
+  </body>
+</html>

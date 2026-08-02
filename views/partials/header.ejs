@@ -1,0 +1,67 @@
+<%
+  var hdrCategories = typeof categories !== 'undefined' && categories ? categories : [];
+%>
+<header class="header" id="siteHeader">
+  <div class="brand container">
+    <a href="/" class="logo-link"><img src="/images/logo30-watermark.png" alt="Grupo Palmares" /></a>
+
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="/" data-nav-link>Início</a>
+      <div class="nav-item has-mega">
+        <button class="nav-trigger" id="megaTrigger" type="button" aria-expanded="false" aria-controls="megaMenu">
+          Produtos
+          <svg class="chev" viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3,5 8,11 13,5"/></svg>
+        </button>
+        <div class="mega-menu" id="megaMenu" role="menu">
+          <div class="mega-grid">
+            <% hdrCategories.forEach(function(cat){ %>
+              <a class="mega-item" href="/categoria/<%= cat.slug %>" role="menuitem">
+                <span class="mega-icon"><%- include('./category-icon', { icon: cat.slug }) %></span>
+                <span><%= cat.name %></span>
+              </a>
+            <% }) %>
+          </div>
+          <a class="mega-viewall" href="/produtos">Ver catálogo completo &rarr;</a>
+        </div>
+      </div>
+      <a href="/produtos" data-nav-link>Catálogo</a>
+      <a href="/admin" data-nav-link class="nav-admin">Admin</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="icon-btn" id="searchToggle" type="button" aria-label="Buscar" aria-expanded="false" aria-controls="headerSearch">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+      </button>
+      <a class="btn" href="/produtos">Explorar catálogo</a>
+      <button class="icon-btn menu-toggle" id="drawerToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileDrawer">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="header-search" id="headerSearch" aria-hidden="true">
+    <form action="/produtos" method="get" class="header-search-form container">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg>
+      <input type="text" name="q" id="headerSearchInput" placeholder="Buscar por nome, SKU ou categoria" aria-label="Buscar produtos" autocomplete="off"/>
+      <button class="btn" type="submit">Buscar</button>
+    </form>
+  </div>
+</header>
+
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="drawer-backdrop" data-drawer-close></div>
+  <div class="drawer-panel">
+    <div class="drawer-head">
+      <img src="/images/logo30-watermark.png" alt="Grupo Palmares" height="32" />
+      <button class="icon-btn" data-drawer-close type="button" aria-label="Fechar menu">&times;</button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="/">Início</a>
+      <a href="/produtos">Todos os produtos</a>
+      <p class="drawer-label">Categorias</p>
+      <% hdrCategories.forEach(function(cat){ %><a href="/categoria/<%= cat.slug %>"><%= cat.name %></a><% }) %>
+      <a href="/admin">Admin</a>
+    </nav>
+    <a class="btn" href="https://api.whatsapp.com/send?phone=5535991710177&text=Ol%C3%A1%2C%20quero%20conhecer%20o%20cat%C3%A1logo%20Grupo%20Palmares" target="_blank" rel="noopener">Falar no WhatsApp</a>
+  </div>
+</div>

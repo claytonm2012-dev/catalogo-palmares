@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100">
+  <g stroke="#ffffff" stroke-width="6" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <polyline points="16,58 44,28 72,58" opacity="0.5"/>
+    <polyline points="26,68 54,38 82,68" opacity="0.75"/>
+    <polyline points="36,78 64,48 92,78" opacity="1"/>
+  </g>
+  <rect x="16" y="86" width="76" height="2" fill="#ffffff" opacity="0.55"/>
+  <text x="112" y="46" font-family="Inter, Arial, Helvetica, sans-serif" font-size="14" letter-spacing="5" fill="#d4af6a">GRUPO</text>
+  <text x="112" y="76" font-family="Inter, Arial, Helvetica, sans-serif" font-size="32" font-weight="800" letter-spacing="0.5" fill="#ffffff">PALMARES</text>
+</svg>

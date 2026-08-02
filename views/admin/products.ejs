@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 0; background: #f8f6f2; color: #333; }
+      .shell { display: flex; min-height: 100vh; }
+      .sidebar { width: 260px; background: #1f2937; color: white; padding: 24px; }
+      .content { flex: 1; padding: 24px; }
+      table { width: 100%; border-collapse: collapse; background: white; }
+      th, td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; }
+      a { color: #8b5e34; text-decoration: none; }
+      .btn { display: inline-block; padding: 8px 12px; border-radius: 8px; background: #8b5e34; color: white; margin-right: 6px; }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <h2>Grupo Palmares</h2>
+        <p>Admin</p>
+        <ul>
+          <li><a href="/" style="color:white">&larr; Voltar ao catálogo</a></li>
+          <li><a href="/admin/dashboard" style="color:white">Dashboard</a></li>
+          <li><a href="/admin/products" style="color:white">Produtos</a></li>
+          <li><a href="/admin/categories" style="color:white">Categorias</a></li>
+          <li><a href="/admin/brands" style="color:white">Marcas</a></li>
+          <li><a href="/admin/qr-codes" style="color:white">QR Codes</a></li>
+          <li><a href="/admin/logout" style="color:white">Sair</a></li>
+        </ul>
+      </aside>
+      <main class="content">
+        <h1>Produtos</h1>
+        <a class="btn" href="/admin/products/new">Novo produto</a>
+        <table>
+          <thead>
+            <tr><th>Nome</th><th>SKU</th><th>Status</th><th>Ações</th></tr>
+          </thead>
+          <tbody>
+            <% products.forEach(function(product){ %>
+              <tr>
+                <td><%= product.name %></td>
+                <td><%= product.sku %></td>
+                <td><%= product.status %></td>
+                <td>
+                  <a href="/admin/products/<%= product.id %>/edit">Editar</a>
+                  <a href="/produto/<%= product.slug %>" target="_blank">Ver</a>
+                  <form action="/admin/products/<%= product.id %>/delete" method="post" style="display:inline">
+                    <button type="submit">Excluir</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </main>
+    </div>
+  </body>
+</html>

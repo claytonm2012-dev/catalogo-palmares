@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      body { font-family: 'Inter', sans-serif; background: #f7f4ef; margin: 0; color: #1f2937; }
+      .wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+      .card { width: min(100%, 420px); background: #fff; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); padding: 32px; }
+      h1 { margin-top: 0; font-size: 1.7rem; }
+      input { width: 100%; padding: 12px 14px; margin-bottom: 12px; border: 1px solid #d6d3d1; border-radius: 10px; }
+      button { width: 100%; background: #8b5e34; color: white; border: none; padding: 13px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+      .error { color: #b91c1c; margin-bottom: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>Login administrativo</h1>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="error"><%= error %></div>
+        <% } %>
+        <form method="post" action="/admin/login">
+          <input name="email" type="email" placeholder="E-mail" required />
+          <input name="password" type="password" placeholder="Senha" required />
+          <button type="submit">Entrar</button>
+        </form>
+        <p style="text-align:center;margin:16px 0 0">
+          <a href="/" style="color:#8b5e34;font-weight:600;text-decoration:none">&larr; Voltar ao catálogo</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
