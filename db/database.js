@@ -66,8 +66,13 @@ async function count(table, filters = {}) {
 async function initialize() {
   const userCount = await count('users');
   if (userCount === 0) {
-    const passwordHash = bcrypt.hashSync('Palmares2026!', 10);
-    await create('users', { name: 'Administrador', email: 'admin@grupopalmares.com.br', password: passwordHash, role: 'admin' });
+    const email = process.env.ADMIN_DEFAULT_EMAIL;
+    const password = process.env.ADMIN_DEFAULT_PASSWORD || require('crypto').randomBytes(9).toString('base64url');
+    if (!process.env.ADMIN_DEFAULT_EMAIL || !process.env.ADMIN_DEFAULT_PASSWORD) {
+      console.warn(`[db] ADMIN_DEFAULT_EMAIL/ADMIN_DEFAULT_PASSWORD não definidos — usuário admin inicial criado com email "${email || 'admin@example.com'}" e senha temporária: ${password} (troque no primeiro acesso)`);
+    }
+    const passwordHash = bcrypt.hashSync(password, 10);
+    await create('users', { name: 'Administrador', email: email || 'admin@example.com', password: passwordHash, role: 'admin' });
   }
 
   const settingsCount = await count('settings');
@@ -78,7 +83,12 @@ async function initialize() {
       { key: 'catalog_url', value: 'https://catalogo.grupopalmares.com.br/' },
       { key: 'whatsapp', value: '(35) 99171-0177' },
       { key: 'phone', value: '(35) 3529-0700' },
-      { key: 'email', value: 'contato@grupopalmares.com.br' }
+      { key: 'email', value: 'contato@grupopalmares.com.br' },
+      { key: 'instagram_url', value: '' },
+      { key: 'facebook_url', value: '' },
+      { key: 'institutional_years', value: '30' },
+      { key: 'hero_fallback_title', value: 'Catálogo Virtual <span class="hl">Grupo Palmares</span>' },
+      { key: 'hero_fallback_subtitle', value: 'Explore nosso catálogo digital de utilidades domésticas e produtos industriais.' }
     ];
     for (const setting of baseSettings) await create('settings', setting);
   }
@@ -231,6 +241,40 @@ async function getRelatedProducts(productId) {
   return categoryProducts.filter(item => item.id !== Number(productId));
 }
 
+async function getSettingsMap() {
+  const rows = await list('settings');
+  const map = {};
+  rows.forEach(row => { map[row.key] = row.value; });
+  return map;
+}
+
+async function upsertSetting(key, value) {
+  const existing = await findOne('settings', { key });
+  if (existing) return update('settings', existing.id, { value });
+  return create('settings', { key, value });
+}
+
+async function countProductsByCategory(categoryId) {
+  return count('products', { category_id: Number(categoryId) });
+}
+
+async function countProductsByBrand(brandId) {
+  return count('products', { brand_id: Number(brandId) });
+}
+
+async function reorderProductImage(imageId, direction) {
+  const image = await findOne('product_images', { id: Number(imageId) });
+  if (!image) return null;
+  const siblings = await list('product_images', { product_id: image.product_id }, [{ field: 'sort_order', direction: 'asc' }]);
+  const index = siblings.findIndex(item => item.id === image.id);
+  const swapIndex = direction === 'up' ? index - 1 : index + 1;
+  if (swapIndex < 0 || swapIndex >= siblings.length) return image;
+  const swapWith = siblings[swapIndex];
+  await update('product_images', image.id, { sort_order: swapWith.sort_order });
+  await update('product_images', swapWith.id, { sort_order: image.sort_order });
+  return image;
+}
+
 const ready = initialize().catch(err => {
   console.error('[db] Falha ao inicializar dados padrão no Supabase:', err.message);
   throw err;
@@ -271,5 +315,10 @@ module.exports = {
   getProductImages,
   getProductVideos,
   getProductDocuments,
-  getRelatedProducts
+  getRelatedProducts,
+  getSettingsMap,
+  upsertSetting,
+  countProductsByCategory,
+  countProductsByBrand,
+  reorderProductImage
 };

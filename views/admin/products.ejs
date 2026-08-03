@@ -4,56 +4,117 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/admin-premium.css?v=1.0">
     <style>
-      body { font-family: Arial, sans-serif; margin: 0; background: #f8f6f2; color: #333; }
-      .shell { display: flex; min-height: 100vh; }
-      .sidebar { width: 260px; background: #1f2937; color: white; padding: 24px; }
-      .content { flex: 1; padding: 24px; }
-      table { width: 100%; border-collapse: collapse; background: white; }
-      th, td { border-bottom: 1px solid #eee; padding: 10px; text-align: left; }
-      a { color: #8b5e34; text-decoration: none; }
-      .btn { display: inline-block; padding: 8px 12px; border-radius: 8px; background: #8b5e34; color: white; margin-right: 6px; }
+      .filters-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+      .filters-bar input, .filters-bar select{padding:9px 12px;border-radius:9px;border:1px solid rgba(6,32,59,0.14);font-size:13.5px;font-family:inherit}
+      .filters-bar input[name="q"]{min-width:220px;flex:1}
+      .pagination{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:13.5px;color:var(--muted)}
+      .pagination a{color:var(--navy-900);text-decoration:none;font-weight:700}
+      .empty-state{padding:40px;text-align:center;color:var(--muted)}
     </style>
   </head>
   <body>
-    <div class="shell">
-      <aside class="sidebar">
-        <h2>Grupo Palmares</h2>
-        <p>Admin</p>
-        <ul>
-          <li><a href="/" style="color:white">&larr; Voltar ao catálogo</a></li>
-          <li><a href="/admin/dashboard" style="color:white">Dashboard</a></li>
-          <li><a href="/admin/products" style="color:white">Produtos</a></li>
-          <li><a href="/admin/categories" style="color:white">Categorias</a></li>
-          <li><a href="/admin/brands" style="color:white">Marcas</a></li>
-          <li><a href="/admin/qr-codes" style="color:white">QR Codes</a></li>
-          <li><a href="/admin/logout" style="color:white">Sair</a></li>
-        </ul>
-      </aside>
-      <main class="content">
-        <h1>Produtos</h1>
-        <a class="btn" href="/admin/products/new">Novo produto</a>
-        <table>
-          <thead>
-            <tr><th>Nome</th><th>SKU</th><th>Status</th><th>Ações</th></tr>
-          </thead>
-          <tbody>
-            <% products.forEach(function(product){ %>
-              <tr>
-                <td><%= product.name %></td>
-                <td><%= product.sku %></td>
-                <td><%= product.status %></td>
-                <td>
-                  <a href="/admin/products/<%= product.id %>/edit">Editar</a>
-                  <a href="/produto/<%= product.slug %>" target="_blank">Ver</a>
-                  <form action="/admin/products/<%= product.id %>/delete" method="post" style="display:inline">
-                    <button type="submit">Excluir</button>
-                  </form>
-                </td>
-              </tr>
+    <div class="admin-shell">
+      <%- include('partials/sidebar', { active: active, user: user }) %>
+      <main class="admin-content">
+        <div class="admin-page-head">
+          <div>
+            <span class="admin-kicker">Catálogo</span>
+            <h1>Produtos</h1>
+            <p><%= pagination.totalResults %> resultado<%= pagination.totalResults === 1 ? '' : 's' %></p>
+          </div>
+          <a class="btn" href="/admin/products/new">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Novo produto
+          </a>
+        </div>
+
+        <form method="get" action="/admin/products" class="filters-bar">
+          <input type="text" name="q" placeholder="Buscar por nome, SKU ou slug" value="<%= filters.q %>" />
+          <select name="category">
+            <option value="">Todas categorias</option>
+            <% categories.forEach(function(c){ %>
+              <option value="<%= c.id %>" <%= String(filters.category) === String(c.id) ? 'selected' : '' %>><%= c.name %></option>
             <% }) %>
-          </tbody>
-        </table>
+          </select>
+          <select name="brand">
+            <option value="">Todas marcas</option>
+            <% brands.forEach(function(b){ %>
+              <option value="<%= b.id %>" <%= String(filters.brand) === String(b.id) ? 'selected' : '' %>><%= b.name %></option>
+            <% }) %>
+          </select>
+          <select name="status">
+            <option value="">Qualquer status</option>
+            <option value="active" <%= filters.status === 'active' ? 'selected' : '' %>>Ativo</option>
+            <option value="inactive" <%= filters.status === 'inactive' ? 'selected' : '' %>>Inativo</option>
+          </select>
+          <select name="featured">
+            <option value="">Destaque (todos)</option>
+            <option value="yes" <%= filters.featured === 'yes' ? 'selected' : '' %>>Só destaques</option>
+            <option value="no" <%= filters.featured === 'no' ? 'selected' : '' %>>Não destaque</option>
+          </select>
+          <select name="launch">
+            <option value="">Lançamento (todos)</option>
+            <option value="yes" <%= filters.launch === 'yes' ? 'selected' : '' %>>Só lançamentos</option>
+            <option value="no" <%= filters.launch === 'no' ? 'selected' : '' %>>Não lançamento</option>
+          </select>
+          <button class="btn-sm" type="submit">Filtrar</button>
+          <% if (filters.q || filters.category || filters.brand || filters.status || filters.featured || filters.launch) { %>
+            <a class="btn-sm" href="/admin/products">Limpar filtros</a>
+          <% } %>
+        </form>
+
+        <div class="admin-table-wrap">
+          <% if (products.length) { %>
+            <table class="admin-table">
+              <thead>
+                <tr><th>Nome</th><th>SKU</th><th>Categoria</th><th>Marca</th><th>Status</th><th>Destaque/Lançamento</th><th>Ações</th></tr>
+              </thead>
+              <tbody>
+                <% products.forEach(function(product){
+                  var cat = categories.find(function(c){ return c.id === product.category_id; });
+                  var brand = brands.find(function(b){ return b.id === product.brand_id; });
+                %>
+                  <tr>
+                    <td><%= product.name %></td>
+                    <td><%= product.sku %></td>
+                    <td><%= cat ? cat.name : '—' %></td>
+                    <td><%= brand ? brand.name : '—' %></td>
+                    <td><span class="status-pill <%= product.status %>"><%= product.status === 'active' ? 'Ativo' : 'Inativo' %></span></td>
+                    <td>
+                      <% if (product.is_featured === 'yes') { %><span class="status-pill active" style="margin-right:4px">Destaque</span><% } %>
+                      <% if (product.is_launch === 'yes') { %><span class="status-pill active">Lançamento</span><% } %>
+                    </td>
+                    <td>
+                      <div class="admin-actions">
+                        <a class="btn-sm" href="/admin/products/<%= product.id %>/edit">Editar</a>
+                        <a class="btn-sm" href="/produto/<%= product.slug %>" target="_blank">Ver</a>
+                        <form action="/admin/products/<%= product.id %>/delete" method="post" style="display:inline" onsubmit="return confirm('Excluir este produto?')">
+                          <button type="submit" class="btn-sm danger">Excluir</button>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          <% } else { %>
+            <div class="empty-state">Nenhum produto encontrado com esses filtros.</div>
+          <% } %>
+        </div>
+
+        <% if (pagination.totalPages > 1) { %>
+          <div class="pagination">
+            <% for (var p = 1; p <= pagination.totalPages; p++) { %>
+              <% if (p === pagination.page) { %><strong><%= p %></strong><% } else { %>
+                <a href="?<%= new URLSearchParams(Object.assign({}, filters, { page: p })).toString() %>"><%= p %></a>
+              <% } %>
+            <% } %>
+          </div>
+        <% } %>
       </main>
     </div>
   </body>

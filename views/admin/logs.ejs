@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/admin-premium.css?v=1.0">
+  </head>
+  <body>
+    <div class="admin-shell">
+      <%- include('partials/sidebar', { active: active, user: user }) %>
+      <main class="admin-content">
+        <div class="admin-page-head">
+          <div>
+            <span class="admin-kicker">Auditoria</span>
+            <h1>Histórico de ações</h1>
+            <p>Últimas <%= logs.length %> ações registradas no painel</p>
+          </div>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Entidade</th><th>Detalhes</th></tr>
+            </thead>
+            <tbody>
+              <% logs.forEach(function(log){ %>
+                <tr>
+                  <td><%= new Date(log.created_at).toLocaleString('pt-BR') %></td>
+                  <td><%= log.user_name %></td>
+                  <td><%= log.action %></td>
+                  <td><%= log.entity %><%= log.entity_id ? ' #' + log.entity_id : '' %></td>
+                  <td><%= log.details %></td>
+                </tr>
+              <% }) %>
+              <% if (!logs.length) { %>
+                <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:30px">Nenhuma ação registrada ainda.</td></tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

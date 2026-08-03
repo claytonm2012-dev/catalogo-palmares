@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title><%= title %></title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/admin-premium.css?v=1.0">
+  </head>
+  <body>
+    <div class="admin-shell">
+      <%- include('partials/sidebar', { active: active, user: user }) %>
+      <main class="admin-content">
+        <div class="admin-page-head">
+          <div>
+            <span class="admin-kicker">Site</span>
+            <h1>Configurações</h1>
+            <p>Contato, redes sociais, números institucionais e domínio usado nos QR Codes.</p>
+          </div>
+        </div>
+
+        <div class="admin-card admin-form">
+          <form method="post" action="/admin/settings" id="settingsForm">
+            <div class="admin-form-grid">
+              <% rows.forEach(function(row){ %>
+                <div>
+                  <label class="field-label"><%= row.label %></label>
+                  <input name="<%= row.key %>" value="<%= row.value %>" />
+                </div>
+              <% }) %>
+            </div>
+            <button class="btn" type="submit" id="settingsSubmit">Salvar configurações</button>
+          </form>
+        </div>
+      </main>
+    </div>
+    <script>
+      document.getElementById('settingsForm').addEventListener('submit', function () {
+        var btn = document.getElementById('settingsSubmit');
+        btn.disabled = true;
+        btn.textContent = 'Salvando...';
+      });
+    </script>
+  </body>
+</html>

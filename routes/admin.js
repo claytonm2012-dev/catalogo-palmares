@@ -2,13 +2,15 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const db = require('../db/database');
-const { upload, uploadToStorage, removeFromStorage } = require('../lib/upload');
+const { upload, productMediaUpload, uploadToStorage, removeFromStorage } = require('../lib/upload');
 const slugify = require('../lib/slugify');
 const { getPublicSiteUrl } = require('../lib/site-url');
 
-const productUploads = upload.fields([
+const productUploads = productMediaUpload.fields([
   { name: 'main_image_file', maxCount: 1 },
-  { name: 'gallery_files', maxCount: 10 }
+  { name: 'gallery_files', maxCount: 10 },
+  { name: 'video_file', maxCount: 1 },
+  { name: 'document_file', maxCount: 1 }
 ]);
 
 function ah(fn) {
@@ -18,6 +20,18 @@ function ah(fn) {
 function requireAuth(req, res, next) {
   if (req.session && req.session.user) return next();
   return res.redirect('/admin/login');
+}
+
+function toNullable(value) {
+  return value === undefined || value === '' ? null : value;
+}
+
+async function logAction(req, action, entity, entityId, details) {
+  await db.createAuditLog({
+    user_id: req.session.user?.id || null,
+    user_name: req.session.user?.name || 'preview',
+    action, entity, entity_id: entityId, details
+  });
 }
 
 router.get('/', (req, res) => {
@@ -44,26 +58,66 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/dashboard', requireAuth, ah(async (req, res) => {
-  const [products, activeProducts, categories, brands, launches, allProducts, qrScans] = await Promise.all([
+  const [
+    products, activeProducts, categories, brands, launches, featuredCount, allProducts, qrScans, recentProducts, recentLogs
+  ] = await Promise.all([
     db.count('products'),
     db.count('products', { status: 'active' }),
     db.count('categories'),
     db.count('brands'),
     db.count('products', { is_launch: 'yes' }),
+    db.count('products', { is_featured: 'yes' }),
     db.list('products'),
-    db.count('qr_scans')
+    db.count('qr_scans'),
+    db.listProducts({}, [{ field: 'id', direction: 'desc' }], 5),
+    db.list('audit_logs', {}, [{ field: 'id', direction: 'desc' }], 8)
   ]);
+  const qrTested = allProducts.filter(p => p.last_qr_test_status).length;
+  const qrErrors = allProducts.filter(p => p.last_qr_test_status && p.last_qr_test_status !== 'funcionando').length;
+  const mostViewed = [...allProducts].sort((a, b) => (b.view_count || 0) - (a.view_count || 0)).slice(0, 5);
+  const brokenImages = allProducts.filter(p => !p.main_image);
   const stats = {
-    products, activeProducts, categories, brands, launches,
+    products, activeProducts, inactiveProducts: products - activeProducts, categories, brands, launches,
+    featured: featuredCount,
     views: allProducts.reduce((sum, item) => sum + (item.view_count || 0), 0),
-    qrScans
+    qrScans, qrTested, qrErrors
   };
-  res.render('admin/dashboard', { title: 'Dashboard', stats, user: req.session.user });
+  res.render('admin/dashboard', {
+    title: 'Dashboard', active: 'dashboard', stats, user: req.session.user,
+    recentProducts, mostViewed, recentLogs, brokenImages
+  });
 }));
 
 router.get('/products', requireAuth, ah(async (req, res) => {
-  const products = await db.listProducts({}, [{ field: 'id', direction: 'desc' }]);
-  res.render('admin/products', { title: 'Produtos', products, user: req.session.user });
+  const { q, category, brand, status, featured, launch, page } = req.query;
+  const [allProducts, categories, brands] = await Promise.all([
+    db.listProducts({}, [{ field: 'id', direction: 'desc' }]),
+    db.listCategories(),
+    db.listBrands()
+  ]);
+  const search = (q || '').trim().toLowerCase();
+  let filtered = allProducts.filter(p => {
+    const matchesSearch = !search || [p.name, p.sku, p.slug].some(v => (v || '').toLowerCase().includes(search));
+    const matchesCategory = !category || String(p.category_id) === String(category);
+    const matchesBrand = !brand || String(p.brand_id) === String(brand);
+    const matchesStatus = !status || p.status === status;
+    const matchesFeatured = !featured || p.is_featured === featured;
+    const matchesLaunch = !launch || p.is_launch === launch;
+    return matchesSearch && matchesCategory && matchesBrand && matchesStatus && matchesFeatured && matchesLaunch;
+  });
+
+  const pageSize = 20;
+  const currentPage = Math.max(1, parseInt(page, 10) || 1);
+  const totalResults = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(totalResults / pageSize));
+  const pageSafe = Math.min(currentPage, totalPages);
+  const products = filtered.slice((pageSafe - 1) * pageSize, pageSafe * pageSize);
+
+  res.render('admin/products', {
+    title: 'Produtos', active: 'products', products, categories, brands, user: req.session.user,
+    filters: { q: q || '', category: category || '', brand: brand || '', status: status || '', featured: featured || '', launch: launch || '' },
+    pagination: { page: pageSafe, totalPages, totalResults, pageSize }
+  });
 }));
 
 router.get('/products/new', requireAuth, ah(async (req, res) => {
@@ -72,84 +126,100 @@ router.get('/products/new', requireAuth, ah(async (req, res) => {
     db.listBrands({ status: 'active' }),
     db.listCollections({ status: 'active' })
   ]);
-  res.render('admin/product-form', { title: 'Novo Produto', categories, brands, collections, product: null, user: req.session.user });
+  res.render('admin/product-form', { title: 'Novo Produto', active: 'products', categories, brands, collections, product: null, user: req.session.user });
 }));
 
+function buildProductData(body) {
+  const { name, sku, slug, description_short, description, category_id, brand_id, collection_id, material, color, capacity, measures, weight, pieces_quantity, box_quantity, origin, status, is_launch, is_featured, whatsapp_message, display_start_at, display_end_at, sort_order } = body;
+  return {
+    name, sku, slug: slugify(slug || sku), description_short, description,
+    category_id: category_id || null, brand_id: brand_id || null, collection_id: collection_id || null,
+    material, color, capacity, measures, weight, pieces_quantity, box_quantity, origin,
+    status: status || 'active', is_launch: is_launch || 'no', is_featured: is_featured || 'no',
+    whatsapp_message: toNullable(whatsapp_message),
+    display_start_at: toNullable(display_start_at),
+    display_end_at: toNullable(display_end_at),
+    sort_order: parseInt(sort_order, 10) || 0
+  };
+}
+
 router.post('/products', requireAuth, productUploads, ah(async (req, res) => {
-  const { name, sku, slug, description_short, description, category_id, brand_id, collection_id, material, color, capacity, measures, weight, pieces_quantity, box_quantity, origin, status, is_launch, is_featured } = req.body;
-  const finalSlug = slugify(slug || sku);
+  const data = buildProductData(req.body);
 
   const renderNewError = async (error) => {
     const [categories, brands, collections] = await Promise.all([
       db.listCategories({ status: 'active' }), db.listBrands({ status: 'active' }), db.listCollections({ status: 'active' })
     ]);
-    return res.status(400).render('admin/product-form', { title: 'Novo Produto', categories, brands, collections, product: null, user: req.session.user, error });
+    return res.status(400).render('admin/product-form', { title: 'Novo Produto', active: 'products', categories, brands, collections, product: null, user: req.session.user, error });
   };
 
-  if (await db.isSkuTaken(sku)) return renderNewError(`SKU "${sku}" já está em uso por outro produto.`);
-  if (await db.isSlugTaken(finalSlug)) return renderNewError(`Slug "${finalSlug}" já está em uso por outro produto.`);
+  if (await db.isSkuTaken(data.sku)) return renderNewError(`SKU "${data.sku}" já está em uso por outro produto.`);
+  if (await db.isSlugTaken(data.slug)) return renderNewError(`Slug "${data.slug}" já está em uso por outro produto.`);
 
   const mainImageFile = req.files && req.files.main_image_file && req.files.main_image_file[0];
-  const mainImageUrl = mainImageFile ? await uploadToStorage(mainImageFile) : null;
+  data.main_image = mainImageFile ? await uploadToStorage(mainImageFile, 'products/images') : null;
 
-  const product = await db.createProduct({
-    name, sku, slug: finalSlug, description_short, description,
-    category_id: category_id || null, brand_id: brand_id || null, collection_id: collection_id || null,
-    material, color, capacity, measures, weight, pieces_quantity, box_quantity, origin,
-    status: status || 'active', is_launch: is_launch || 'no', is_featured: is_featured || 'no',
-    main_image: mainImageUrl
-  });
+  const product = await db.createProduct(data);
 
   const galleryFiles = (req.files && req.files.gallery_files) || [];
   let i = 0;
   for (const file of galleryFiles) {
-    const url = await uploadToStorage(file);
+    const url = await uploadToStorage(file, 'products/images');
     await db.create('product_images', { product_id: product.id, url, sort_order: i });
     i += 1;
   }
 
-  // createAuditLog should not fail when no user is in session (preview mode)
-  await db.createAuditLog({ user_id: req.session.user?.id || null, user_name: req.session.user?.name || 'preview', action: 'create', entity: 'product', entity_id: product.id, details: `Criou produto ${name}` });
+  const videoFile = req.files && req.files.video_file && req.files.video_file[0];
+  if (videoFile) {
+    const url = await uploadToStorage(videoFile, 'products/videos');
+    await db.create('product_videos', { product_id: product.id, url, sort_order: 0 });
+  } else if (req.body.video_url) {
+    await db.create('product_videos', { product_id: product.id, url: req.body.video_url, sort_order: 0 });
+  }
+
+  const documentFile = req.files && req.files.document_file && req.files.document_file[0];
+  if (documentFile) {
+    const url = await uploadToStorage(documentFile, 'products/documents');
+    await db.create('product_documents', { product_id: product.id, url, name: req.body.document_name || documentFile.originalname, doc_type: req.body.document_type || 'documento' });
+  }
+
+  await logAction(req, 'create', 'product', product.id, `Criou produto ${data.name}`);
   res.redirect('/admin/products');
 }));
 
 router.get('/products/:id/edit', requireAuth, ah(async (req, res) => {
   const product = await db.getProductById(req.params.id);
   if (!product) return res.redirect('/admin/products');
-  const [categories, brands, collections, images] = await Promise.all([
+  const [categories, brands, collections, images, videos, documents] = await Promise.all([
     db.listCategories({ status: 'active' }),
     db.listBrands({ status: 'active' }),
     db.listCollections({ status: 'active' }),
-    db.getProductImages(product.id)
+    db.getProductImages(product.id),
+    db.getProductVideos(product.id),
+    db.getProductDocuments(product.id)
   ]);
-  res.render('admin/product-form', { title: 'Editar Produto', product, categories, brands, collections, images, user: req.session.user });
+  res.render('admin/product-form', { title: 'Editar Produto', active: 'products', product, categories, brands, collections, images, videos, documents, user: req.session.user });
 }));
 
 router.post('/products/:id', requireAuth, productUploads, ah(async (req, res) => {
-  const { name, sku, slug, description_short, description, category_id, brand_id, collection_id, material, color, capacity, measures, weight, pieces_quantity, box_quantity, origin, status, is_launch, is_featured } = req.body;
   const current = await db.getProductById(req.params.id);
   if (!current) return res.redirect('/admin/products');
-  const finalSlug = slugify(slug || sku);
+  const data = buildProductData(req.body);
 
   const renderEditError = async (error) => {
-    const [categories, brands, collections, images] = await Promise.all([
-      db.listCategories({ status: 'active' }), db.listBrands({ status: 'active' }), db.listCollections({ status: 'active' }), db.getProductImages(current.id)
+    const [categories, brands, collections, images, videos, documents] = await Promise.all([
+      db.listCategories({ status: 'active' }), db.listBrands({ status: 'active' }), db.listCollections({ status: 'active' }),
+      db.getProductImages(current.id), db.getProductVideos(current.id), db.getProductDocuments(current.id)
     ]);
-    return res.status(400).render('admin/product-form', { title: 'Editar Produto', product: current, categories, brands, collections, images, user: req.session.user, error });
+    return res.status(400).render('admin/product-form', { title: 'Editar Produto', active: 'products', product: current, categories, brands, collections, images, videos, documents, user: req.session.user, error });
   };
 
-  if (await db.isSkuTaken(sku, current.id)) return renderEditError(`SKU "${sku}" já está em uso por outro produto.`);
-  if (await db.isSlugTaken(finalSlug, current.id)) return renderEditError(`Slug "${finalSlug}" já está em uso por outro produto — a URL/QR Code de outro produto ficaria ambígua.`);
+  if (await db.isSkuTaken(data.sku, current.id)) return renderEditError(`SKU "${data.sku}" já está em uso por outro produto.`);
+  if (await db.isSlugTaken(data.slug, current.id)) return renderEditError(`Slug "${data.slug}" já está em uso por outro produto — a URL/QR Code de outro produto ficaria ambígua.`);
 
   const mainImageFile = req.files && req.files.main_image_file && req.files.main_image_file[0];
-  const data = {
-    name, sku, slug: finalSlug, description_short, description,
-    category_id: category_id || null, brand_id: brand_id || null, collection_id: collection_id || null,
-    material, color, capacity, measures, weight, pieces_quantity, box_quantity, origin,
-    status: status || 'active', is_launch: is_launch || 'no', is_featured: is_featured || 'no'
-  };
   if (mainImageFile) {
-    const newUrl = await uploadToStorage(mainImageFile);
+    const newUrl = await uploadToStorage(mainImageFile, 'products/images');
     if (current.main_image) await removeFromStorage(current.main_image);
     data.main_image = newUrl;
   }
@@ -159,11 +229,53 @@ router.post('/products/:id', requireAuth, productUploads, ah(async (req, res) =>
   const existingCount = (await db.getProductImages(req.params.id)).length;
   let i = 0;
   for (const file of galleryFiles) {
-    const url = await uploadToStorage(file);
+    const url = await uploadToStorage(file, 'products/images');
     await db.create('product_images', { product_id: Number(req.params.id), url, sort_order: existingCount + i });
     i += 1;
   }
+
+  const videoFile = req.files && req.files.video_file && req.files.video_file[0];
+  if (videoFile) {
+    const url = await uploadToStorage(videoFile, 'products/videos');
+    await db.create('product_videos', { product_id: current.id, url, sort_order: 0 });
+  } else if (req.body.video_url) {
+    await db.create('product_videos', { product_id: current.id, url: req.body.video_url, sort_order: 0 });
+  }
+
+  const documentFile = req.files && req.files.document_file && req.files.document_file[0];
+  if (documentFile) {
+    const url = await uploadToStorage(documentFile, 'products/documents');
+    await db.create('product_documents', { product_id: current.id, url, name: req.body.document_name || documentFile.originalname, doc_type: req.body.document_type || 'documento' });
+  }
+
+  await logAction(req, 'update', 'product', current.id, `Editou produto ${data.name}`);
   res.redirect('/admin/products/' + req.params.id + '/edit');
+}));
+
+router.post('/products/:id/duplicate', requireAuth, ah(async (req, res) => {
+  const original = await db.getProductById(req.params.id);
+  if (!original) return res.redirect('/admin/products');
+  const suffix = Date.now().toString().slice(-5);
+  const newSku = `${original.sku}-COPIA-${suffix}`;
+  const newSlug = slugify(`${original.slug}-copia-${suffix}`);
+  const copy = { ...original };
+  delete copy.id; delete copy.created_at; delete copy.updated_at;
+  copy.sku = newSku;
+  copy.slug = newSlug;
+  copy.name = `${original.name} (cópia)`;
+  copy.status = 'inactive';
+  copy.view_count = 0;
+  copy.last_qr_test_status = null;
+  copy.last_qr_test_at = null;
+  const created = await db.createProduct(copy);
+
+  const images = await db.getProductImages(original.id);
+  for (const img of images) {
+    await db.create('product_images', { product_id: created.id, url: img.url, sort_order: img.sort_order });
+  }
+
+  await logAction(req, 'duplicate', 'product', created.id, `Duplicou produto ${original.name} (origem #${original.id})`);
+  res.redirect('/admin/products/' + created.id + '/edit');
 }));
 
 router.post('/products/:id/images/:imageId/delete', requireAuth, ah(async (req, res) => {
@@ -173,15 +285,36 @@ router.post('/products/:id/images/:imageId/delete', requireAuth, ah(async (req, 
   res.redirect('/admin/products/' + req.params.id + '/edit');
 }));
 
+router.post('/products/:id/images/:imageId/move', requireAuth, ah(async (req, res) => {
+  await db.reorderProductImage(req.params.imageId, req.body.direction === 'up' ? 'up' : 'down');
+  res.redirect('/admin/products/' + req.params.id + '/edit');
+}));
+
+router.post('/products/:id/videos/:videoId/delete', requireAuth, ah(async (req, res) => {
+  const video = await db.findOne('product_videos', { id: Number(req.params.videoId) });
+  if (video) await removeFromStorage(video.url);
+  await db.remove('product_videos', req.params.videoId);
+  res.redirect('/admin/products/' + req.params.id + '/edit');
+}));
+
+router.post('/products/:id/documents/:documentId/delete', requireAuth, ah(async (req, res) => {
+  const document = await db.findOne('product_documents', { id: Number(req.params.documentId) });
+  if (document) await removeFromStorage(document.url);
+  await db.remove('product_documents', req.params.documentId);
+  res.redirect('/admin/products/' + req.params.id + '/edit');
+}));
+
 router.post('/products/:id/delete', requireAuth, ah(async (req, res) => {
   const product = await db.getProductById(req.params.id);
   if (product) {
     if (product.main_image) await removeFromStorage(product.main_image);
-    const images = await db.getProductImages(product.id);
-    for (const img of images) {
-      await removeFromStorage(img.url);
-      await db.remove('product_images', img.id);
-    }
+    const [images, videos, documents] = await Promise.all([
+      db.getProductImages(product.id), db.getProductVideos(product.id), db.getProductDocuments(product.id)
+    ]);
+    for (const img of images) { await removeFromStorage(img.url); await db.remove('product_images', img.id); }
+    for (const vid of videos) { await removeFromStorage(vid.url); await db.remove('product_videos', vid.id); }
+    for (const doc of documents) { await removeFromStorage(doc.url); await db.remove('product_documents', doc.id); }
+    await logAction(req, 'delete', 'product', product.id, `Excluiu produto ${product.name}`);
   }
   await db.deleteProduct(req.params.id);
   res.redirect('/admin/products');
@@ -189,46 +322,123 @@ router.post('/products/:id/delete', requireAuth, ah(async (req, res) => {
 
 router.get('/categories', requireAuth, ah(async (req, res) => {
   const categories = await db.listCategories();
-  res.render('admin/categories', { title: 'Categorias', categories, user: req.session.user });
+  const withCounts = await Promise.all(categories.map(async cat => ({ ...cat, product_count: await db.countProductsByCategory(cat.id) })));
+  res.render('admin/categories', { title: 'Categorias', active: 'categories', categories: withCounts, user: req.session.user });
 }));
 
-router.post('/categories', requireAuth, ah(async (req, res) => {
+router.post('/categories', requireAuth, upload.single('image'), ah(async (req, res) => {
   const { name, slug, description, status } = req.body;
-  await db.createCategory({ name, slug: slugify(slug || name), description, status: status || 'active' });
+  const image = req.file ? await uploadToStorage(req.file, 'categories') : null;
+  const category = await db.createCategory({ name, slug: slugify(slug || name), description, status: status || 'active', image });
+  await logAction(req, 'create', 'category', category.id, `Criou categoria ${name}`);
   res.redirect('/admin/categories');
 }));
 
-router.post('/categories/:id', requireAuth, ah(async (req, res) => {
+router.post('/categories/:id', requireAuth, upload.single('image'), ah(async (req, res) => {
   const { name, slug, description, status } = req.body;
-  await db.updateCategory(req.params.id, { name, slug: slugify(slug || name), description, status: status || 'active' });
+  const data = { name, slug: slugify(slug || name), description, status: status || 'active' };
+  if (req.file) {
+    const current = await db.findOne('categories', { id: Number(req.params.id) });
+    data.image = await uploadToStorage(req.file, 'categories');
+    if (current && current.image) await removeFromStorage(current.image);
+  }
+  await db.updateCategory(req.params.id, data);
+  await logAction(req, 'update', 'category', Number(req.params.id), `Editou categoria ${name}`);
   res.redirect('/admin/categories');
 }));
 
 router.post('/categories/:id/delete', requireAuth, ah(async (req, res) => {
+  const productCount = await db.countProductsByCategory(req.params.id);
+  if (productCount > 0 && req.body.confirmed !== '1') {
+    const categories = await db.listCategories();
+    const withCounts = await Promise.all(categories.map(async cat => ({ ...cat, product_count: await db.countProductsByCategory(cat.id) })));
+    return res.status(400).render('admin/categories', {
+      title: 'Categorias', active: 'categories', categories: withCounts, user: req.session.user,
+      error: `Esta categoria tem ${productCount} produto(s) vinculado(s). Mova os produtos para outra categoria antes de excluir, ou confirme a exclusão mesmo assim (os produtos ficarão sem categoria).`
+    });
+  }
+  const category = await db.findOne('categories', { id: Number(req.params.id) });
+  if (category && category.image) await removeFromStorage(category.image);
   await db.deleteCategory(req.params.id);
+  await logAction(req, 'delete', 'category', Number(req.params.id), `Excluiu categoria (${productCount} produtos afetados)`);
   res.redirect('/admin/categories');
 }));
 
 router.get('/brands', requireAuth, ah(async (req, res) => {
   const brands = await db.listBrands();
-  res.render('admin/brands', { title: 'Marcas', brands, user: req.session.user });
+  const withCounts = await Promise.all(brands.map(async brand => ({ ...brand, product_count: await db.countProductsByBrand(brand.id) })));
+  res.render('admin/brands', { title: 'Marcas', active: 'brands', brands: withCounts, user: req.session.user });
 }));
 
-router.post('/brands', requireAuth, ah(async (req, res) => {
-  const { name, slug, description, status } = req.body;
-  await db.createBrand({ name, slug: slugify(slug || name), description, status: status || 'active' });
+router.post('/brands', requireAuth, upload.single('logo'), ah(async (req, res) => {
+  const { name, slug, description, status, website } = req.body;
+  const logo = req.file ? await uploadToStorage(req.file, 'brands') : null;
+  const brand = await db.createBrand({ name, slug: slugify(slug || name), description, status: status || 'active', website: toNullable(website), logo });
+  await logAction(req, 'create', 'brand', brand.id, `Criou marca ${name}`);
   res.redirect('/admin/brands');
 }));
 
-router.post('/brands/:id', requireAuth, ah(async (req, res) => {
-  const { name, slug, description, status } = req.body;
-  await db.updateBrand(req.params.id, { name, slug: slugify(slug || name), description, status: status || 'active' });
+router.post('/brands/:id', requireAuth, upload.single('logo'), ah(async (req, res) => {
+  const { name, slug, description, status, website } = req.body;
+  const data = { name, slug: slugify(slug || name), description, status: status || 'active', website: toNullable(website) };
+  if (req.file) {
+    const current = await db.findOne('brands', { id: Number(req.params.id) });
+    data.logo = await uploadToStorage(req.file, 'brands');
+    if (current && current.logo) await removeFromStorage(current.logo);
+  }
+  await db.updateBrand(req.params.id, data);
+  await logAction(req, 'update', 'brand', Number(req.params.id), `Editou marca ${name}`);
   res.redirect('/admin/brands');
 }));
 
 router.post('/brands/:id/delete', requireAuth, ah(async (req, res) => {
+  const productCount = await db.countProductsByBrand(req.params.id);
+  if (productCount > 0 && req.body.confirmed !== '1') {
+    const brands = await db.listBrands();
+    const withCounts = await Promise.all(brands.map(async brand => ({ ...brand, product_count: await db.countProductsByBrand(brand.id) })));
+    return res.status(400).render('admin/brands', {
+      title: 'Marcas', active: 'brands', brands: withCounts, user: req.session.user,
+      error: `Esta marca tem ${productCount} produto(s) vinculado(s). Mova os produtos para outra marca antes de excluir, ou confirme a exclusão mesmo assim (os produtos ficarão sem marca).`
+    });
+  }
+  const brand = await db.findOne('brands', { id: Number(req.params.id) });
+  if (brand && brand.logo) await removeFromStorage(brand.logo);
   await db.deleteBrand(req.params.id);
+  await logAction(req, 'delete', 'brand', Number(req.params.id), `Excluiu marca (${productCount} produtos afetados)`);
   res.redirect('/admin/brands');
+}));
+
+const SETTINGS_LABELS = {
+  site_title: 'Título do site',
+  site_url: 'URL institucional',
+  catalog_url: 'Domínio público do catálogo (usado nos QR Codes)',
+  whatsapp: 'WhatsApp',
+  phone: 'Telefone',
+  email: 'E-mail de contato',
+  instagram_url: 'Link do Instagram',
+  facebook_url: 'Link do Facebook',
+  institutional_years: 'Anos de tradição (número exibido no site)',
+  hero_fallback_title: 'Título do Hero (quando não há produto em destaque)',
+  hero_fallback_subtitle: 'Subtítulo do Hero (quando não há produto em destaque)'
+};
+
+router.get('/settings', requireAuth, ah(async (req, res) => {
+  const map = await db.getSettingsMap();
+  const rows = Object.keys(SETTINGS_LABELS).map(key => ({ key, label: SETTINGS_LABELS[key], value: map[key] || '' }));
+  res.render('admin/settings', { title: 'Configurações do site', active: 'settings', rows, user: req.session.user });
+}));
+
+router.post('/settings', requireAuth, ah(async (req, res) => {
+  for (const key of Object.keys(SETTINGS_LABELS)) {
+    if (req.body[key] !== undefined) await db.upsertSetting(key, req.body[key]);
+  }
+  await logAction(req, 'update', 'settings', null, 'Atualizou configurações do site');
+  res.redirect('/admin/settings');
+}));
+
+router.get('/logs', requireAuth, ah(async (req, res) => {
+  const logs = await db.list('audit_logs', {}, [{ field: 'id', direction: 'desc' }], 200);
+  res.render('admin/logs', { title: 'Histórico de ações', active: 'logs', logs, user: req.session.user });
 }));
 
 router.get('/qr-codes', requireAuth, ah(async (req, res) => {
@@ -239,7 +449,7 @@ router.get('/qr-codes', requireAuth, ah(async (req, res) => {
     publicUrl: `${baseUrl}/produto/${product.slug}`,
     qrFile: `QR-${product.sku}.png`
   }));
-  res.render('admin/qr-codes', { title: 'QR Codes', products: rows, baseUrl, usesLocalhost: baseUrl.includes('localhost'), user: req.session.user });
+  res.render('admin/qr-codes', { title: 'QR Codes', active: 'qr-codes', products: rows, baseUrl, usesLocalhost: baseUrl.includes('localhost'), user: req.session.user });
 }));
 
 router.get('/qr-codes/export.csv', requireAuth, ah(async (req, res) => {
@@ -249,7 +459,7 @@ router.get('/qr-codes/export.csv', requireAuth, ah(async (req, res) => {
     db.listCategories()
   ]);
   const escapeCsv = (value) => `"${String(value == null ? '' : value).replace(/"/g, '""')}"`;
-  const header = ['SKU', 'Nome', 'Categoria', 'URL pública', 'Arquivo QR Code', 'Status'];
+  const header = ['SKU', 'Nome', 'Categoria', 'URL pública', 'Arquivo QR Code', 'Status', 'Último teste'];
   const lines = [header.join(',')];
   for (const product of products) {
     const category = categories.find(c => c.id === product.category_id);
@@ -261,7 +471,8 @@ router.get('/qr-codes/export.csv', requireAuth, ah(async (req, res) => {
       escapeCsv(category ? category.name : ''),
       escapeCsv(`${baseUrl}/produto/${product.slug}`),
       escapeCsv(`QR-${product.sku}.png`),
-      escapeCsv(isValid ? 'valido' : 'revisar')
+      escapeCsv(isValid ? 'valido' : 'revisar'),
+      escapeCsv(product.last_qr_test_at || '')
     ].join(','));
   }
   res.set('Content-Type', 'text/csv; charset=utf-8');
@@ -277,23 +488,42 @@ router.get('/qr-codes/:sku/print', requireAuth, ah(async (req, res) => {
   res.render('admin/qr-print', { title: `Imprimir QR — ${product.sku}`, product, publicUrl });
 }));
 
-router.get('/qr-codes/:sku/testar', requireAuth, ah(async (req, res) => {
-  const product = await db.getProductBySku(req.params.sku);
-  if (!product) return res.status(404).json({ ok: false, error: 'SKU não encontrado' });
+async function evaluateQrTest(product) {
   const resolved = await db.getProductBySlug(product.slug);
   const baseUrl = await getPublicSiteUrl();
   const publicUrl = `${baseUrl}/produto/${product.slug}`;
-  const resolvedSameProduct = !!resolved && resolved.id === product.id;
   const usesLocalhost = publicUrl.includes('localhost');
-  res.json({
-    ok: resolvedSameProduct && !usesLocalhost && product.status === 'active',
-    sku: product.sku,
-    slug: product.slug,
-    status: product.status,
-    publicUrl,
-    usesLocalhost,
-    resolvedSameProduct
-  });
+  let testStatus;
+  if (usesLocalhost) testStatus = 'erro_dominio';
+  else if (!resolved) testStatus = 'pagina_inexistente';
+  else if (resolved.id !== product.id) testStatus = 'produto_incorreto';
+  else if (resolved.status !== 'active') testStatus = 'produto_inativo';
+  else testStatus = 'funcionando';
+  const testedAt = new Date().toISOString();
+  await db.updateProduct(product.id, { last_qr_test_status: testStatus, last_qr_test_at: testedAt });
+  return {
+    ok: testStatus === 'funcionando',
+    sku: product.sku, slug: product.slug, status: product.status,
+    publicUrl, usesLocalhost, resolvedSameProduct: !!resolved && resolved.id === product.id,
+    testStatus, testedAt
+  };
+}
+
+router.get('/qr-codes/:sku/testar', requireAuth, ah(async (req, res) => {
+  const product = await db.getProductBySku(req.params.sku);
+  if (!product) return res.status(404).json({ ok: false, error: 'SKU não encontrado' });
+  const result = await evaluateQrTest(product);
+  res.json(result);
+}));
+
+router.post('/qr-codes/testar-todos', requireAuth, ah(async (req, res) => {
+  const products = await db.listProducts({});
+  const results = [];
+  for (const product of products) {
+    results.push(await evaluateQrTest(product));
+  }
+  const summary = results.reduce((acc, r) => { acc[r.testStatus] = (acc[r.testStatus] || 0) + 1; return acc; }, {});
+  res.json({ total: results.length, summary, results });
 }));
 
 module.exports = router;

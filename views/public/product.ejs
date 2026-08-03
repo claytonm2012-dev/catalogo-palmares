@@ -40,7 +40,7 @@
             <h1><%= product.name %></h1>
             <p class="muted"><strong>SKU:</strong> <%= product.sku %> &bull; <strong>Categoria:</strong> <%= product.category_name %></p>
             <div style="display:flex;gap:14px;margin-top:18px;flex-wrap:wrap">
-              <a class="btn" href="https://api.whatsapp.com/send?phone=5535991710177&text=Quero%20mais%20informacoes%20sobre%20<%= encodeURIComponent(product.name) %>" target="_blank" rel="noopener">
+              <a class="btn" href="https://api.whatsapp.com/send?phone=<%= whatsappDigits %>&text=<%= encodeURIComponent(product.whatsapp_message || ('Quero mais informações sobre ' + product.name)) %>" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg>
                 WhatsApp
               </a>
@@ -87,6 +87,29 @@
           <% } %>
         </div>
       </section>
+
+      <% if ((videos && videos.length) || (documents && documents.length)) { %>
+        <section class="section">
+          <div class="section-head"><div><span class="section-kicker">Recursos</span><h2>Vídeo e documentos</h2></div></div>
+          <div style="display:flex;flex-direction:column;gap:24px">
+            <% if (videos && videos.length) { videos.forEach(function(video){ %>
+              <div style="max-width:720px;background:var(--card);border-radius:var(--radius-card);box-shadow:var(--shadow-card-light);border:1px solid rgba(6,32,59,0.06);padding:16px">
+                <video controls style="width:100%;border-radius:12px;display:block" src="<%= video.url %>"></video>
+              </div>
+            <% }) } %>
+            <% if (documents && documents.length) { %>
+              <div style="display:flex;flex-wrap:wrap;gap:12px">
+                <% documents.forEach(function(doc){ %>
+                  <a class="btn ghost" href="<%= doc.url %>" target="_blank" rel="noopener" style="color:var(--navy-900);border-color:rgba(10,26,47,0.18)">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <%= doc.name || doc.doc_type || 'Documento' %>
+                  </a>
+                <% }) %>
+              </div>
+            <% } %>
+          </div>
+        </section>
+      <% } %>
 
       <section class="section">
         <div class="section-head"><div><span class="section-kicker">Você também pode gostar</span><h2>Produtos Relacionados</h2></div></div>

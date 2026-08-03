@@ -1,9 +1,10 @@
 -- Dados iniciais essenciais (nao inclui produtos — esses vem da migracao dos dados
 -- existentes em db/catalogo.json, feita pelo script scripts/migrate-to-supabase.js).
 
--- Usuario admin padrao. Senha: Palmares2026! (mesmo hash que ja estava em producao local).
+-- Usuario admin padrao. Senha real definida via ADMIN_DEFAULT_PASSWORD (.env, nao versionado) —
+-- este hash bcrypt é apenas o estado já aplicado em producao, a senha em si nao fica no repositorio.
 insert into users (name, email, password, role)
-values ('Administrador', 'admin@grupopalmares.com.br', '$2a$10$kVDhldCBc7EiCGLkn7beKeZvhRamnXJoZMqTKxY9OxzLheBWwE9Ue', 'admin')
+values ('Administrador', 'admin@grupopalmares.com', '$2a$10$67c8f.6rj08ysNdXtcea0eq12vjfOnGbWdwkbCZl/p5ya18tK.Fl.', 'admin')
 on conflict (email) do nothing;
 
 insert into settings (key, value) values

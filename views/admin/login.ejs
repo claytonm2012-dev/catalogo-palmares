@@ -6,33 +6,65 @@
     <title><%= title %></title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/admin-premium.css?v=1.0">
     <style>
-      body { font-family: 'Inter', sans-serif; background: #f7f4ef; margin: 0; color: #1f2937; }
-      .wrap { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
-      .card { width: min(100%, 420px); background: #fff; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); padding: 32px; }
-      h1 { margin-top: 0; font-size: 1.7rem; }
-      input { width: 100%; padding: 12px 14px; margin-bottom: 12px; border: 1px solid #d6d3d1; border-radius: 10px; }
-      button { width: 100%; background: #8b5e34; color: white; border: none; padding: 13px; border-radius: 10px; font-weight: 700; cursor: pointer; }
-      .error { color: #b91c1c; margin-bottom: 12px; }
+      .admin-login-form input[type="email"], .admin-login-form input[type="password"], .admin-login-form input[type="text"] {
+        width: 100%; padding: 12px 14px; margin-bottom: 14px; border: 1px solid rgba(6,32,59,0.14); border-radius: 10px;
+        font-family: inherit; font-size: 14.5px; color: #1b2430; transition: border-color .18s ease, box-shadow .18s ease;
+      }
+      .admin-login-form input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,106,0.16); }
+      .admin-login-form .password-row { position: relative; }
+      .admin-login-form .password-row input { padding-right: 64px; margin-bottom: 0; }
+      .admin-login-form .password-toggle {
+        position: absolute; top: 0; bottom: 0; right: 0; width: 56px;
+        display: flex; align-items: center; justify-content: center;
+        background: none; border: none; color: var(--muted); font-size: 12.5px; font-weight: 700;
+        cursor: pointer; padding: 0;
+      }
+      .admin-login-form .password-toggle:hover { color: var(--navy-900); }
+      .admin-login-form button[type="submit"] { width: 100%; margin-top: 18px; justify-content: center; }
+      .admin-error { color: #b23b3b; background: #fdecea; border: 1px solid #f3c2bd; padding: 10px 14px; border-radius: 10px; margin-bottom: 16px; font-size: 14px; font-weight: 600; }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <div class="card">
-        <h1>Login administrativo</h1>
+    <div class="admin-login-wrap">
+      <div class="admin-login-card">
+        <div class="admin-login-brand">
+          <div class="admin-brand-mark" style="color:#1a1305">GP</div>
+          <div>
+            <h1>Login administrativo</h1>
+            <p style="margin:2px 0 0;color:var(--muted);font-size:13px">Grupo Palmares — painel</p>
+          </div>
+        </div>
         <% if (typeof error !== 'undefined' && error) { %>
-          <div class="error"><%= error %></div>
+          <div class="admin-error"><%= error %></div>
         <% } %>
-        <form method="post" action="/admin/login">
+        <form class="admin-login-form" method="post" action="/admin/login">
           <input name="email" type="email" placeholder="E-mail" required />
-          <input name="password" type="password" placeholder="Senha" required />
-          <button type="submit">Entrar</button>
+          <div class="password-row">
+            <input id="passwordInput" name="password" type="password" placeholder="Senha" required />
+            <button type="button" class="password-toggle" id="togglePassword" aria-label="Mostrar senha">Ver</button>
+          </div>
+          <button class="btn" type="submit">Entrar</button>
         </form>
-        <p style="text-align:center;margin:16px 0 0">
-          <a href="/" style="color:#8b5e34;font-weight:600;text-decoration:none">&larr; Voltar ao catálogo</a>
+        <p style="text-align:center;margin:18px 0 0">
+          <a href="/" style="color:var(--gold);font-weight:600;text-decoration:none;font-size:14px">&larr; Voltar ao catálogo</a>
         </p>
       </div>
     </div>
+    <script>
+      (function () {
+        var input = document.getElementById('passwordInput');
+        var toggle = document.getElementById('togglePassword');
+        toggle.addEventListener('click', function () {
+          var isHidden = input.getAttribute('type') === 'password';
+          input.setAttribute('type', isHidden ? 'text' : 'password');
+          toggle.textContent = isHidden ? 'Ocultar' : 'Ver';
+          toggle.setAttribute('aria-label', isHidden ? 'Ocultar senha' : 'Mostrar senha');
+        });
+      })();
+    </script>
   </body>
 </html>

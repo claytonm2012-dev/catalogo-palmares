@@ -4,8 +4,11 @@ const app = require('../app');
 const db = require('../db/database');
 const request = require('supertest');
 
-const ADMIN_EMAIL = 'admin@grupopalmares.com.br';
-const ADMIN_PASSWORD = 'Palmares2026!';
+const ADMIN_EMAIL = process.env.ADMIN_DEFAULT_EMAIL;
+const ADMIN_PASSWORD = process.env.ADMIN_DEFAULT_PASSWORD;
+if (!ADMIN_EMAIL || !ADMIN_PASSWORD) {
+  throw new Error('Defina ADMIN_DEFAULT_EMAIL e ADMIN_DEFAULT_PASSWORD no .env para rodar os testes administrativos');
+}
 
 async function loginAgent() {
   const agent = request.agent(app);
@@ -248,9 +251,11 @@ test('Upload de imagem: cadastrar produto com foto principal envia para o Supaba
     assert.match(product.main_image, /supabase\.co\/storage\/v1\/object\/public\/product-images\//);
 
     const objectPath = product.main_image.split('/product-images/')[1];
-    const { data: listing, error: listError } = await db.supabase.storage.from('product-images').list('', { search: objectPath });
+    const folder = objectPath.substring(0, objectPath.lastIndexOf('/'));
+    const filename = objectPath.substring(objectPath.lastIndexOf('/') + 1);
+    const { data: listing, error: listError } = await db.supabase.storage.from('product-images').list(folder, { search: filename });
     assert.equal(listError, null);
-    assert.ok(listing.some(f => f.name === objectPath), 'arquivo deveria existir no bucket product-images');
+    assert.ok(listing.some(f => f.name === filename), 'arquivo deveria existir no bucket product-images');
   } finally {
     const product = await db.getProductBySku('AUD-UP001');
     if (product && product.main_image) {

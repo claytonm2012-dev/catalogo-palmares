@@ -1,0 +1,96 @@
+/* ===========================================================
+   Grupo Palmares — Admin panel, same premium language as the
+   public site (see premium.css for the shared design tokens).
+   =========================================================== */
+
+body{background:var(--bg)}
+
+.admin-shell{display:flex;min-height:100vh;align-items:stretch}
+
+/* ---------------- Sidebar ---------------- */
+.admin-sidebar{
+  width:264px;flex-shrink:0;padding:28px 18px;
+  background:linear-gradient(180deg,var(--navy-900),var(--navy-950));
+  color:#eaf1fb;display:flex;flex-direction:column;gap:22px;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.admin-brand{display:flex;align-items:center;gap:12px;padding:0 10px}
+.admin-brand-mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--gold-light),var(--gold));display:flex;align-items:center;justify-content:center;color:#1a1305;font-weight:800;font-size:15px;flex-shrink:0;box-shadow:0 10px 22px rgba(212,175,106,0.28)}
+.admin-brand-text h2{margin:0;font-size:15.5px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.admin-brand-text span{font-size:11.5px;color:var(--gold-light);font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+
+.admin-nav{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+.admin-nav-link{
+  display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:12px;
+  color:#c3d0e0;text-decoration:none;font-weight:600;font-size:14px;
+  border-left:3px solid transparent;transition:background .18s ease,color .18s ease,border-color .18s ease;
+}
+.admin-nav-link svg{width:18px;height:18px;flex-shrink:0;opacity:.85}
+.admin-nav-link:hover{background:rgba(234,241,251,0.06);color:#fff}
+.admin-nav-link.active{background:rgba(212,175,106,0.14);color:#fff;border-left-color:var(--gold)}
+.admin-nav-link.active svg{opacity:1;color:var(--gold-light)}
+.admin-nav-divider{height:1px;background:rgba(255,255,255,0.08);margin:8px 6px}
+.admin-nav-back{margin-top:auto}
+.admin-nav-back .admin-nav-link{color:#9fb0c4}
+
+/* ---------------- Content area ---------------- */
+.admin-content{flex:1;min-width:0;padding:36px 40px;max-width:1400px}
+.admin-page-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:26px}
+.admin-page-head h1{margin:0 0 4px;font-size:26px;color:var(--navy-900);letter-spacing:-.4px}
+.admin-page-head p{margin:0;color:var(--muted);font-size:14.5px}
+.admin-kicker{display:block;font-size:11px;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+
+/* ---------------- Cards ---------------- */
+.admin-card{background:var(--card);border-radius:var(--radius-card);box-shadow:var(--shadow-card-light);border:1px solid rgba(6,32,59,0.05);padding:24px}
+.admin-card + .admin-card{margin-top:20px}
+
+/* ---------------- Stat grid (dashboard) ---------------- */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(190px, 1fr));gap:16px;margin-top:4px}
+.stat-card{
+  background:var(--card);border-radius:var(--radius-card-inner);box-shadow:var(--shadow-card-light);
+  border:1px solid rgba(6,32,59,0.05);padding:20px;display:flex;flex-direction:column;gap:14px;
+  transition:transform .3s var(--ease-premium),box-shadow .3s var(--ease-premium);
+}
+.stat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-card-light-hover)}
+.stat-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, rgba(212,175,106,0.16), rgba(212,175,106,0.06));color:var(--gold)}
+.stat-icon svg{width:21px;height:21px}
+.stat-value{font-size:28px;font-weight:800;color:var(--navy-900);letter-spacing:-.5px;line-height:1}
+.stat-label{font-size:13px;color:var(--muted);font-weight:600}
+
+/* ---------------- Tables ---------------- */
+.admin-table-wrap{background:var(--card);border-radius:var(--radius-card);box-shadow:var(--shadow-card-light);border:1px solid rgba(6,32,59,0.05);overflow:hidden}
+table.admin-table{width:100%;border-collapse:collapse}
+table.admin-table thead th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;padding:14px 20px;border-bottom:1px solid rgba(6,32,59,0.06);background:rgba(6,32,59,0.02)}
+table.admin-table tbody td{padding:14px 20px;border-bottom:1px solid rgba(6,32,59,0.05);font-size:14.5px;color:#1b2430;vertical-align:middle}
+table.admin-table tbody tr:last-child td{border-bottom:none}
+table.admin-table tbody tr:hover{background:rgba(212,175,106,0.04)}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.status-pill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
+.status-pill.active{background:#e3f5e6;color:#1c7a34}
+.status-pill.inactive{background:#f1f2f4;color:#6b7b8a}
+
+/* ---------------- Small action buttons ---------------- */
+.btn-sm{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none;border:1px solid rgba(6,32,59,0.12);color:var(--navy-900);background:#fff;cursor:pointer;transition:background .18s ease,border-color .18s ease,color .18s ease}
+.btn-sm:hover{background:rgba(212,175,106,0.1);border-color:var(--gold)}
+.btn-sm.danger{color:#b23b3b;border-color:rgba(178,59,59,0.25)}
+.btn-sm.danger:hover{background:rgba(178,59,59,0.08);border-color:#b23b3b}
+.btn-sm svg{width:14px;height:14px}
+
+/* ---------------- Forms ---------------- */
+.admin-form label.field-label{display:block;font-size:12.5px;font-weight:700;color:var(--navy-900);margin:0 0 6px}
+.admin-form input, .admin-form textarea, .admin-form select{
+  width:100%;padding:11px 14px;margin-bottom:16px;border-radius:10px;border:1px solid rgba(6,32,59,0.14);
+  font-family:inherit;font-size:14.5px;color:#1b2430;background:#fff;transition:border-color .18s ease,box-shadow .18s ease;
+}
+.admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,106,0.16)}
+.admin-form textarea{min-height:96px;resize:vertical}
+.admin-form-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:0 16px}
+.admin-error-banner{background:#fdecea;color:#b23b3b;border:1px solid #f3c2bd;padding:12px 16px;border-radius:10px;margin-bottom:18px;font-size:14px;font-weight:600}
+.admin-hint{margin:-10px 0 16px;font-size:12.5px;color:var(--muted)}
+
+/* ---------------- Login (standalone) ---------------- */
+.admin-login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px;background:var(--bg)}
+.admin-login-card{width:min(100%, 420px);background:var(--card);border-radius:var(--radius-card);box-shadow:var(--shadow-card-light);padding:36px 32px}
+.admin-login-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.admin-login-brand .admin-brand-mark{box-shadow:0 10px 22px rgba(212,175,106,0.28)}
+.admin-login-card h1{margin:0;font-size:22px;color:var(--navy-900);letter-spacing:-.3px}

@@ -8,9 +8,9 @@
       <img src="/images/logo30-watermark.png" alt="Grupo Palmares" height="40" />
       <p class="muted">Distribuição de utilidades domésticas, eletrodomésticos e produtos industriais há décadas — agora também em catálogo digital.</p>
       <div class="footer-social" aria-label="Redes sociais">
-        <a href="#" aria-label="Instagram" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
-        <a href="#" aria-label="Facebook" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V12H8v3h2.5v6h3v-6H16l.5-3h-3v-1.5c0-.6.4-1.5 1.5-1.5z"/></svg></a>
-        <a href="https://api.whatsapp.com/send?phone=5535991710177" aria-label="WhatsApp" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg></a>
+        <a href="<%= (typeof settings !== 'undefined' && settings.instagram_url) || '#' %>" aria-label="Instagram" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="<%= (typeof settings !== 'undefined' && settings.facebook_url) || '#' %>" aria-label="Facebook" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9h3V6h-3c-2 0-3.5 1.5-3.5 3.5V12H8v3h2.5v6h3v-6H16l.5-3h-3v-1.5c0-.6.4-1.5 1.5-1.5z"/></svg></a>
+        <a href="https://api.whatsapp.com/send?phone=<%= whatsappDigits %>" aria-label="WhatsApp" class="social-btn"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg></a>
       </div>
     </div>
 
@@ -31,9 +31,9 @@
 
     <div class="footer-col footer-contact">
       <h4>Contato</h4>
-      <p class="muted">contato@grupopalmares.com.br</p>
-      <p class="muted">(35) 3529-0700</p>
-      <a class="btn footer-whatsapp" href="https://api.whatsapp.com/send?phone=5535991710177&text=Ol%C3%A1%2C%20quero%20conhecer%20o%20cat%C3%A1logo%20Grupo%20Palmares" target="_blank" rel="noopener">
+      <p class="muted"><%= (typeof settings !== 'undefined' && settings.email) || 'contato@grupopalmares.com.br' %></p>
+      <p class="muted"><%= (typeof settings !== 'undefined' && settings.phone) || '(35) 3529-0700' %></p>
+      <a class="btn footer-whatsapp" href="https://api.whatsapp.com/send?phone=<%= whatsappDigits %>&text=Ol%C3%A1%2C%20quero%20conhecer%20o%20cat%C3%A1logo%20Grupo%20Palmares" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.3-4A8 8 0 1 1 8 19l-4 1z"/></svg>
         Falar no WhatsApp
       </a>

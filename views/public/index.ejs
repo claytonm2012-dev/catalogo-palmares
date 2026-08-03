@@ -12,12 +12,13 @@
   ];
   var heroSlides = slideDefs.map(function(s){ return { tone: s.tone, title: s.title, subtitle: s.subtitle, product: findProductByCat(s.tone), category: catBySlug(s.tone) }; }).filter(function(s){ return s.product; });
   if (!heroSlides.length) {
-    heroSlides = [{ tone: 'diversos', title: 'Catálogo Virtual <span class="hl">Grupo Palmares</span>', subtitle: 'Explore nosso catálogo digital de utilidades domésticas e produtos industriais.', product: (pool[0] || null), category: { name: 'Catálogo', slug: 'diversos' } }];
+    heroSlides = [{ tone: 'diversos', title: (settings && settings.hero_fallback_title) || 'Catálogo Virtual <span class="hl">Grupo Palmares</span>', subtitle: (settings && settings.hero_fallback_subtitle) || 'Explore nosso catálogo digital de utilidades domésticas e produtos industriais.', product: (pool[0] || null), category: { name: 'Catálogo', slug: 'diversos' } }];
   }
+  var yearsValue = Number((settings && settings.institutional_years) || 30);
   var stats = [
     { value: totals.products, suffix: '+', label: 'Produtos no catálogo' },
     { value: totals.categories, suffix: '', label: 'Categorias especializadas' },
-    { value: 30, suffix: '+', label: 'Anos de tradição' },
+    { value: yearsValue, suffix: '+', label: 'Anos de tradição' },
     { value: 100, suffix: '%', label: 'Atendimento nacional' }
   ];
 %>
@@ -63,7 +64,7 @@
                 <div class="hero-stats hero-anim" style="--d:5">
                   <div><strong><%= totals.products %>+</strong><span>Produtos</span></div>
                   <div><strong><%= totals.categories %></strong><span>Categorias</span></div>
-                  <div><strong>30+</strong><span>Anos de tradição</span></div>
+                  <div><strong><%= yearsValue %>+</strong><span>Anos de tradição</span></div>
                 </div>
               </div>
 

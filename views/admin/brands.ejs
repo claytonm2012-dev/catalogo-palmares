@@ -4,56 +4,91 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%= title %></title>
-    <style>
-      body { font-family: Arial, sans-serif; margin: 0; background: #f8f6f2; color: #333; }
-      .shell { display: flex; min-height: 100vh; }
-      .sidebar { width: 260px; background: #1f2937; color: white; padding: 24px; }
-      .content { flex: 1; padding: 24px; }
-      form, .card { background: white; padding: 16px; border-radius: 12px; margin-bottom: 16px; }
-      input, textarea, select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; }
-      a { color: #8b5e34; text-decoration: none; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/admin-premium.css?v=1.0">
   </head>
   <body>
-    <div class="shell">
-      <aside class="sidebar">
-        <h2>Grupo Palmares</h2>
-        <p>Admin</p>
-        <ul>
-          <li><a href="/" style="color:white">&larr; Voltar ao catálogo</a></li>
-          <li><a href="/admin/dashboard" style="color:white">Dashboard</a></li>
-          <li><a href="/admin/products" style="color:white">Produtos</a></li>
-          <li><a href="/admin/categories" style="color:white">Categorias</a></li>
-          <li><a href="/admin/brands" style="color:white">Marcas</a></li>
-          <li><a href="/admin/qr-codes" style="color:white">QR Codes</a></li>
-          <li><a href="/admin/logout" style="color:white">Sair</a></li>
-        </ul>
-      </aside>
-      <main class="content">
-        <h1>Marcas</h1>
-        <form method="post" action="/admin/brands">
-          <input name="name" placeholder="Nome" required />
-          <input name="slug" placeholder="Slug" required />
-          <textarea name="description" placeholder="Descrição"></textarea>
-          <select name="status"><option value="active">Ativa</option><option value="inactive">Inativa</option></select>
-          <button type="submit">Salvar</button>
-        </form>
+    <div class="admin-shell">
+      <%- include('partials/sidebar', { active: active, user: user }) %>
+      <main class="admin-content">
+        <div class="admin-page-head">
+          <div>
+            <span class="admin-kicker">Catálogo</span>
+            <h1>Marcas</h1>
+            <p><%= brands.length %> marca<%= brands.length === 1 ? '' : 's' %></p>
+          </div>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="admin-error-banner"><%= error %></div>
+        <% } %>
+
+        <div class="admin-card admin-form">
+          <label class="field-label">Nova marca</label>
+          <form method="post" action="/admin/brands" enctype="multipart/form-data">
+            <div class="admin-form-grid">
+              <input name="name" placeholder="Nome" required />
+              <input name="slug" placeholder="Slug (opcional)" />
+              <input name="website" placeholder="Site (https://...)" />
+            </div>
+            <textarea name="description" placeholder="Descrição"></textarea>
+            <label class="field-label">Logotipo</label>
+            <input type="file" name="logo" accept="image/*" />
+            <div class="admin-form-grid" style="margin-top:10px">
+              <select name="status"><option value="active">Ativa</option><option value="inactive">Inativa</option></select>
+              <button class="btn" type="submit">Salvar</button>
+            </div>
+          </form>
+        </div>
+
         <% brands.forEach(function(brand){ %>
-          <div class="card">
-            <strong><%= brand.name %></strong> — <%= brand.slug %>
-            <form method="post" action="/admin/brands/<%= brand.id %>">
-              <input name="name" value="<%= brand.name %>" />
-              <input name="slug" value="<%= brand.slug %>" />
+          <div class="admin-card admin-form" style="margin-top:16px">
+            <div class="admin-actions" style="justify-content:space-between;margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:12px">
+                <% if (brand.logo) { %>
+                  <img src="<%= brand.logo %>" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:8px" />
+                <% } %>
+                <strong style="color:var(--navy-900)"><%= brand.name %></strong>
+                <span class="admin-hint" style="margin:0"><%= brand.product_count %> produto<%= brand.product_count === 1 ? '' : 's' %></span>
+              </div>
+              <span class="status-pill <%= brand.status %>"><%= brand.status === 'active' ? 'Ativa' : 'Inativa' %></span>
+            </div>
+            <form method="post" action="/admin/brands/<%= brand.id %>" enctype="multipart/form-data">
+              <div class="admin-form-grid">
+                <input name="name" value="<%= brand.name %>" placeholder="Nome" />
+                <input name="slug" value="<%= brand.slug %>" placeholder="Slug" />
+                <input name="website" value="<%= brand.website || '' %>" placeholder="Site" />
+              </div>
               <textarea name="description"><%= brand.description %></textarea>
-              <select name="status"><option value="active" <%= brand.status === 'active' ? 'selected' : '' %>>Ativa</option><option value="inactive" <%= brand.status === 'inactive' ? 'selected' : '' %>>Inativa</option></select>
-              <button type="submit">Atualizar</button>
+              <label class="field-label">Substituir logotipo</label>
+              <input type="file" name="logo" accept="image/*" />
+              <div class="admin-form-grid" style="margin-top:10px">
+                <select name="status"><option value="active" <%= brand.status === 'active' ? 'selected' : '' %>>Ativa</option><option value="inactive" <%= brand.status === 'inactive' ? 'selected' : '' %>>Inativa</option></select>
+                <button class="btn-sm" type="submit">Atualizar</button>
+              </div>
             </form>
-            <form method="post" action="/admin/brands/<%= brand.id %>/delete">
-              <button type="submit">Excluir</button>
+            <form method="post" action="/admin/brands/<%= brand.id %>/delete" class="delete-brand-form" data-count="<%= brand.product_count %>" style="margin-top:10px">
+              <input type="hidden" name="confirmed" value="0" />
+              <button type="submit" class="btn-sm danger">Excluir</button>
             </form>
           </div>
         <% }) %>
       </main>
     </div>
+    <script>
+      document.querySelectorAll('.delete-brand-form').forEach(function(form){
+        form.addEventListener('submit', function(e){
+          var count = parseInt(form.getAttribute('data-count'), 10) || 0;
+          if (count > 0) {
+            var ok = confirm('Esta marca tem ' + count + ' produto(s) vinculado(s). Eles ficarão sem marca. Deseja excluir mesmo assim?');
+            if (!ok) { e.preventDefault(); return; }
+            form.querySelector('input[name="confirmed"]').value = '1';
+          } else if (!confirm('Excluir esta marca?')) {
+            e.preventDefault();
+          }
+        });
+      });
+    </script>
   </body>
 </html>

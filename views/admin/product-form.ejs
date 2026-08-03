@@ -4,105 +4,185 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%= title %></title>
-    <style>
-      body { font-family: Arial, sans-serif; margin: 0; background: #f8f6f2; color: #333; }
-      .shell { display: flex; min-height: 100vh; }
-      .sidebar { width: 260px; background: #1f2937; color: white; padding: 24px; }
-      .content { flex: 1; padding: 24px; }
-      form { background: white; padding: 20px; border-radius: 12px; }
-      input, textarea, select { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; }
-      .btn { display: inline-block; padding: 10px 14px; border-radius: 8px; background: #8b5e34; color: white; border: none; cursor: pointer; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/premium.css?v=4.2">
+    <link rel="stylesheet" href="/css/admin-premium.css?v=1.0">
   </head>
   <body>
-    <div class="shell">
-      <aside class="sidebar">
-        <h2>Grupo Palmares</h2>
-        <p>Admin</p>
-        <ul>
-          <li><a href="/" style="color:white">&larr; Voltar ao catálogo</a></li>
-          <li><a href="/admin/dashboard" style="color:white">Dashboard</a></li>
-          <li><a href="/admin/products" style="color:white">Produtos</a></li>
-          <li><a href="/admin/categories" style="color:white">Categorias</a></li>
-          <li><a href="/admin/brands" style="color:white">Marcas</a></li>
-          <li><a href="/admin/qr-codes" style="color:white">QR Codes</a></li>
-          <li><a href="/admin/logout" style="color:white">Sair</a></li>
-        </ul>
-      </aside>
-      <main class="content">
-        <h1><%= title %></h1>
-        <% if (typeof error !== 'undefined' && error) { %>
-          <div style="background:#fdecea;color:#b23b3b;border:1px solid #f3c2bd;padding:12px 16px;border-radius:8px;margin-bottom:16px"><%= error %></div>
-        <% } %>
-        <form method="post" action="<%= product ? '/admin/products/' + product.id : '/admin/products' %>" enctype="multipart/form-data">
-          <label style="display:block;font-size:13px;font-weight:bold;margin-bottom:6px">Imagem principal</label>
-          <% if (product && product.main_image) { %>
-            <img src="<%= product.main_image %>" alt="Imagem atual" style="max-width:160px;border-radius:8px;margin-bottom:8px;display:block" />
-          <% } %>
-          <input type="file" name="main_image_file" accept="image/*" />
-          <p style="margin:-4px 0 12px;font-size:12px;color:#777">Envie uma imagem para <%= product && product.main_image ? 'substituir a atual' : 'definir a foto do produto' %> (PNG, JPG ou WEBP).</p>
-
-          <input name="name" placeholder="Nome" value="<%= product ? product.name : '' %>" required />
-          <input name="sku" placeholder="SKU" value="<%= product ? product.sku : '' %>" required />
-          <input name="slug" placeholder="Slug" value="<%= product ? product.slug : '' %>" />
-          <textarea name="description_short" placeholder="Descrição curta"><%= product ? product.description_short : '' %></textarea>
-          <textarea name="description" placeholder="Descrição completa"><%= product ? product.description : '' %></textarea>
-          <select name="category_id">
-            <option value="">Categoria</option>
-            <% categories.forEach(function(category){ %>
-              <option value="<%= category.id %>" <%= product && product.category_id == category.id ? 'selected' : '' %>><%= category.name %></option>
-            <% }) %>
-          </select>
-          <select name="brand_id">
-            <option value="">Marca</option>
-            <% brands.forEach(function(brand){ %>
-              <option value="<%= brand.id %>" <%= product && product.brand_id == brand.id ? 'selected' : '' %>><%= brand.name %></option>
-            <% }) %>
-          </select>
-          <select name="collection_id">
-            <option value="">Coleção</option>
-            <% collections.forEach(function(collection){ %>
-              <option value="<%= collection.id %>" <%= product && product.collection_id == collection.id ? 'selected' : '' %>><%= collection.name %></option>
-            <% }) %>
-          </select>
-          <input name="material" placeholder="Material" value="<%= product ? product.material : '' %>" />
-          <input name="color" placeholder="Cor" value="<%= product ? product.color : '' %>" />
-          <input name="capacity" placeholder="Capacidade" value="<%= product ? product.capacity : '' %>" />
-          <input name="measures" placeholder="Medidas" value="<%= product ? product.measures : '' %>" />
-          <input name="weight" placeholder="Peso" value="<%= product ? product.weight : '' %>" />
-          <input name="pieces_quantity" placeholder="Quantidade de peças" value="<%= product ? product.pieces_quantity : '' %>" />
-          <input name="box_quantity" placeholder="Quantidade por caixa" value="<%= product ? product.box_quantity : '' %>" />
-          <input name="origin" placeholder="Origem" value="<%= product ? product.origin : '' %>" />
-          <select name="status">
-            <option value="active" <%= product && product.status === 'active' ? 'selected' : '' %>>Ativo</option>
-            <option value="inactive" <%= product && product.status === 'inactive' ? 'selected' : '' %>>Inativo</option>
-          </select>
-          <select name="is_launch">
-            <option value="no" <%= product && product.is_launch === 'no' ? 'selected' : '' %>>Não é lançamento</option>
-            <option value="yes" <%= product && product.is_launch === 'yes' ? 'selected' : '' %>>Lançamento</option>
-          </select>
-          <select name="is_featured">
-            <option value="no" <%= product && product.is_featured === 'no' ? 'selected' : '' %>>Não destaque</option>
-            <option value="yes" <%= product && product.is_featured === 'yes' ? 'selected' : '' %>>Destaque</option>
-          </select>
+    <div class="admin-shell">
+      <%- include('partials/sidebar', { active: active, user: user }) %>
+      <main class="admin-content">
+        <div class="admin-page-head">
+          <div>
+            <span class="admin-kicker">Catálogo</span>
+            <h1><%= title %></h1>
+          </div>
           <% if (product) { %>
-            <label style="display:block;font-size:13px;font-weight:bold;margin-bottom:6px">Galeria (imagens adicionais)</label>
-            <input type="file" name="gallery_files" accept="image/*" multiple />
-            <p style="margin:-4px 0 12px;font-size:12px;color:#777">Você pode selecionar várias imagens de uma vez. Elas serão adicionadas à galeria ao salvar.</p>
+            <form method="post" action="/admin/products/<%= product.id %>/duplicate" onsubmit="return confirm('Duplicar este produto? Uma cópia inativa será criada com novo SKU/slug.')">
+              <button type="submit" class="btn-sm">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                Duplicar produto
+              </button>
+            </form>
           <% } %>
+        </div>
 
-          <button class="btn" type="submit">Salvar</button>
-        </form>
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="admin-error-banner"><%= error %></div>
+        <% } %>
+
+        <div class="admin-card admin-form">
+          <form method="post" id="productForm" action="<%= product ? '/admin/products/' + product.id : '/admin/products' %>" enctype="multipart/form-data">
+            <label class="field-label">Imagem principal</label>
+            <% if (product && product.main_image) { %>
+              <img src="<%= product.main_image %>" alt="Imagem atual" style="max-width:160px;border-radius:10px;margin-bottom:10px;display:block" />
+            <% } %>
+            <input type="file" name="main_image_file" accept="image/*" />
+            <p class="admin-hint">Envie uma imagem para <%= product && product.main_image ? 'substituir a atual' : 'definir a foto do produto' %> (PNG, JPG ou WEBP).</p>
+
+            <div class="admin-form-grid">
+              <input name="name" placeholder="Nome" value="<%= product ? product.name : '' %>" required />
+              <input name="sku" placeholder="SKU" value="<%= product ? product.sku : '' %>" required />
+            </div>
+            <input name="slug" placeholder="Slug (opcional — gerado a partir do SKU se vazio)" value="<%= product ? product.slug : '' %>" />
+            <textarea name="description_short" placeholder="Descrição curta"><%= product ? product.description_short : '' %></textarea>
+            <textarea name="description" placeholder="Descrição completa"><%= product ? product.description : '' %></textarea>
+
+            <div class="admin-form-grid">
+              <select name="category_id">
+                <option value="">Categoria</option>
+                <% categories.forEach(function(category){ %>
+                  <option value="<%= category.id %>" <%= product && product.category_id == category.id ? 'selected' : '' %>><%= category.name %></option>
+                <% }) %>
+              </select>
+              <select name="brand_id">
+                <option value="">Marca</option>
+                <% brands.forEach(function(brand){ %>
+                  <option value="<%= brand.id %>" <%= product && product.brand_id == brand.id ? 'selected' : '' %>><%= brand.name %></option>
+                <% }) %>
+              </select>
+              <select name="collection_id">
+                <option value="">Coleção</option>
+                <% collections.forEach(function(collection){ %>
+                  <option value="<%= collection.id %>" <%= product && product.collection_id == collection.id ? 'selected' : '' %>><%= collection.name %></option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="admin-form-grid">
+              <input name="material" placeholder="Material" value="<%= product ? product.material : '' %>" />
+              <input name="color" placeholder="Cor" value="<%= product ? product.color : '' %>" />
+              <input name="capacity" placeholder="Capacidade" value="<%= product ? product.capacity : '' %>" />
+              <input name="measures" placeholder="Medidas" value="<%= product ? product.measures : '' %>" />
+              <input name="weight" placeholder="Peso" value="<%= product ? product.weight : '' %>" />
+              <input name="pieces_quantity" placeholder="Quantidade de peças" value="<%= product ? product.pieces_quantity : '' %>" />
+              <input name="box_quantity" placeholder="Quantidade por caixa" value="<%= product ? product.box_quantity : '' %>" />
+              <input name="origin" placeholder="Origem" value="<%= product ? product.origin : '' %>" />
+            </div>
+
+            <label class="field-label">Mensagem personalizada do botão WhatsApp (opcional)</label>
+            <input name="whatsapp_message" placeholder="Ex: Quero saber mais sobre este produto" value="<%= product ? (product.whatsapp_message || '') : '' %>" />
+
+            <div class="admin-form-grid">
+              <select name="status">
+                <option value="active" <%= product && product.status === 'active' ? 'selected' : '' %>>Ativo</option>
+                <option value="inactive" <%= product && product.status === 'inactive' ? 'selected' : '' %>>Inativo</option>
+              </select>
+              <select name="is_launch">
+                <option value="no" <%= product && product.is_launch === 'no' ? 'selected' : '' %>>Não é lançamento</option>
+                <option value="yes" <%= product && product.is_launch === 'yes' ? 'selected' : '' %>>Lançamento</option>
+              </select>
+              <select name="is_featured">
+                <option value="no" <%= product && product.is_featured === 'no' ? 'selected' : '' %>>Não destaque</option>
+                <option value="yes" <%= product && product.is_featured === 'yes' ? 'selected' : '' %>>Destaque</option>
+              </select>
+              <input name="sort_order" type="number" placeholder="Ordem de exibição" value="<%= product ? (product.sort_order || 0) : 0 %>" />
+            </div>
+
+            <label class="field-label">Período de exibição do destaque/lançamento (opcional)</label>
+            <div class="admin-form-grid">
+              <input name="display_start_at" type="date" value="<%= product && product.display_start_at ? product.display_start_at : '' %>" />
+              <input name="display_end_at" type="date" value="<%= product && product.display_end_at ? product.display_end_at : '' %>" />
+            </div>
+
+            <% if (product) { %>
+              <label class="field-label">Galeria (imagens adicionais)</label>
+              <input type="file" name="gallery_files" accept="image/*" multiple />
+              <p class="admin-hint">Você pode selecionar várias imagens de uma vez. Elas serão adicionadas à galeria ao salvar.</p>
+
+              <label class="field-label">Vídeo do produto (opcional)</label>
+              <div class="admin-form-grid">
+                <input type="file" name="video_file" accept="video/mp4,video/webm" />
+                <input name="video_url" placeholder="...ou cole a URL de um vídeo (MP4/WEBM)" />
+              </div>
+
+              <label class="field-label">Documento (ficha técnica, manual — opcional)</label>
+              <div class="admin-form-grid">
+                <input type="file" name="document_file" accept=".pdf,.xlsx,.csv" />
+                <input name="document_name" placeholder="Nome do documento (ex: Manual do produto)" />
+              </div>
+              <select name="document_type" style="max-width:260px">
+                <option value="manual">Manual</option>
+                <option value="ficha_tecnica">Ficha técnica</option>
+                <option value="documento">Outro documento</option>
+              </select>
+            <% } %>
+
+            <button class="btn" type="submit" id="productSubmit">Salvar</button>
+          </form>
+        </div>
 
         <% if (product && images && images.length) { %>
-          <div style="margin-top:20px;background:white;padding:20px;border-radius:12px">
-            <h3 style="margin-top:0">Imagens da galeria</h3>
-            <div style="display:flex;flex-wrap:wrap;gap:12px">
-              <% images.forEach(function(img){ %>
+          <div class="admin-card" style="margin-top:20px">
+            <label class="field-label">Imagens da galeria</label>
+            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px">
+              <% images.forEach(function(img, idx){ %>
                 <div style="text-align:center">
-                  <img src="<%= img.url %>" alt="Imagem da galeria" style="width:110px;height:110px;object-fit:cover;border-radius:8px;display:block;margin-bottom:6px" />
-                  <form method="post" action="/admin/products/<%= product.id %>/images/<%= img.id %>/delete" onsubmit="return confirm('Remover esta imagem?')">
-                    <button class="btn" type="submit" style="background:#b23b3b;padding:6px 10px;font-size:12px">Remover</button>
+                  <img src="<%= img.url %>" alt="Imagem da galeria" style="width:110px;height:110px;object-fit:cover;border-radius:10px;display:block;margin-bottom:8px" />
+                  <div class="admin-actions" style="justify-content:center">
+                    <form method="post" action="/admin/products/<%= product.id %>/images/<%= img.id %>/move">
+                      <input type="hidden" name="direction" value="up" />
+                      <button class="btn-sm" type="submit" <%= idx === 0 ? 'disabled' : '' %> aria-label="Mover para cima">&uarr;</button>
+                    </form>
+                    <form method="post" action="/admin/products/<%= product.id %>/images/<%= img.id %>/move">
+                      <input type="hidden" name="direction" value="down" />
+                      <button class="btn-sm" type="submit" <%= idx === images.length - 1 ? 'disabled' : '' %> aria-label="Mover para baixo">&darr;</button>
+                    </form>
+                    <form method="post" action="/admin/products/<%= product.id %>/images/<%= img.id %>/delete" onsubmit="return confirm('Remover esta imagem?')">
+                      <button class="btn-sm danger" type="submit" aria-label="Remover imagem">✕</button>
+                    </form>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+
+        <% if (product && videos && videos.length) { %>
+          <div class="admin-card" style="margin-top:20px">
+            <label class="field-label">Vídeos</label>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+              <% videos.forEach(function(video){ %>
+                <div class="admin-actions" style="justify-content:space-between">
+                  <span class="admin-hint" style="margin:0;word-break:break-all"><%= video.url %></span>
+                  <form method="post" action="/admin/products/<%= product.id %>/videos/<%= video.id %>/delete" onsubmit="return confirm('Remover este vídeo?')">
+                    <button class="btn-sm danger" type="submit">Remover</button>
+                  </form>
+                </div>
+              <% }) %>
+            </div>
+          </div>
+        <% } %>
+
+        <% if (product && documents && documents.length) { %>
+          <div class="admin-card" style="margin-top:20px">
+            <label class="field-label">Documentos</label>
+            <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+              <% documents.forEach(function(doc){ %>
+                <div class="admin-actions" style="justify-content:space-between">
+                  <a href="<%= doc.url %>" target="_blank" style="color:var(--gold);font-weight:600"><%= doc.name || doc.doc_type %></a>
+                  <form method="post" action="/admin/products/<%= product.id %>/documents/<%= doc.id %>/delete" onsubmit="return confirm('Remover este documento?')">
+                    <button class="btn-sm danger" type="submit">Remover</button>
                   </form>
                 </div>
               <% }) %>
@@ -111,5 +191,12 @@
         <% } %>
       </main>
     </div>
+    <script>
+      document.getElementById('productForm').addEventListener('submit', function () {
+        var btn = document.getElementById('productSubmit');
+        btn.disabled = true;
+        btn.textContent = 'Salvando...';
+      });
+    </script>
   </body>
 </html>

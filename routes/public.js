@@ -25,14 +25,23 @@ function qrToSvg(url, options) {
   });
 }
 
+function isWithinDisplayWindow(product) {
+  const today = new Date().toISOString().slice(0, 10);
+  if (product.display_start_at && product.display_start_at > today) return false;
+  if (product.display_end_at && product.display_end_at < today) return false;
+  return true;
+}
+
 router.get('/', ah(async (req, res) => {
   const activeCategories = await db.listCategories({ status: 'active' });
   const categories = await Promise.all(activeCategories.map(async cat => ({
     ...cat,
     product_count: (await db.listProducts({ status: 'active', category_id: cat.id })).length
   })));
-  const featured = await db.listProducts({ status: 'active', is_featured: 'yes' }, [{ field: 'id', direction: 'desc' }], 8);
-  const launches = await db.listProducts({ status: 'active', is_launch: 'yes' }, [{ field: 'id', direction: 'desc' }], 8);
+  const featuredAll = await db.listProducts({ status: 'active', is_featured: 'yes' }, [{ field: 'sort_order', direction: 'asc' }, { field: 'id', direction: 'desc' }]);
+  const launchesAll = await db.listProducts({ status: 'active', is_launch: 'yes' }, [{ field: 'sort_order', direction: 'asc' }, { field: 'id', direction: 'desc' }]);
+  const featured = featuredAll.filter(isWithinDisplayWindow).slice(0, 8);
+  const launches = launchesAll.filter(isWithinDisplayWindow).slice(0, 8);
   const allActive = await db.listProducts({ status: 'active' });
   res.render('public/index', {
     title: 'Catálogo Virtual Grupo Palmares',

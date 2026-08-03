@@ -23,6 +23,10 @@ app.use(session({
 app.use(async (req, res, next) => {
   try {
     await database.ready;
+    const settings = await database.getSettingsMap();
+    res.locals.settings = settings;
+    const digits = (settings.whatsapp || '').replace(/\D/g, '');
+    res.locals.whatsappDigits = digits ? (digits.startsWith('55') ? digits : `55${digits}`) : '5535991710177';
     next();
   } catch (err) {
     next(err);
