@@ -13,9 +13,14 @@ async function loginAgent() {
   return agent;
 }
 
-function cleanupProduct(sku) {
-  const product = db.getProductBySku(sku);
-  if (product) db.deleteProduct(product.id);
+async function cleanupProduct(sku) {
+  const product = await db.getProductBySku(sku);
+  if (product) await db.deleteProduct(product.id);
+}
+
+async function cleanupCategory(slug) {
+  const category = await db.findOne('categories', { slug });
+  if (category) await db.deleteCategory(category.id);
 }
 
 test('TESTE 1 e 2: cada produto novo (A e B) tem sua propria URL/QR e abre sua propria pagina', async () => {
@@ -37,8 +42,8 @@ test('TESTE 1 e 2: cada produto novo (A e B) tem sua propria URL/QR e abre sua p
     assert.match(pageA.text, /AUD-A001/);
     assert.match(pageB.text, /AUD-B001/);
   } finally {
-    cleanupProduct('AUD-A001');
-    cleanupProduct('AUD-B001');
+    await cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-B001');
   }
 });
 
@@ -56,8 +61,8 @@ test('TESTE 3: o QR Code do Produto A nunca abre o Produto B', async () => {
     assert.match(pageA.text, /<strong>SKU:<\/strong> AUD-A001/);
     assert.doesNotMatch(pageA.text, /<strong>SKU:<\/strong> AUD-B001/);
   } finally {
-    cleanupProduct('AUD-A001');
-    cleanupProduct('AUD-B001');
+    await cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-B001');
   }
 });
 
@@ -65,7 +70,7 @@ test('TESTE 4: editar descricao/imagens do Produto A preserva o mesmo slug/QR e 
   const agent = await loginAgent();
   try {
     await agent.post('/admin/products').type('form').send({ name: 'Produto Auditoria A', sku: 'AUD-A001', slug: '', status: 'active' });
-    const productBefore = db.getProductBySku('AUD-A001');
+    const productBefore = await db.getProductBySku('AUD-A001');
     const slugBefore = productBefore.slug;
 
     await agent.post(`/admin/products/${productBefore.id}`).type('form').send({
@@ -73,14 +78,14 @@ test('TESTE 4: editar descricao/imagens do Produto A preserva o mesmo slug/QR e 
       description: 'Descricao atualizada apos edicao', status: 'active'
     });
 
-    const productAfter = db.getProductBySku('AUD-A001');
+    const productAfter = await db.getProductBySku('AUD-A001');
     assert.equal(productAfter.slug, slugBefore, 'slug nao deveria mudar quando nao alterado explicitamente');
 
     const page = await request(app).get(`/produto/${slugBefore}`);
     assert.equal(page.status, 200);
     assert.match(page.text, /Descricao atualizada apos edicao/);
   } finally {
-    cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-A001');
   }
 });
 
@@ -90,9 +95,9 @@ test('TESTE 5: cadastrar SKU duplicado deve ser bloqueado', async () => {
     await agent.post('/admin/products').type('form').send({ name: 'Produto Auditoria A', sku: 'AUD-A001', slug: '', status: 'active' });
     const dup = await agent.post('/admin/products').type('form').send({ name: 'Outro nome', sku: 'AUD-A001', slug: 'outro-slug', status: 'active' });
     assert.equal(dup.status, 400);
-    assert.equal(db.list('products', { sku: 'AUD-A001' }).length, 1);
+    assert.equal((await db.list('products', { sku: 'AUD-A001' })).length, 1);
   } finally {
-    cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-A001');
   }
 });
 
@@ -102,10 +107,10 @@ test('TESTE 6: cadastrar slug duplicado deve ser bloqueado', async () => {
     await agent.post('/admin/products').type('form').send({ name: 'Produto Auditoria A', sku: 'AUD-A001', slug: 'slug-auditoria-unico', status: 'active' });
     const dup = await agent.post('/admin/products').type('form').send({ name: 'Produto Auditoria C', sku: 'AUD-C001', slug: 'slug-auditoria-unico', status: 'active' });
     assert.equal(dup.status, 400);
-    assert.equal(db.list('products', { slug: 'slug-auditoria-unico' }).length, 1);
+    assert.equal((await db.list('products', { slug: 'slug-auditoria-unico' })).length, 1);
   } finally {
-    cleanupProduct('AUD-A001');
-    cleanupProduct('AUD-C001');
+    await cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-C001');
   }
 });
 
@@ -122,7 +127,7 @@ test('TESTE 8: desativar produto exibe pagina informativa sem quebrar a aplicaca
   const agent = await loginAgent();
   try {
     await agent.post('/admin/products').type('form').send({ name: 'Produto Auditoria A', sku: 'AUD-A001', slug: '', status: 'active' });
-    const product = db.getProductBySku('AUD-A001');
+    const product = await db.getProductBySku('AUD-A001');
 
     await agent.post(`/admin/products/${product.id}`).type('form').send({ name: 'Produto Auditoria A', sku: 'AUD-A001', slug: product.slug, status: 'inactive' });
 
@@ -130,7 +135,7 @@ test('TESTE 8: desativar produto exibe pagina informativa sem quebrar a aplicaca
     assert.equal(page.status, 200);
     assert.match(page.text, /indisponível/i);
   } finally {
-    cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-A001');
   }
 });
 
@@ -142,8 +147,8 @@ test('TESTE 9: geracao em lote — cada QR do painel admin aponta para o produto
 
     const panel = await agent.get('/admin/qr-codes');
     assert.equal(panel.status, 200);
-    const productA = db.getProductBySku('AUD-A001');
-    const productB = db.getProductBySku('AUD-B001');
+    const productA = await db.getProductBySku('AUD-A001');
+    const productB = await db.getProductBySku('AUD-B001');
     assert.match(panel.text, new RegExp(`produto/${productA.slug}`));
     assert.match(panel.text, new RegExp(`produto/${productB.slug}`));
 
@@ -152,8 +157,8 @@ test('TESTE 9: geracao em lote — cada QR do painel admin aponta para o produto
     assert.match(csv.text, /AUD-A001/);
     assert.match(csv.text, /AUD-B001/);
   } finally {
-    cleanupProduct('AUD-A001');
-    cleanupProduct('AUD-B001');
+    await cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-B001');
   }
 });
 
@@ -173,7 +178,7 @@ test('Redirecionamento permanente: alterar slug de produto com QR ja impresso re
   const agent = await loginAgent();
   try {
     await agent.post('/admin/products').type('form').send({ name: 'Produto Auditoria A', sku: 'AUD-A001', slug: 'slug-original-impresso', status: 'active' });
-    const product = db.getProductBySku('AUD-A001');
+    const product = await db.getProductBySku('AUD-A001');
 
     await agent.post(`/admin/products/${product.id}`).type('form').send({ name: 'Produto Auditoria A', sku: 'AUD-A001', slug: 'slug-novo-apos-edicao', status: 'active' });
 
@@ -185,6 +190,73 @@ test('Redirecionamento permanente: alterar slug de produto com QR ja impresso re
     assert.equal(newUrlRes.status, 200);
     assert.match(newUrlRes.text, /AUD-A001/);
   } finally {
-    cleanupProduct('AUD-A001');
+    await cleanupProduct('AUD-A001');
+  }
+});
+
+test('Autenticacao: login com senha errada falha e nao cria sessao', async () => {
+  const res = await request(app).post('/admin/login').type('form').send({ email: ADMIN_EMAIL, password: 'senha-errada' });
+  assert.equal(res.status, 401);
+
+  const agent = request.agent(app);
+  await agent.post('/admin/login').type('form').send({ email: ADMIN_EMAIL, password: 'senha-errada' });
+  const dashboard = await agent.get('/admin/dashboard');
+  assert.equal(dashboard.status, 302);
+  assert.match(dashboard.headers.location, /\/admin\/login/);
+});
+
+test('Autenticacao: sem login, rotas /admin redirecionam para login', async () => {
+  const res = await request(app).get('/admin/products');
+  assert.equal(res.status, 302);
+  assert.match(res.headers.location, /\/admin\/login/);
+});
+
+test('CRUD de categorias: criar, editar e excluir uma categoria', async () => {
+  const agent = await loginAgent();
+  try {
+    await agent.post('/admin/categories').type('form').send({ name: 'Categoria Auditoria', slug: 'categoria-auditoria', description: 'teste', status: 'active' });
+    let category = await db.findOne('categories', { slug: 'categoria-auditoria' });
+    assert.ok(category, 'categoria deveria ter sido criada');
+
+    await agent.post(`/admin/categories/${category.id}`).type('form').send({ name: 'Categoria Auditoria Editada', slug: 'categoria-auditoria', description: 'teste editado', status: 'active' });
+    category = await db.findOne('categories', { id: category.id });
+    assert.equal(category.name, 'Categoria Auditoria Editada');
+
+    await agent.post(`/admin/categories/${category.id}/delete`);
+    const afterDelete = await db.findOne('categories', { id: category.id });
+    assert.equal(afterDelete, null);
+  } finally {
+    await cleanupCategory('categoria-auditoria');
+  }
+});
+
+test('Upload de imagem: cadastrar produto com foto principal envia para o Supabase Storage', async () => {
+  const agent = await loginAgent();
+  // 1x1 transparent PNG
+  const pngBuffer = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=', 'base64');
+  try {
+    await agent.post('/admin/products')
+      .field('name', 'Produto Auditoria Upload')
+      .field('sku', 'AUD-UP001')
+      .field('slug', '')
+      .field('status', 'active')
+      .attach('main_image_file', pngBuffer, 'foto.png');
+
+    const product = await db.getProductBySku('AUD-UP001');
+    assert.ok(product, 'produto deveria ter sido criado');
+    assert.ok(product.main_image, 'main_image deveria estar preenchido');
+    assert.match(product.main_image, /supabase\.co\/storage\/v1\/object\/public\/product-images\//);
+
+    const objectPath = product.main_image.split('/product-images/')[1];
+    const { data: listing, error: listError } = await db.supabase.storage.from('product-images').list('', { search: objectPath });
+    assert.equal(listError, null);
+    assert.ok(listing.some(f => f.name === objectPath), 'arquivo deveria existir no bucket product-images');
+  } finally {
+    const product = await db.getProductBySku('AUD-UP001');
+    if (product && product.main_image) {
+      const { removeFromStorage } = require('../lib/upload');
+      await removeFromStorage(product.main_image);
+    }
+    await cleanupProduct('AUD-UP001');
   }
 });

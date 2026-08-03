@@ -1,107 +1,77 @@
-const fs = require('fs');
-const path = require('path');
+require('dotenv').config({ quiet: true });
 const bcrypt = require('bcryptjs');
+const { createClient } = require('@supabase/supabase-js');
 
-const dbPath = process.env.CATALOGO_DB_PATH
-  ? path.resolve(process.env.CATALOGO_DB_PATH)
-  : path.join(__dirname, 'catalogo.json');
+const supabaseUrl = process.env.SUPABASE_URL;
+const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const defaultState = {
-  users: [],
-  categories: [],
-  brands: [],
-  collections: [],
-  products: [],
-  product_images: [],
-  product_videos: [],
-  product_documents: [],
-  product_relations: [],
-  product_redirects: [],
-  product_views: [],
-  qr_scans: [],
-  audit_logs: [],
-  settings: []
-};
-
-let state = loadState();
-
-function loadState() {
-  if (!fs.existsSync(dbPath)) {
-    fs.writeFileSync(dbPath, JSON.stringify(defaultState, null, 2));
-    return JSON.parse(JSON.stringify(defaultState));
-  }
-  const loaded = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-  Object.keys(defaultState).forEach(table => {
-    if (!Array.isArray(loaded[table])) loaded[table] = [];
-  });
-  return loaded;
+if (!supabaseUrl || !serviceKey) {
+  throw new Error('SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY precisam estar definidos (.env)');
 }
 
-function saveState() {
-  fs.writeFileSync(dbPath, JSON.stringify(state, null, 2));
-}
+const supabase = createClient(supabaseUrl, serviceKey, {
+  auth: { persistSession: false, autoRefreshToken: false }
+});
 
-function makeId(table) {
-  const items = state[table] || [];
-  return items.length ? Math.max(...items.map(item => item.id)) + 1 : 1;
-}
-
-function list(table, filters = {}, orderBy = []) {
-  let items = [...(state[table] || [])];
+function applyFilters(query, filters = {}) {
+  let q = query;
   Object.entries(filters).forEach(([key, value]) => {
     if (value === undefined || value === null || value === '') return;
-    items = items.filter(item => item[key] === value);
+    q = q.eq(key, value);
   });
-  if (orderBy.length) {
-    items.sort((a, b) => {
-      for (const rule of orderBy) {
-        const dir = rule.direction === 'desc' ? -1 : 1;
-        if (a[rule.field] < b[rule.field]) return -1 * dir;
-        if (a[rule.field] > b[rule.field]) return 1 * dir;
-      }
-      return 0;
-    });
-  }
-  return items;
+  return q;
 }
 
-function findOne(table, filters = {}) {
-  return list(table, filters)[0] || null;
+async function list(table, filters = {}, orderBy = [], limit = null) {
+  let q = supabase.from(table).select('*');
+  q = applyFilters(q, filters);
+  orderBy.forEach(rule => { q = q.order(rule.field, { ascending: rule.direction !== 'desc' }); });
+  if (limit) q = q.limit(limit);
+  const { data, error } = await q;
+  if (error) throw error;
+  return data || [];
 }
 
-function create(table, data) {
-  const item = { id: makeId(table), ...data, created_at: new Date().toISOString() };
-  state[table].push(item);
-  saveState();
-  return item;
+async function findOne(table, filters = {}) {
+  const items = await list(table, filters, [], 1);
+  return items[0] || null;
 }
 
-function update(table, id, data) {
-  const index = (state[table] || []).findIndex(item => item.id === Number(id));
-  if (index === -1) return null;
-  state[table][index] = { ...state[table][index], ...data, updated_at: new Date().toISOString() };
-  saveState();
-  return state[table][index];
+async function create(table, data) {
+  const { data: rows, error } = await supabase.from(table).insert(data).select();
+  if (error) throw error;
+  return rows[0];
 }
 
-function remove(table, id) {
-  const prevLength = (state[table] || []).length;
-  state[table] = (state[table] || []).filter(item => item.id !== Number(id));
-  saveState();
-  return state[table].length < prevLength;
+async function update(table, id, data) {
+  const { data: rows, error } = await supabase.from(table).update(data).eq('id', Number(id)).select();
+  if (error) throw error;
+  return rows[0] || null;
 }
 
-function count(table, filters = {}) {
-  return list(table, filters).length;
+async function remove(table, id) {
+  const { data: rows, error } = await supabase.from(table).delete().eq('id', Number(id)).select();
+  if (error) throw error;
+  return (rows || []).length > 0;
 }
 
-function initialize() {
-  if (state.users.length === 0) {
+async function count(table, filters = {}) {
+  let q = supabase.from(table).select('*', { count: 'exact', head: true });
+  q = applyFilters(q, filters);
+  const { count: total, error } = await q;
+  if (error) throw error;
+  return total || 0;
+}
+
+async function initialize() {
+  const userCount = await count('users');
+  if (userCount === 0) {
     const passwordHash = bcrypt.hashSync('Palmares2026!', 10);
-    create('users', { name: 'Administrador', email: 'admin@grupopalmares.com.br', password: passwordHash, role: 'admin' });
+    await create('users', { name: 'Administrador', email: 'admin@grupopalmares.com.br', password: passwordHash, role: 'admin' });
   }
 
-  if (state.settings.length === 0) {
+  const settingsCount = await count('settings');
+  if (settingsCount === 0) {
     const baseSettings = [
       { key: 'site_title', value: 'Grupo Palmares' },
       { key: 'site_url', value: 'https://grupopalmares.com.br/' },
@@ -110,10 +80,11 @@ function initialize() {
       { key: 'phone', value: '(35) 3529-0700' },
       { key: 'email', value: 'contato@grupopalmares.com.br' }
     ];
-    baseSettings.forEach(setting => create('settings', setting));
+    for (const setting of baseSettings) await create('settings', setting);
   }
 
-  if (state.categories.length === 0) {
+  const categoriesCount = await count('categories');
+  if (categoriesCount === 0) {
     const categoriesSeed = [
       ['Importados', 'importados', 'Produtos importados'],
       ['Vidro', 'vidro', 'Produtos em vidro'],
@@ -125,13 +96,14 @@ function initialize() {
       ['Plástico', 'plastico', 'Produtos em plástico'],
       ['Diversos', 'diversos', 'Diversos produtos']
     ];
-    categoriesSeed.forEach(([name, slug, description]) => create('categories', { name, slug, description, sort_order: 0, status: 'active' }));
+    for (const [name, slug, description] of categoriesSeed) {
+      await create('categories', { name, slug, description, sort_order: 0, status: 'active' });
+    }
   }
 }
 
 function listProducts(filters = {}, orderBy = [{ field: 'id', direction: 'desc' }], limit = null) {
-  const items = list('products', filters, orderBy);
-  return limit ? items.slice(0, limit) : items;
+  return list('products', filters, orderBy, limit);
 }
 
 function getProductBySlug(slug) {
@@ -146,26 +118,34 @@ function getProductById(id) {
   return findOne('products', { id: Number(id) });
 }
 
-function isSkuTaken(sku, excludeId = null) {
-  return state.products.some(p => p.sku === sku && p.id !== Number(excludeId));
+async function isSkuTaken(sku, excludeId = null) {
+  let q = supabase.from('products').select('id').eq('sku', sku);
+  if (excludeId) q = q.neq('id', Number(excludeId));
+  const { data, error } = await q;
+  if (error) throw error;
+  return (data || []).length > 0;
 }
 
-function isSlugTaken(slug, excludeId = null) {
-  return state.products.some(p => p.slug === slug && p.id !== Number(excludeId));
+async function isSlugTaken(slug, excludeId = null) {
+  let q = supabase.from('products').select('id').eq('slug', slug);
+  if (excludeId) q = q.neq('id', Number(excludeId));
+  const { data, error } = await q;
+  if (error) throw error;
+  return (data || []).length > 0;
 }
 
-function createProduct(data) {
-  if (isSkuTaken(data.sku)) throw new Error('SKU duplicado');
-  if (isSlugTaken(data.slug)) throw new Error('Slug duplicado');
+async function createProduct(data) {
+  if (await isSkuTaken(data.sku)) throw new Error('SKU duplicado');
+  if (await isSlugTaken(data.slug)) throw new Error('Slug duplicado');
   return create('products', data);
 }
 
-function updateProduct(id, data) {
-  if (data.sku !== undefined && isSkuTaken(data.sku, id)) throw new Error('SKU duplicado');
-  if (data.slug !== undefined && isSlugTaken(data.slug, id)) throw new Error('Slug duplicado');
-  const current = getProductById(id);
+async function updateProduct(id, data) {
+  if (data.sku !== undefined && await isSkuTaken(data.sku, id)) throw new Error('SKU duplicado');
+  if (data.slug !== undefined && await isSlugTaken(data.slug, id)) throw new Error('Slug duplicado');
+  const current = await getProductById(id);
   if (current && data.slug !== undefined && data.slug !== current.slug) {
-    create('product_redirects', { old_slug: current.slug, product_id: current.id });
+    await create('product_redirects', { old_slug: current.slug, product_id: current.id });
   }
   return update('products', id, data);
 }
@@ -174,9 +154,15 @@ function deleteProduct(id) {
   return remove('products', id);
 }
 
-function getRedirectBySlug(slug) {
-  const matches = list('product_redirects', { old_slug: slug }, [{ field: 'id', direction: 'desc' }]);
-  return matches[0] || null;
+async function getRedirectBySlug(slug) {
+  const { data, error } = await supabase
+    .from('product_redirects')
+    .select('*')
+    .eq('old_slug', slug)
+    .order('id', { ascending: false })
+    .limit(1);
+  if (error) throw error;
+  return (data && data[0]) || null;
 }
 
 function listCategories(filters = {}) {
@@ -239,15 +225,20 @@ function getProductDocuments(productId) {
   return list('product_documents', { product_id: Number(productId) }, [{ field: 'id', direction: 'asc' }]);
 }
 
-function getRelatedProducts(productId) {
-  const product = getProductById(productId);
-  const categoryProducts = listProducts({ status: 'active', category_id: product?.category_id }, [{ field: 'id', direction: 'desc' }], 4);
+async function getRelatedProducts(productId) {
+  const product = await getProductById(productId);
+  const categoryProducts = await listProducts({ status: 'active', category_id: product?.category_id }, [{ field: 'id', direction: 'desc' }], 4);
   return categoryProducts.filter(item => item.id !== Number(productId));
 }
 
-initialize();
+const ready = initialize().catch(err => {
+  console.error('[db] Falha ao inicializar dados padrão no Supabase:', err.message);
+  throw err;
+});
 
 module.exports = {
+  ready,
+  supabase,
   list,
   findOne,
   create,
@@ -280,6 +271,5 @@ module.exports = {
   getProductImages,
   getProductVideos,
   getProductDocuments,
-  getRelatedProducts,
-  state
+  getRelatedProducts
 };
