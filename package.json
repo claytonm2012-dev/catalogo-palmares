@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Catálogo virtual do Grupo Palmares",
   "main": "app.js",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "start": "node app.js",
     "test": "node --test",
