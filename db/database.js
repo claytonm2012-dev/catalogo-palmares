@@ -22,8 +22,8 @@ function applyFilters(query, filters = {}) {
   return q;
 }
 
-async function list(table, filters = {}, orderBy = [], limit = null) {
-  let q = supabase.from(table).select('*');
+async function list(table, filters = {}, orderBy = [], limit = null, columns = '*') {
+  let q = supabase.from(table).select(columns);
   q = applyFilters(q, filters);
   orderBy.forEach(rule => { q = q.order(rule.field, { ascending: rule.direction !== 'desc' }); });
   if (limit) q = q.limit(limit);
@@ -112,8 +112,23 @@ async function initialize() {
   }
 }
 
-function listProducts(filters = {}, orderBy = [{ field: 'id', direction: 'desc' }], limit = null) {
-  return list('products', filters, orderBy, limit);
+function listProducts(filters = {}, orderBy = [{ field: 'id', direction: 'desc' }], limit = null, columns = '*') {
+  return list('products', filters, orderBy, limit, columns);
+}
+
+// Conta produtos ativos por categoria com uma unica query (so a coluna category_id),
+// em vez de uma query completa por categoria.
+async function getCategoryProductCounts() {
+  const rows = await list('products', { status: 'active' }, [], null, 'category_id');
+  const counts = {};
+  rows.forEach(row => { counts[row.category_id] = (counts[row.category_id] || 0) + 1; });
+  return counts;
+}
+
+// So id+slug, ordenados — o suficiente para calcular produto anterior/proximo
+// sem trazer a tabela inteira com todas as colunas.
+function getProductNavList() {
+  return list('products', { status: 'active' }, [{ field: 'id', direction: 'asc' }], null, 'id,slug');
 }
 
 function getProductBySlug(slug) {
@@ -316,6 +331,8 @@ module.exports = {
   getProductVideos,
   getProductDocuments,
   getRelatedProducts,
+  getCategoryProductCounts,
+  getProductNavList,
   getSettingsMap,
   upsertSetting,
   countProductsByCategory,

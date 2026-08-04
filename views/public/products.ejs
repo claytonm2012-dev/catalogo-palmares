@@ -66,6 +66,19 @@
       <% if (!products.length) { %>
         <p class="muted" style="margin-top:24px">Nenhum produto encontrado para os filtros selecionados.</p>
       <% } %>
+      <% if (pagination && pagination.totalPages > 1) { %>
+        <nav style="display:flex;gap:8px;justify-content:center;margin-top:36px;flex-wrap:wrap" aria-label="Paginação">
+          <% for (var p = 1; p <= pagination.totalPages; p++) {
+            var qs = new URLSearchParams(Object.assign({}, filters, { page: p })).toString();
+          %>
+            <% if (p === pagination.page) { %>
+              <span class="btn" style="padding:8px 14px;min-width:40px;text-align:center"><%= p %></span>
+            <% } else { %>
+              <a href="/produtos?<%= qs %>" style="padding:8px 14px;min-width:40px;text-align:center;border:1px solid rgba(10,26,47,0.15);border-radius:10px;color:var(--navy-900);text-decoration:none;font-weight:700"><%= p %></a>
+            <% } %>
+          <% } %>
+        </nav>
+      <% } %>
     </main>
 
     <%- include('../partials/footer', { categories: categories }) %>
