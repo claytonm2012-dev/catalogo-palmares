@@ -1,0 +1,14 @@
+{
+  "pastas_encontradas": 131,
+  "pastas_processadas": 131,
+  "produtos_criados": 128,
+  "produtos_ja_existentes": 3,
+  "imagens_enviadas": 427,
+  "imagens_ja_existentes_ignoradas": 14,
+  "arquivos_ignorados_por_nao_serem_imagem": 0,
+  "qr_codes_ok": 131,
+  "qr_codes_com_problema": [],
+  "pastas_sem_imagem_valida": [],
+  "erros": [],
+  "pastas_sem_produto_no_banco_apos_importacao": []
+}
