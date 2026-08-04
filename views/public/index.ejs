@@ -142,48 +142,50 @@
         </div>
       </section>
 
-      <section class="section on-dark container coverflow-section glow-bleed-top">
-        <div class="section-head">
-          <div>
-            <span class="section-kicker">Novidades</span>
-            <h2>Lançamentos</h2>
+      <section class="section on-dark coverflow-section glow-bleed-top">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <span class="section-kicker">Novidades</span>
+              <h2>Lançamentos</h2>
+            </div>
+            <% if (launches && launches.length) { %>
+              <div class="coverflow-counter"><strong id="cfCurrent">1</strong> / <%= launches.length %></div>
+            <% } %>
           </div>
           <% if (launches && launches.length) { %>
-            <div class="coverflow-counter"><strong id="cfCurrent">1</strong> / <%= launches.length %></div>
-          <% } %>
-        </div>
-        <% if (launches && launches.length) { %>
-          <div class="coverflow" id="launchesCoverflow" role="region" aria-roledescription="carrossel" aria-label="Lançamentos" tabindex="0">
-            <div class="coverflow-track">
-              <% launches.forEach(function(p, i){ %>
-                <div class="coverflow-slide<%= i === 0 ? ' is-active' : '' %>" data-index="<%= i %>">
-                  <div class="cf-card">
-                    <div class="card-media"><%- include('../partials/visual', { image: p.main_image, alt: p.name, slug: catFor(p).slug }) %></div>
-                    <div class="cf-card-info">
-                      <span class="cf-badge">Lançamento</span>
-                      <h3><%= p.name %></h3>
-                      <p class="muted">SKU <%= p.sku %> · <%= catFor(p).name %></p>
-                      <p class="cf-desc"><%= p.description_short || '' %></p>
-                      <div class="cf-actions">
-                        <a class="btn" href="/produto/<%= p.slug %>">Ver produto</a>
-                        <button class="icon-btn" data-qr-sku="<%= p.sku %>" aria-label="Gerar QR Code">
-                          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg>
-                        </button>
+            <div class="coverflow" id="launchesCoverflow" role="region" aria-roledescription="carrossel" aria-label="Lançamentos" tabindex="0">
+              <div class="coverflow-track">
+                <% launches.forEach(function(p, i){ %>
+                  <div class="coverflow-slide<%= i === 0 ? ' is-active' : '' %>" data-index="<%= i %>">
+                    <div class="cf-card">
+                      <div class="card-media"><%- include('../partials/visual', { image: p.main_image, alt: p.name, slug: catFor(p).slug }) %></div>
+                      <div class="cf-card-info">
+                        <span class="cf-badge">Lançamento</span>
+                        <h3><%= p.name %></h3>
+                        <p class="muted">SKU <%= p.sku %> · <%= catFor(p).name %></p>
+                        <p class="cf-desc"><%= p.description_short || '' %></p>
+                        <div class="cf-actions">
+                          <a class="btn" href="/produto/<%= p.slug %>">Ver produto</a>
+                          <button class="icon-btn" data-qr-sku="<%= p.sku %>" aria-label="Gerar QR Code">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><line x1="14" y1="14" x2="14" y2="21"/><line x1="21" y1="14" x2="21" y2="21"/><line x1="14" y1="17.5" x2="21" y2="17.5"/></svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              <% }) %>
+                <% }) %>
+              </div>
+              <div class="coverflow-controls">
+                <button class="carousel-arrow prev" id="cfPrev" aria-label="Anterior">&#10094;</button>
+                <div class="coverflow-progress"><span id="cfProgressBar"></span></div>
+                <button class="carousel-arrow next" id="cfNext" aria-label="Próximo">&#10095;</button>
+              </div>
             </div>
-            <div class="coverflow-controls">
-              <button class="carousel-arrow prev" id="cfPrev" aria-label="Anterior">&#10094;</button>
-              <div class="coverflow-progress"><span id="cfProgressBar"></span></div>
-              <button class="carousel-arrow next" id="cfNext" aria-label="Próximo">&#10095;</button>
-            </div>
-          </div>
-        <% } else { %>
-          <p class="muted">Nenhum lançamento no momento.</p>
-        <% } %>
+          <% } else { %>
+            <p class="muted">Nenhum lançamento no momento.</p>
+          <% } %>
+        </div>
       </section>
 
       <section class="section on-dark container">

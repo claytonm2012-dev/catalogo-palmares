@@ -403,18 +403,23 @@ img{max-width:100%;display:block}
 }
 
 /* ===================== Coverflow carousel (Lançamentos) ===================== */
+/* Full-bleed like the Hero: the section itself has no container/max-width, so
+   the background naturally spans 100% of the viewport with no side bands and
+   no horizontal scroll (avoids the old 100vw-breakout trick and its scrollbar
+   edge case). Readable content is centered via an inner .container, same
+   pattern as .hero-slide-content inside the full-width .hero. */
 .coverflow-section{position:relative}
 .coverflow-section::after{
   content:'';
-  position:absolute;top:0;bottom:0;left:50%;width:100vw;transform:translateX(-50%);
+  position:absolute;inset:0;
   z-index:0;pointer-events:none;
   background-color:#071e3d;
   background-image:linear-gradient(180deg, rgba(4,19,38,0.82) 0%, rgba(7,30,61,0.66) 40%, rgba(7,30,61,0.7) 72%, rgba(4,19,38,0.86) 100%), url('/images/coverflow-bg.jpg');
-  background-size:cover, 100% auto;
-  background-position:center, center center;
+  background-size:cover, cover;
+  background-position:center, center;
   background-repeat:no-repeat, no-repeat;
 }
-.coverflow-section > .section-head, .coverflow-section > .coverflow, .coverflow-section > p.muted{position:relative;z-index:1}
+.coverflow-section > .container{position:relative;z-index:1}
 .coverflow{position:relative;perspective:1600px}
 .coverflow-track{position:relative;height:480px;z-index:2}
 .coverflow-slide{position:absolute;top:50%;left:50%;width:340px;margin-left:-170px;transform:translateY(-50%);transition:transform .55s var(--ease-premium), opacity .55s ease, filter .55s ease;will-change:transform}
