@@ -41,13 +41,13 @@
         <% if (typeof error !== 'undefined' && error) { %>
           <div class="admin-error"><%= error %></div>
         <% } %>
-        <form class="admin-login-form" method="post" action="/admin/login">
+        <form class="admin-login-form" id="loginForm" method="post" action="/admin/login">
           <input name="email" type="email" placeholder="E-mail" required />
           <div class="password-row">
             <input id="passwordInput" name="password" type="password" placeholder="Senha" required />
             <button type="button" class="password-toggle" id="togglePassword" aria-label="Mostrar senha">Ver</button>
           </div>
-          <button class="btn" type="submit">Entrar</button>
+          <button class="btn" type="submit" id="loginSubmit">Entrar</button>
         </form>
         <p style="text-align:center;margin:18px 0 0">
           <a href="/" style="color:var(--gold);font-weight:600;text-decoration:none;font-size:14px">&larr; Voltar ao catálogo</a>
@@ -65,6 +65,11 @@
           toggle.setAttribute('aria-label', isHidden ? 'Ocultar senha' : 'Mostrar senha');
         });
       })();
+      document.getElementById('loginForm').addEventListener('submit', function () {
+        var btn = document.getElementById('loginSubmit');
+        btn.disabled = true;
+        btn.textContent = 'Entrando...';
+      });
     </script>
   </body>
 </html>

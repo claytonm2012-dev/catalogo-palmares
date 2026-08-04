@@ -1,5 +1,4 @@
 const express = require('express');
-const session = require('express-session');
 const path = require('path');
 const database = require('./db/database');
 const publicRoutes = require('./routes/public');
@@ -13,12 +12,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'palmares-secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 }
-}));
 
 app.use(async (req, res, next) => {
   try {

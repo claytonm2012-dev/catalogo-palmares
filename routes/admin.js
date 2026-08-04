@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
 const db = require('../db/database');
 const { upload, productMediaUpload, uploadToStorage, removeFromStorage } = require('../lib/upload');
 const slugify = require('../lib/slugify');
 const { getPublicSiteUrl } = require('../lib/site-url');
+const { authClient } = require('../lib/supabase-auth');
+const { parseCookies, setAuthCookies, clearAuthCookies, getAdminFromRequest, ACCESS_COOKIE, REFRESH_COOKIE } = require('../lib/admin-session');
 
 const productUploads = productMediaUpload.fields([
   { name: 'main_image_file', maxCount: 1 },
@@ -17,9 +18,16 @@ function ah(fn) {
   return (req, res, next) => fn(req, res, next).catch(next);
 }
 
+// Le e valida a sessao do Supabase Auth (com renovacao automatica via refresh token) e
+// so libera acesso se o e-mail corresponder a um perfil com role "admin" em `users`.
 function requireAuth(req, res, next) {
-  if (req.session && req.session.user) return next();
-  return res.redirect('/admin/login');
+  getAdminFromRequest(req, res)
+    .then(admin => {
+      if (!admin) return res.redirect('/admin/login');
+      req.adminUser = admin;
+      next();
+    })
+    .catch(next);
 }
 
 function toNullable(value) {
@@ -28,34 +36,50 @@ function toNullable(value) {
 
 async function logAction(req, action, entity, entityId, details) {
   await db.createAuditLog({
-    user_id: req.session.user?.id || null,
-    user_name: req.session.user?.name || 'preview',
+    user_id: req.adminUser?.id || null,
+    user_name: req.adminUser?.name || 'preview',
     action, entity, entity_id: entityId, details
   });
 }
 
-router.get('/', (req, res) => {
-  res.redirect(req.session && req.session.user ? '/admin/dashboard' : '/admin/login');
-});
+router.get('/', ah(async (req, res) => {
+  const admin = await getAdminFromRequest(req, res);
+  res.redirect(admin ? '/admin/dashboard' : '/admin/login');
+}));
 
-router.get('/login', (req, res) => {
-  if (req.session && req.session.user) return res.redirect('/admin/dashboard');
+router.get('/login', ah(async (req, res) => {
+  const admin = await getAdminFromRequest(req, res);
+  if (admin) return res.redirect('/admin/dashboard');
   res.render('admin/login', { title: 'Login Administrativo' });
-});
+}));
 
 router.post('/login', ah(async (req, res) => {
   const { email, password } = req.body;
-  const user = await db.findOne('users', { email });
-  if (!user || !bcrypt.compareSync(password, user.password)) {
+  const { data, error } = await authClient.auth.signInWithPassword({ email, password });
+  if (error || !data || !data.session) {
     return res.status(401).render('admin/login', { title: 'Login Administrativo', error: 'Credenciais inválidas' });
   }
-  req.session.user = { id: user.id, email: user.email, name: user.name, role: user.role };
+  const profile = await db.findOne('users', { email });
+  if (!profile || profile.role !== 'admin') {
+    return res.status(403).render('admin/login', { title: 'Login Administrativo', error: 'Este usuário não tem permissão de administrador.' });
+  }
+  setAuthCookies(res, data.session);
   res.redirect('/admin/dashboard');
 }));
 
-router.get('/logout', (req, res) => {
-  req.session.destroy(() => res.redirect('/admin/login'));
-});
+router.get('/logout', ah(async (req, res) => {
+  const cookies = parseCookies(req);
+  const accessToken = cookies[ACCESS_COOKIE];
+  const refreshToken = cookies[REFRESH_COOKIE];
+  if (accessToken && refreshToken) {
+    try {
+      await authClient.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+      await authClient.auth.signOut();
+    } catch (err) { /* best-effort revoke — cookies are cleared regardless */ }
+  }
+  clearAuthCookies(res);
+  res.redirect('/admin/login');
+}));
 
 router.get('/dashboard', requireAuth, ah(async (req, res) => {
   const [
@@ -83,7 +107,7 @@ router.get('/dashboard', requireAuth, ah(async (req, res) => {
     qrScans, qrTested, qrErrors
   };
   res.render('admin/dashboard', {
-    title: 'Dashboard', active: 'dashboard', stats, user: req.session.user,
+    title: 'Dashboard', active: 'dashboard', stats, user: req.adminUser,
     recentProducts, mostViewed, recentLogs, brokenImages
   });
 }));
@@ -114,7 +138,7 @@ router.get('/products', requireAuth, ah(async (req, res) => {
   const products = filtered.slice((pageSafe - 1) * pageSize, pageSafe * pageSize);
 
   res.render('admin/products', {
-    title: 'Produtos', active: 'products', products, categories, brands, user: req.session.user,
+    title: 'Produtos', active: 'products', products, categories, brands, user: req.adminUser,
     filters: { q: q || '', category: category || '', brand: brand || '', status: status || '', featured: featured || '', launch: launch || '' },
     pagination: { page: pageSafe, totalPages, totalResults, pageSize }
   });
@@ -126,7 +150,7 @@ router.get('/products/new', requireAuth, ah(async (req, res) => {
     db.listBrands({ status: 'active' }),
     db.listCollections({ status: 'active' })
   ]);
-  res.render('admin/product-form', { title: 'Novo Produto', active: 'products', categories, brands, collections, product: null, user: req.session.user });
+  res.render('admin/product-form', { title: 'Novo Produto', active: 'products', categories, brands, collections, product: null, user: req.adminUser });
 }));
 
 function buildProductData(body) {
@@ -150,7 +174,7 @@ router.post('/products', requireAuth, productUploads, ah(async (req, res) => {
     const [categories, brands, collections] = await Promise.all([
       db.listCategories({ status: 'active' }), db.listBrands({ status: 'active' }), db.listCollections({ status: 'active' })
     ]);
-    return res.status(400).render('admin/product-form', { title: 'Novo Produto', active: 'products', categories, brands, collections, product: null, user: req.session.user, error });
+    return res.status(400).render('admin/product-form', { title: 'Novo Produto', active: 'products', categories, brands, collections, product: null, user: req.adminUser, error });
   };
 
   if (await db.isSkuTaken(data.sku)) return renderNewError(`SKU "${data.sku}" já está em uso por outro produto.`);
@@ -198,7 +222,7 @@ router.get('/products/:id/edit', requireAuth, ah(async (req, res) => {
     db.getProductVideos(product.id),
     db.getProductDocuments(product.id)
   ]);
-  res.render('admin/product-form', { title: 'Editar Produto', active: 'products', product, categories, brands, collections, images, videos, documents, user: req.session.user });
+  res.render('admin/product-form', { title: 'Editar Produto', active: 'products', product, categories, brands, collections, images, videos, documents, user: req.adminUser });
 }));
 
 router.post('/products/:id', requireAuth, productUploads, ah(async (req, res) => {
@@ -211,7 +235,7 @@ router.post('/products/:id', requireAuth, productUploads, ah(async (req, res) =>
       db.listCategories({ status: 'active' }), db.listBrands({ status: 'active' }), db.listCollections({ status: 'active' }),
       db.getProductImages(current.id), db.getProductVideos(current.id), db.getProductDocuments(current.id)
     ]);
-    return res.status(400).render('admin/product-form', { title: 'Editar Produto', active: 'products', product: current, categories, brands, collections, images, videos, documents, user: req.session.user, error });
+    return res.status(400).render('admin/product-form', { title: 'Editar Produto', active: 'products', product: current, categories, brands, collections, images, videos, documents, user: req.adminUser, error });
   };
 
   if (await db.isSkuTaken(data.sku, current.id)) return renderEditError(`SKU "${data.sku}" já está em uso por outro produto.`);
@@ -323,7 +347,7 @@ router.post('/products/:id/delete', requireAuth, ah(async (req, res) => {
 router.get('/categories', requireAuth, ah(async (req, res) => {
   const categories = await db.listCategories();
   const withCounts = await Promise.all(categories.map(async cat => ({ ...cat, product_count: await db.countProductsByCategory(cat.id) })));
-  res.render('admin/categories', { title: 'Categorias', active: 'categories', categories: withCounts, user: req.session.user });
+  res.render('admin/categories', { title: 'Categorias', active: 'categories', categories: withCounts, user: req.adminUser });
 }));
 
 router.post('/categories', requireAuth, upload.single('image'), ah(async (req, res) => {
@@ -353,7 +377,7 @@ router.post('/categories/:id/delete', requireAuth, ah(async (req, res) => {
     const categories = await db.listCategories();
     const withCounts = await Promise.all(categories.map(async cat => ({ ...cat, product_count: await db.countProductsByCategory(cat.id) })));
     return res.status(400).render('admin/categories', {
-      title: 'Categorias', active: 'categories', categories: withCounts, user: req.session.user,
+      title: 'Categorias', active: 'categories', categories: withCounts, user: req.adminUser,
       error: `Esta categoria tem ${productCount} produto(s) vinculado(s). Mova os produtos para outra categoria antes de excluir, ou confirme a exclusão mesmo assim (os produtos ficarão sem categoria).`
     });
   }
@@ -367,7 +391,7 @@ router.post('/categories/:id/delete', requireAuth, ah(async (req, res) => {
 router.get('/brands', requireAuth, ah(async (req, res) => {
   const brands = await db.listBrands();
   const withCounts = await Promise.all(brands.map(async brand => ({ ...brand, product_count: await db.countProductsByBrand(brand.id) })));
-  res.render('admin/brands', { title: 'Marcas', active: 'brands', brands: withCounts, user: req.session.user });
+  res.render('admin/brands', { title: 'Marcas', active: 'brands', brands: withCounts, user: req.adminUser });
 }));
 
 router.post('/brands', requireAuth, upload.single('logo'), ah(async (req, res) => {
@@ -397,7 +421,7 @@ router.post('/brands/:id/delete', requireAuth, ah(async (req, res) => {
     const brands = await db.listBrands();
     const withCounts = await Promise.all(brands.map(async brand => ({ ...brand, product_count: await db.countProductsByBrand(brand.id) })));
     return res.status(400).render('admin/brands', {
-      title: 'Marcas', active: 'brands', brands: withCounts, user: req.session.user,
+      title: 'Marcas', active: 'brands', brands: withCounts, user: req.adminUser,
       error: `Esta marca tem ${productCount} produto(s) vinculado(s). Mova os produtos para outra marca antes de excluir, ou confirme a exclusão mesmo assim (os produtos ficarão sem marca).`
     });
   }
@@ -425,7 +449,7 @@ const SETTINGS_LABELS = {
 router.get('/settings', requireAuth, ah(async (req, res) => {
   const map = await db.getSettingsMap();
   const rows = Object.keys(SETTINGS_LABELS).map(key => ({ key, label: SETTINGS_LABELS[key], value: map[key] || '' }));
-  res.render('admin/settings', { title: 'Configurações do site', active: 'settings', rows, user: req.session.user });
+  res.render('admin/settings', { title: 'Configurações do site', active: 'settings', rows, user: req.adminUser });
 }));
 
 router.post('/settings', requireAuth, ah(async (req, res) => {
@@ -438,7 +462,7 @@ router.post('/settings', requireAuth, ah(async (req, res) => {
 
 router.get('/logs', requireAuth, ah(async (req, res) => {
   const logs = await db.list('audit_logs', {}, [{ field: 'id', direction: 'desc' }], 200);
-  res.render('admin/logs', { title: 'Histórico de ações', active: 'logs', logs, user: req.session.user });
+  res.render('admin/logs', { title: 'Histórico de ações', active: 'logs', logs, user: req.adminUser });
 }));
 
 router.get('/qr-codes', requireAuth, ah(async (req, res) => {
@@ -449,7 +473,7 @@ router.get('/qr-codes', requireAuth, ah(async (req, res) => {
     publicUrl: `${baseUrl}/produto/${product.slug}`,
     qrFile: `QR-${product.sku}.png`
   }));
-  res.render('admin/qr-codes', { title: 'QR Codes', active: 'qr-codes', products: rows, baseUrl, usesLocalhost: baseUrl.includes('localhost'), user: req.session.user });
+  res.render('admin/qr-codes', { title: 'QR Codes', active: 'qr-codes', products: rows, baseUrl, usesLocalhost: baseUrl.includes('localhost'), user: req.adminUser });
 }));
 
 router.get('/qr-codes/export.csv', requireAuth, ah(async (req, res) => {
