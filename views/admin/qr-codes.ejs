@@ -27,6 +27,10 @@
             <p><%= products.length %> produto<%= products.length === 1 ? '' : 's' %> com QR Code gerado por SKU</p>
           </div>
           <div class="admin-actions">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);font-weight:600">
+              <input type="checkbox" id="forceRetest" style="width:auto;margin:0" />
+              Forçar reteste (ignorar testados recentemente)
+            </label>
             <button type="button" class="btn-sm" id="testAllBtn">Testar todos</button>
             <a class="btn-sm" href="/admin/qr-codes/export.csv">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -41,7 +45,12 @@
           </div>
         <% } %>
         <p class="admin-hint" style="margin-top:0">Domínio base atual: <code><%= baseUrl %></code></p>
-        <p id="testAllSummary" class="admin-hint" style="margin-top:-8px"></p>
+        <div id="testAllProgressWrap" style="display:none;margin:0 0 14px">
+          <div style="background:rgba(6,32,59,0.08);border-radius:999px;height:8px;overflow:hidden">
+            <div id="testAllProgressBar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--gold-light),var(--gold));transition:width .2s ease"></div>
+          </div>
+        </div>
+        <p id="testAllSummary" class="admin-hint" style="margin-top:0"></p>
 
         <div class="admin-table-wrap">
           <table class="admin-table">
@@ -63,7 +72,7 @@
                   <td><%= product.name %></td>
                   <td><%= product.sku %></td>
                   <td class="url-cell"><%= product.publicUrl %></td>
-                  <td class="test-status" data-sku="<%= product.sku %>">
+                  <td class="test-status" data-sku="<%= product.sku %>" data-tested-at="<%= product.last_qr_test_at || '' %>">
                     <% if (known) { %>
                       <span class="status-badge <%= known[0] %>"><%= known[1] %></span>
                       <span class="test-meta">testado em <%= new Date(product.last_qr_test_at).toLocaleString('pt-BR') %></span>
@@ -120,20 +129,71 @@
             .catch(function(){ cell.innerHTML = '<span class="status-badge status-fail">Erro ao testar</span>'; });
         });
       });
-      document.getElementById('testAllBtn').addEventListener('click', function(){
+      // Lote controlado: no maximo N testes simultaneos, nunca todos de uma vez.
+      // Pula quem ja foi testado ha pouco tempo, a menos que "Forcar reteste" esteja marcado.
+      var RECENT_TEST_MS = 10 * 60 * 1000; // 10 minutos
+      var CONCURRENCY = 4;
+
+      async function runWithConcurrency(items, limit, worker) {
+        var index = 0;
+        async function run() {
+          while (index < items.length) {
+            var current = index++;
+            await worker(items[current], current);
+          }
+        }
+        var runners = [];
+        for (var i = 0; i < Math.min(limit, items.length); i++) runners.push(run());
+        await Promise.all(runners);
+      }
+
+      document.getElementById('testAllBtn').addEventListener('click', async function(){
         var btn = this;
-        btn.disabled = true; btn.textContent = 'Testando todos...';
-        fetch('/admin/qr-codes/testar-todos', { method: 'POST' })
-          .then(function(res){ return res.json(); })
-          .then(function(data){
-            data.results.forEach(function(result){
-              var cell = document.querySelector('.test-status[data-sku="' + result.sku + '"]');
-              if (cell) renderStatusCell(cell, result);
-            });
-            var summaryParts = Object.keys(data.summary).map(function(key){ return (statusLabelMap[key] ? statusLabelMap[key][1] : key) + ': ' + data.summary[key]; });
-            document.getElementById('testAllSummary').textContent = data.total + ' QR Codes testados — ' + summaryParts.join(', ');
-          })
-          .finally(function(){ btn.disabled = false; btn.textContent = 'Testar todos'; });
+        var force = document.getElementById('forceRetest').checked;
+        var allCells = Array.prototype.slice.call(document.querySelectorAll('.test-status[data-sku]'));
+        var now = Date.now();
+        var toTest = allCells.filter(function(cell){
+          if (force) return true;
+          var testedAt = cell.getAttribute('data-tested-at');
+          if (!testedAt) return true;
+          return (now - new Date(testedAt).getTime()) > RECENT_TEST_MS;
+        });
+        var skipped = allCells.length - toTest.length;
+
+        if (!toTest.length) {
+          document.getElementById('testAllSummary').textContent = 'Todos os ' + allCells.length + ' QR Codes ja foram testados recentemente. Marque "Forçar reteste" para testar de novo.';
+          return;
+        }
+
+        btn.disabled = true; btn.textContent = 'Testando...';
+        var progressWrap = document.getElementById('testAllProgressWrap');
+        var progressBar = document.getElementById('testAllProgressBar');
+        progressWrap.style.display = 'block';
+        progressBar.style.width = '0%';
+
+        var done = 0;
+        var summary = {};
+        await runWithConcurrency(toTest, CONCURRENCY, async function(cell){
+          var sku = cell.getAttribute('data-sku');
+          cell.innerHTML = '<span class="status-badge status-pending">testando...</span>';
+          try {
+            var res = await fetch('/admin/qr-codes/' + encodeURIComponent(sku) + '/testar');
+            var data = await res.json();
+            renderStatusCell(cell, data);
+            cell.setAttribute('data-tested-at', data.testedAt || new Date().toISOString());
+            summary[data.testStatus] = (summary[data.testStatus] || 0) + 1;
+          } catch (e) {
+            cell.innerHTML = '<span class="status-badge status-fail">Erro ao testar</span>';
+            summary.erro_rede = (summary.erro_rede || 0) + 1;
+          }
+          done++;
+          progressBar.style.width = Math.round((done / toTest.length) * 100) + '%';
+        });
+
+        var summaryParts = Object.keys(summary).map(function(key){ return (statusLabelMap[key] ? statusLabelMap[key][1] : key) + ': ' + summary[key]; });
+        var skippedText = skipped ? (' (' + skipped + ' pulado(s) — testado(s) recentemente)') : '';
+        document.getElementById('testAllSummary').textContent = toTest.length + ' QR Codes testados' + skippedText + ' — ' + summaryParts.join(', ');
+        btn.disabled = false; btn.textContent = 'Testar todos';
       });
     </script>
   </body>

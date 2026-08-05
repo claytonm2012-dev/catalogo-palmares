@@ -2,9 +2,21 @@
   var v_image = typeof image !== 'undefined' ? image : null;
   var v_alt = typeof alt !== 'undefined' ? alt : 'Grupo Palmares';
   var v_slug = typeof slug !== 'undefined' && slug ? slug : 'diversos';
+  // thumb=true (padrao): usa a miniatura via Supabase Image Transformations pra
+  // cards/grades. thumb=false: imagem original, pra hero/imagem principal do produto.
+  var v_thumb = typeof thumb === 'undefined' ? true : thumb;
+  // eager=true: imagem ja visivel na primeira dobra (hero, imagem principal) —
+  // carrega na hora, sem lazy loading, pra nao atrasar o LCP.
+  var v_eager = typeof eager !== 'undefined' && eager;
+  var v_src = v_thumb ? cardThumb(v_image) : v_image;
 %>
 <% if (v_image) { %>
-  <img src="<%= v_image %>" alt="<%= v_alt %>" class="pv-img" loading="lazy"/>
+  <img
+    src="<%= v_src %>"
+    alt="<%= v_alt %>"
+    class="pv-img"
+    <% if (v_eager) { %>loading="eager" fetchpriority="high"<% } else { %>loading="lazy" width="480" height="480"<% } %>
+  />
 <% } else { %>
   <div class="ph-visual tone-<%= v_slug %>">
     <div class="ph-shine" aria-hidden="true"></div>

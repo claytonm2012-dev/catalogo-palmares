@@ -3,6 +3,7 @@ const path = require('path');
 const database = require('./db/database');
 const publicRoutes = require('./routes/public');
 const adminRoutes = require('./routes/admin');
+const { cardThumb } = require('./lib/image-url');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,7 +12,9 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+// CSS/JS ja usam query string de versao (?v=4.x) pra invalidar cache quando o
+// conteudo muda, entao um maxAge generoso aqui e seguro (nao serve conteudo velho).
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d' }));
 
 app.use(async (req, res, next) => {
   try {
@@ -20,6 +23,7 @@ app.use(async (req, res, next) => {
     res.locals.settings = settings;
     const digits = (settings.whatsapp || '').replace(/\D/g, '');
     res.locals.whatsappDigits = digits ? (digits.startsWith('55') ? digits : `55${digits}`) : '5535991710177';
+    res.locals.cardThumb = cardThumb;
     next();
   } catch (err) {
     next(err);

@@ -18,6 +18,13 @@ function ah(fn) {
   return (req, res, next) => fn(req, res, next).catch(next);
 }
 
+// Nada no painel administrativo pode ser cacheado publicamente (dados privados,
+// autenticacao, formularios com estado). Explicito em vez de depender do default.
+router.use((req, res, next) => {
+  res.set('Cache-Control', 'private, no-store');
+  next();
+});
+
 // Le e valida a sessao do Supabase Auth (com renovacao automatica via refresh token) e
 // so libera acesso se o e-mail corresponder a um perfil com role "admin" em `users`.
 function requireAuth(req, res, next) {
@@ -91,7 +98,7 @@ router.get('/dashboard', requireAuth, ah(async (req, res) => {
     db.count('brands'),
     db.count('products', { is_launch: 'yes' }),
     db.count('products', { is_featured: 'yes' }),
-    db.list('products'),
+    db.list('products', {}, [], null, 'id,name,view_count,main_image,last_qr_test_status'),
     db.count('qr_scans'),
     db.listProducts({}, [{ field: 'id', direction: 'desc' }], 5),
     db.list('audit_logs', {}, [{ field: 'id', direction: 'desc' }], 8)
@@ -485,9 +492,12 @@ router.get('/qr-codes/export.csv', requireAuth, ah(async (req, res) => {
   const escapeCsv = (value) => `"${String(value == null ? '' : value).replace(/"/g, '""')}"`;
   const header = ['SKU', 'Nome', 'Categoria', 'URL pública', 'Arquivo QR Code', 'Status', 'Último teste'];
   const lines = [header.join(',')];
+  // slug e unico no banco (constraint), entao validar contra a lista ja carregada
+  // equivale a validar contra o banco de novo — sem precisar de 1 query por produto.
+  const bySlug = new Map(products.map(p => [p.slug, p]));
   for (const product of products) {
     const category = categories.find(c => c.id === product.category_id);
-    const resolved = await db.getProductBySlug(product.slug);
+    const resolved = bySlug.get(product.slug);
     const isValid = !!product.sku && !!product.slug && resolved && resolved.id === product.id;
     lines.push([
       escapeCsv(product.sku),

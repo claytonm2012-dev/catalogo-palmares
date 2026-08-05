@@ -75,7 +75,7 @@
                 <div class="hv-stage">
                   <div class="hv-stage-glow" aria-hidden="true"></div>
                   <div class="hv-stage-media">
-                    <%- include('../partials/visual', { image: slide.product.main_image, alt: slide.product.name, slug: slide.tone }) %>
+                    <%- include('../partials/visual', { image: slide.product.main_image, alt: slide.product.name, slug: slide.tone, eager: i === 0 }) %>
                   </div>
                   <div class="hv-stage-info">
                     <span class="hv-stage-cat"><%= slide.category.name %></span>
