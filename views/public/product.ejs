@@ -10,6 +10,12 @@
     { k: 'Qtd. por caixa', v: product.box_quantity }
   ].filter(function(s){ return s.v && s.v !== '—'; });
   var catSlug = product.category_slug || 'diversos';
+  var galleryImages = [];
+  if (product.main_image) galleryImages.push({ url: product.main_image, alt: product.name });
+  var mainOffset = galleryImages.length;
+  (images || []).forEach(function(img){
+    galleryImages.push({ url: img.url || img.path, alt: product.name + ' - imagem ' + (galleryImages.length + 1) });
+  });
 %>
 <!doctype html>
 <html lang="pt-BR">
@@ -67,8 +73,23 @@
           <aside class="hero-visual">
             <div class="hero-visual-inner">
               <canvas class="canvas-scan"></canvas>
-              <div id="mainProductImage" class="card-media" style="position:absolute;inset:0;height:100%;border-radius:0">
-                <%- include('../partials/visual', { image: product.main_image, alt: product.name, slug: catSlug, thumb: false, eager: true }) %>
+              <div id="productGallery" class="product-gallery" style="position:absolute;inset:0;height:100%">
+                <div class="pg-track" id="pgTrack">
+                  <% if (galleryImages.length) { galleryImages.forEach(function(img, i){ %>
+                    <div class="pg-slide">
+                      <%- include('../partials/visual', { image: img.url, alt: img.alt, slug: catSlug, thumb: false, eager: i === 0 }) %>
+                    </div>
+                  <% }) } else { %>
+                    <div class="pg-slide">
+                      <%- include('../partials/visual', { image: null, alt: product.name, slug: catSlug }) %>
+                    </div>
+                  <% } %>
+                </div>
+                <% if (galleryImages.length > 1) { %>
+                  <button class="pg-arrow pg-prev" id="pgPrev" type="button" aria-label="Imagem anterior">&#10094;</button>
+                  <button class="pg-arrow pg-next" id="pgNext" type="button" aria-label="Próxima imagem">&#10095;</button>
+                  <div class="pg-counter" id="pgCounter">1 / <%= galleryImages.length %></div>
+                <% } %>
               </div>
             </div>
           </aside>
@@ -79,7 +100,7 @@
         <div class="section-head"><div><span class="section-kicker">Galeria</span><h2>Imagens do produto</h2></div></div>
         <div class="products-grid">
           <% if (images && images.length) { images.forEach(function(img, i){ %>
-            <div class="product-card gallery-thumb" style="--stagger:<%= i %>" data-full="<%= img.url || img.path %>">
+            <div class="product-card gallery-thumb" style="--stagger:<%= i %>" data-full="<%= img.url || img.path %>" data-index="<%= mainOffset + i %>">
               <div class="card-media"><%- include('../partials/visual', { image: img.url || img.path, alt: 'Imagem ' + (i+1), slug: catSlug }) %></div>
             </div>
           <% }) } else { %>
@@ -134,6 +155,7 @@
 
     <%- include('../partials/footer', { categories: categories }) %>
     <%- include('../partials/qr-modal') %>
-    <script src="/js/animations.js?v=4.0" defer></script>
+    <%- include('../partials/gallery-modal', { images: galleryImages }) %>
+    <script src="/js/animations.js?v=4.1" defer></script>
   </body>
 </html>

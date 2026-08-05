@@ -194,20 +194,177 @@
     });
   }
 
-  /* ---------- Product gallery: crossfade swap of the main image ---------- */
-  function initGalleryBlend(){
-    const main = document.getElementById('mainProductImage');
-    const thumbs = document.querySelectorAll('.gallery-thumb[data-full]');
-    if (!main || !thumbs.length) return;
+  /* ---------- Product gallery: swipeable carousel + fullscreen modal ----------
+     All slides are already rendered server-side (no re-fetching on swipe/tap).
+     Pointer Events unify touch drag (mobile) and mouse drag (desktop) in one
+     code path. touch-action:pan-y (see CSS) is what keeps vertical page
+     scroll working — we only ever transform the track on a horizontal drag. */
+  function initProductGallery(){
+    const root = document.getElementById('productGallery');
+    if (!root) return;
+    const track = document.getElementById('pgTrack');
+    const slides = Array.from(track.querySelectorAll('.pg-slide'));
+    const total = slides.length;
+    if (!total) return;
+    const prevBtn = document.getElementById('pgPrev');
+    const nextBtn = document.getElementById('pgNext');
+    const counter = document.getElementById('pgCounter');
+    const thumbs = Array.from(document.querySelectorAll('.gallery-thumb[data-index]'));
+    const modal = document.getElementById('galleryModal');
+    let index = 0;
+
+    function render(withTransition){
+      track.classList.toggle('no-transition', !withTransition);
+      track.style.transform = `translateX(${-index * 100}%)`;
+      if (counter) counter.textContent = (index + 1) + ' / ' + total;
+      thumbs.forEach(t => t.classList.toggle('active', Number(t.getAttribute('data-index')) === index));
+    }
+    function go(i){ index = (i + total) % total; render(true); }
+    function next(){ go(index + 1); }
+    function prev(){ go(index - 1); }
+
+    if (total < 2){
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (counter) counter.style.display = 'none';
+    } else {
+      prevBtn && prevBtn.addEventListener('click', prev);
+      nextBtn && nextBtn.addEventListener('click', next);
+    }
     thumbs.forEach(thumb=>{
       thumb.addEventListener('click', ()=>{
-        const src = thumb.getAttribute('data-full');
-        if (!src) return;
-        main.classList.add('blend-out');
-        setTimeout(()=>{
-          main.innerHTML = `<img class="pv-img" src="${src}" alt="" />`;
-          main.classList.remove('blend-out');
-        }, reduced ? 0 : 260);
+        const i = Number(thumb.getAttribute('data-index'));
+        if (!Number.isNaN(i)) go(i);
+      });
+    });
+
+    root.setAttribute('tabindex', '0');
+    root.addEventListener('keydown', e=>{
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
+      if (e.key === 'Enter') openModal(index);
+    });
+    render(false);
+
+    /* ---- fullscreen modal (opens on a tap/click that wasn't a drag) ---- */
+    function openModal(i){
+      if (!modal) return;
+      modalIndex = i;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      renderModal(false);
+    }
+
+    /* ---- drag/swipe: follows the finger, snaps on release ----
+       <img> is natively draggable in every desktop browser — without this,
+       a mouse drag starts an HTML5 dragstart/ghost-image instead of firing
+       pointermove, so the swipe below would never see the movement. */
+    root.addEventListener('dragstart', e => e.preventDefault());
+
+    let startX = 0, startY = 0, dx = 0, dragging = false, moved = false;
+    const trackWidth = () => root.clientWidth || 1;
+
+    root.addEventListener('pointerdown', e=>{
+      if (e.target.closest('.pg-arrow')) return;
+      dragging = true; moved = false; startX = e.clientX; startY = e.clientY; dx = 0;
+      if (total > 1) track.classList.add('no-transition');
+      root.classList.add('dragging');
+      root.setPointerCapture && root.setPointerCapture(e.pointerId);
+    });
+    root.addEventListener('pointermove', e=>{
+      if (!dragging) return;
+      const curDx = e.clientX - startX, curDy = e.clientY - startY;
+      if (!moved && Math.abs(curDx) < 6 && Math.abs(curDy) < 6) return;
+      if (Math.abs(curDy) > Math.abs(curDx) && Math.abs(curDx) < 30) return; // vertical scroll wins
+      moved = true; dx = curDx;
+      if (total > 1){
+        const pct = (dx / trackWidth()) * 100;
+        track.style.transform = `translateX(${(-index * 100) + pct}%)`;
+      }
+    });
+    function endDrag(){
+      if (!dragging) return;
+      dragging = false;
+      root.classList.remove('dragging');
+      if (total > 1){
+        track.classList.remove('no-transition');
+        const threshold = trackWidth() * 0.18;
+        if (moved && Math.abs(dx) > threshold){ dx < 0 ? next() : prev(); }
+        else render(true);
+      }
+      if (!moved) openModal(index);
+      dx = 0; moved = false;
+    }
+    root.addEventListener('pointerup', endDrag);
+    root.addEventListener('pointercancel', endDrag);
+
+    if (!modal) return;
+    const modalTrack = modal.querySelector('.gallery-modal-track');
+    const modalCounter = modal.querySelector('.gallery-modal-counter');
+    const modalPrev = modal.querySelector('.gallery-modal-prev');
+    const modalNext = modal.querySelector('.gallery-modal-next');
+    let modalIndex = 0;
+
+    function renderModal(withTransition){
+      modalTrack.classList.toggle('no-transition', !withTransition);
+      modalTrack.style.transform = `translateX(${-modalIndex * 100}%)`;
+      if (modalCounter) modalCounter.textContent = (modalIndex + 1) + ' / ' + total;
+    }
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      modalTrack.querySelectorAll('img.zoomed').forEach(img=>img.classList.remove('zoomed'));
+    }
+    function modalNextFn(){ modalIndex = (modalIndex + 1) % total; renderModal(true); }
+    function modalPrevFn(){ modalIndex = (modalIndex - 1 + total) % total; renderModal(true); }
+
+    modal.querySelectorAll('[data-gallery-close]').forEach(el=>el.addEventListener('click', closeModal));
+    modalPrev && modalPrev.addEventListener('click', modalPrevFn);
+    modalNext && modalNext.addEventListener('click', modalNextFn);
+    document.addEventListener('keydown', e=>{
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') modalNextFn();
+      if (e.key === 'ArrowLeft') modalPrevFn();
+    });
+
+    modalTrack.addEventListener('dragstart', e => e.preventDefault());
+    let mStartX = 0, mStartY = 0, mDx = 0, mDragging = false, mMoved = false;
+    modalTrack.addEventListener('pointerdown', e=>{
+      if (total < 2) return;
+      mDragging = true; mMoved = false; mStartX = e.clientX; mStartY = e.clientY; mDx = 0;
+      modalTrack.classList.add('no-transition');
+      modalTrack.setPointerCapture && modalTrack.setPointerCapture(e.pointerId);
+    });
+    modalTrack.addEventListener('pointermove', e=>{
+      if (!mDragging) return;
+      const curDx = e.clientX - mStartX, curDy = e.clientY - mStartY;
+      if (!mMoved && Math.abs(curDx) < 6 && Math.abs(curDy) < 6) return;
+      if (Math.abs(curDy) > Math.abs(curDx) && Math.abs(curDx) < 30) return;
+      mMoved = true; mDx = curDx;
+      const pct = (mDx / (modal.clientWidth || 1)) * 100;
+      modalTrack.style.transform = `translateX(${(-modalIndex * 100) + pct}%)`;
+    });
+    function endModalDrag(){
+      if (!mDragging) return;
+      mDragging = false;
+      modalTrack.classList.remove('no-transition');
+      const threshold = (modal.clientWidth || 1) * 0.18;
+      if (mMoved && Math.abs(mDx) > threshold){ mDx < 0 ? modalNextFn() : modalPrevFn(); }
+      else renderModal(true);
+      mDx = 0; mMoved = false;
+    }
+    modalTrack.addEventListener('pointerup', endModalDrag);
+    modalTrack.addEventListener('pointercancel', endModalDrag);
+
+    // Zoom is optional per the spec — a lightweight double-tap/double-click
+    // toggle (2x) rather than full pinch-zoom, kept dependency-free.
+    modalTrack.querySelectorAll('img').forEach(img=>{
+      let lastTap = 0;
+      img.addEventListener('click', ()=>{
+        const now = Date.now();
+        if (now - lastTap < 320) img.classList.toggle('zoomed');
+        lastTap = now;
       });
     });
   }
@@ -363,7 +520,7 @@
     initNewsletter();
     initCounters();
     initQrModal();
-    initGalleryBlend();
+    initProductGallery();
     initHeroCarousel();
     initCoverflow();
 

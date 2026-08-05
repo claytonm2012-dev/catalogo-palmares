@@ -1,0 +1,16 @@
+<% var gm_images = typeof images !== 'undefined' && images ? images : []; %>
+<div class="gallery-modal" id="galleryModal" aria-hidden="true">
+  <button class="gallery-modal-close" data-gallery-close type="button" aria-label="Fechar">&times;</button>
+  <% if (gm_images.length > 1) { %>
+    <div class="gallery-modal-counter">1 / <%= gm_images.length %></div>
+    <button class="gallery-modal-arrow gallery-modal-prev" type="button" aria-label="Imagem anterior">&#10094;</button>
+    <button class="gallery-modal-arrow gallery-modal-next" type="button" aria-label="Próxima imagem">&#10095;</button>
+  <% } %>
+  <div class="gallery-modal-track">
+    <% gm_images.forEach(function(img){ %>
+      <div class="gallery-modal-slide">
+        <img src="<%= img.url %>" alt="<%= img.alt %>" />
+      </div>
+    <% }) %>
+  </div>
+</div>

@@ -548,12 +548,41 @@ img{max-width:100%;display:block}
 @media(max-width:1000px){.footer-top{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.footer-top{grid-template-columns:1fr;padding:40px 0 20px}}
 
-/* ===================== Product gallery blend swap ===================== */
-#mainProductImage{transition:opacity .3s ease}
-#mainProductImage.blend-out{opacity:0}
+/* ===================== Product gallery carousel ===================== */
+/* touch-action:pan-y is what lets a vertical finger-drag keep scrolling the
+   page natively while a horizontal drag is captured by JS below — without it
+   the browser has no way to tell which axis the gesture "belongs" to. */
+.product-gallery{overflow:hidden;touch-action:pan-y;cursor:grab;border-radius:0;-webkit-user-select:none;user-select:none}
+.product-gallery.dragging{cursor:grabbing}
+.pg-track{display:flex;width:100%;height:100%;will-change:transform;transition:transform .38s var(--ease-premium)}
+.pg-track.no-transition{transition:none}
+.pg-slide{flex:0 0 100%;width:100%;height:100%;position:relative}
+.pg-slide .pv-img,.pg-slide .ph-visual{width:100%;height:100%}
+.pg-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:none;background:rgba(10,26,47,0.55);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:background .2s ease,opacity .2s ease;opacity:.8;font-size:14px}
+.pg-arrow:hover{background:rgba(10,26,47,0.85);opacity:1}
+.pg-prev{left:12px}
+.pg-next{right:12px}
+.pg-counter{position:absolute;right:12px;bottom:12px;background:rgba(10,26,47,0.6);color:#fff;font-size:12px;padding:4px 10px;border-radius:20px;z-index:5;letter-spacing:.3px;pointer-events:none}
 .gallery-thumb{cursor:pointer}
 .gallery-thumb .card-media{height:120px}
 .gallery-thumb:hover .pv-img{transform:scale(1.06);filter:brightness(1.05)}
+.gallery-thumb.active .card-media{box-shadow:0 0 0 3px var(--gold)}
+
+/* ===================== Fullscreen gallery modal ===================== */
+.gallery-modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease;background:rgba(5,10,20,0.94)}
+.gallery-modal.open{opacity:1;pointer-events:auto}
+.gallery-modal-close{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.12);border:none;color:#fff;font-size:24px;line-height:1;cursor:pointer;z-index:6;display:flex;align-items:center;justify-content:center}
+.gallery-modal-close:hover{background:rgba(255,255,255,0.22)}
+.gallery-modal-counter{position:absolute;top:24px;left:50%;transform:translateX(-50%);color:#fff;font-size:13px;letter-spacing:.4px;background:rgba(255,255,255,0.1);padding:5px 14px;border-radius:20px;z-index:6;pointer-events:none}
+.gallery-modal-track{display:flex;width:100%;height:100%;touch-action:pan-y;transition:transform .3s var(--ease-premium)}
+.gallery-modal-track.no-transition{transition:none}
+.gallery-modal-slide{flex:0 0 100%;width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+.gallery-modal-slide img{max-width:92vw;max-height:88vh;width:auto;height:auto;object-fit:contain;transition:transform .3s ease;-webkit-user-select:none;user-select:none}
+.gallery-modal-slide img.zoomed{transform:scale(2);cursor:zoom-out}
+.gallery-modal-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.12);border:none;color:#fff;font-size:18px;cursor:pointer;z-index:6;display:flex;align-items:center;justify-content:center;transition:background .2s ease}
+.gallery-modal-arrow:hover{background:rgba(255,255,255,0.25)}
+.gallery-modal-prev{left:18px}
+.gallery-modal-next{right:18px}
 
 /* ===================== QR modal ===================== */
 .qr-modal{position:fixed;inset:0;z-index:150;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease}
