@@ -246,7 +246,11 @@ img{max-width:100%;display:block}
 .product-hero{position:relative;min-height:auto;padding:130px 0 0;background:var(--bg)}
 .product-hero .grid{display:grid;grid-template-columns:1fr 460px;gap:40px;align-items:start}
 .product-hero h1{color:var(--navy-900);text-shadow:none;font-size:36px;margin:0 0 8px;letter-spacing:-.3px}
-.product-hero .hero-visual{height:auto;min-height:380px}
+/* .hero-visual creates its own stacking context (z-index:5 + transform-style),
+   which traps any z-index set on .pg-arrow inside it no matter how high — so
+   this needs to raise the context itself above .product-nav's z-index:70,
+   scoped to the product page only (the shared Home hero keeps its z-index:5). */
+.product-hero .hero-visual{height:auto;min-height:380px;z-index:80}
 .product-hero .hero-visual-inner{background:linear-gradient(180deg,#fff,rgba(9,30,56,0.02));border:1px solid rgba(6,32,59,0.06);box-shadow:0 20px 50px rgba(6,32,59,0.1)}
 .product-hero .hero-visual-inner::before{box-shadow:none}
 .product-hero .btn.ghost{color:var(--navy-900);border-color:rgba(10,26,47,0.18)}
@@ -552,13 +556,17 @@ img{max-width:100%;display:block}
 /* touch-action:pan-y is what lets a vertical finger-drag keep scrolling the
    page natively while a horizontal drag is captured by JS below — without it
    the browser has no way to tell which axis the gesture "belongs" to. */
-.product-gallery{overflow:hidden;touch-action:pan-y;cursor:grab;border-radius:0;-webkit-user-select:none;user-select:none}
+.product-gallery{overflow:hidden;touch-action:pan-y;overscroll-behavior-x:contain;cursor:grab;border-radius:0;-webkit-user-select:none;user-select:none}
 .product-gallery.dragging{cursor:grabbing}
 .pg-track{display:flex;width:100%;height:100%;will-change:transform;transition:transform .38s var(--ease-premium)}
 .pg-track.no-transition{transition:none}
 .pg-slide{flex:0 0 100%;width:100%;height:100%;position:relative}
 .pg-slide .pv-img,.pg-slide .ph-visual{width:100%;height:100%}
-.pg-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:none;background:rgba(10,26,47,0.55);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:5;transition:background .2s ease,opacity .2s ease;opacity:.8;font-size:14px}
+/* z-index:75 — at some desktop widths (~900-960px) this arrow's position
+   over the image geometrically overlaps the unrelated .product-nav
+   prev/next-PRODUCT buttons (z-index:70, fixed to the viewport edges); this
+   makes sure a click there always changes the image, never the product. */
+.pg-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:none;background:rgba(10,26,47,0.55);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:75;transition:background .2s ease,opacity .2s ease;opacity:.8;font-size:14px}
 .pg-arrow:hover{background:rgba(10,26,47,0.85);opacity:1}
 .pg-prev{left:12px}
 .pg-next{right:12px}
