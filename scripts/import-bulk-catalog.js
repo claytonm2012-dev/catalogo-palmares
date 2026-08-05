@@ -88,7 +88,7 @@ async function evaluateQr(product) {
   return { ok: testStatus === 'funcionando', testStatus };
 }
 
-async function processFolder(code, categoryId, report) {
+async function processFolder(code, categoryId, report, existingProductsBySku) {
   const folderPath = path.join(SOURCE_DIR, code);
   const sku = code;
   const slug = `produto-${code}`;
@@ -114,8 +114,10 @@ async function processFolder(code, categoryId, report) {
       return;
     }
 
-    const { data: existingRows } = await supabase.from('products').select('*').eq('sku', sku).limit(1);
-    let product = existingRows && existingRows[0];
+    // produto existente ja veio de uma unica busca em lote antes do loop (nao consulta o
+    // banco por SKU aqui dentro) — so revalida contra o banco no momento de criar, pra
+    // pegar o registro completo com id gerado.
+    let product = existingProductsBySku.get(sku) || null;
     let isNew = false;
 
     if (!product) {
@@ -200,9 +202,15 @@ async function main() {
     qrOk: [], qrFailed: [], noImages: [], ignoredNonImages: [], errors: []
   };
 
+  // Busca todos os SKUs existentes de uma vez (1 query) em vez de 1 query por pasta dentro
+  // do loop — com 113+ pastas isso evita centenas de idas ao banco so pra checar duplicidade.
+  const { data: existingRows } = await supabase.from('products').select('*').in('sku', allFolders);
+  const existingProductsBySku = new Map((existingRows || []).map(p => [p.sku, p]));
+  console.log(`Produtos ja existentes no banco (dentre as pastas encontradas): ${existingProductsBySku.size}`);
+
   let done = 0;
   await mapWithConcurrency(allFolders, CONCURRENCY, async (code) => {
-    await processFolder(code, categoryId, report);
+    await processFolder(code, categoryId, report, existingProductsBySku);
     done++;
     if (done % 10 === 0 || done === allFolders.length) {
       console.log(`--- progresso: ${done}/${allFolders.length} ---`);
