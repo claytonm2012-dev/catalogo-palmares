@@ -246,11 +246,7 @@ img{max-width:100%;display:block}
 .product-hero{position:relative;min-height:auto;padding:130px 0 0;background:var(--bg)}
 .product-hero .grid{display:grid;grid-template-columns:1fr 460px;gap:40px;align-items:start}
 .product-hero h1{color:var(--navy-900);text-shadow:none;font-size:36px;margin:0 0 8px;letter-spacing:-.3px}
-/* .hero-visual creates its own stacking context (z-index:5 + transform-style),
-   which traps any z-index set on .pg-arrow inside it no matter how high — so
-   this needs to raise the context itself above .product-nav's z-index:70,
-   scoped to the product page only (the shared Home hero keeps its z-index:5). */
-.product-hero .hero-visual{height:auto;min-height:380px;z-index:80}
+.product-hero .hero-visual{height:auto;min-height:380px}
 .product-hero .hero-visual-inner{background:linear-gradient(180deg,#fff,rgba(9,30,56,0.02));border:1px solid rgba(6,32,59,0.06);box-shadow:0 20px 50px rgba(6,32,59,0.1)}
 .product-hero .hero-visual-inner::before{box-shadow:none}
 .product-hero .btn.ghost{color:var(--navy-900);border-color:rgba(10,26,47,0.18)}
@@ -258,12 +254,6 @@ img{max-width:100%;display:block}
 .product-crumb{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);margin-bottom:14px}
 .product-crumb a{color:var(--muted);text-decoration:none}
 .product-crumb a:hover{color:var(--navy-900)}
-.product-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:70;display:flex;flex-direction:column;gap:10px}
-.product-nav.prev{left:14px}
-.product-nav.next{right:14px}
-.product-nav a{width:44px;height:44px;border-radius:50%;background:rgba(10,26,47,0.85);color:#fff;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 14px 30px rgba(2,10,20,0.3);transition:transform .2s ease,background .2s ease}
-.product-nav a:hover{background:var(--gold);color:#1a1305;transform:scale(1.08)}
-@media(max-width:900px){.product-nav{display:none}}
 
 .spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
 .spec-item{background:#fff;border:1px solid rgba(6,32,59,0.06);border-radius:12px;padding:14px 16px;box-shadow:0 10px 26px rgba(6,32,59,0.06)}

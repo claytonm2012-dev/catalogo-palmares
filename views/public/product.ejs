@@ -29,13 +29,6 @@
   <body>
     <%- include('../partials/header', { categories: categories }) %>
 
-    <% if (prevProduct) { %>
-      <div class="product-nav prev"><a href="/produto/<%= prevProduct.slug %>" aria-label="Produto anterior">&#10094;</a></div>
-    <% } %>
-    <% if (nextProduct) { %>
-      <div class="product-nav next"><a href="/produto/<%= nextProduct.slug %>" aria-label="Próximo produto">&#10095;</a></div>
-    <% } %>
-
     <main class="container">
       <section class="product-hero">
         <p class="product-crumb">

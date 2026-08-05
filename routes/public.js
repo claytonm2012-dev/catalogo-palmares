@@ -110,26 +110,20 @@ router.get('/produto/:slug', ah(async (req, res) => {
   }
   await db.updateProduct(product.id, { view_count: (product.view_count || 0) + 1 });
   await db.createProductView(product.id, 'public', 'desktop');
-  const [images, videos, documents, related, category, brand, categories, siblings] = await Promise.all([
+  const [images, videos, documents, related, category, brand, categories] = await Promise.all([
     db.getProductImages(product.id),
     db.getProductVideos(product.id),
     db.getProductDocuments(product.id),
     db.getRelatedProducts(product.id),
     db.findOne('categories', { id: Number(product.category_id) }),
     db.findOne('brands', { id: Number(product.brand_id) }),
-    db.listCategories({ status: 'active' }),
-    db.getProductNavList()
+    db.listCategories({ status: 'active' })
   ]);
-  const currentIndex = siblings.findIndex(item => item.id === product.id);
-  const prevProduct = currentIndex > 0 ? siblings[currentIndex - 1] : siblings[siblings.length - 1];
-  const nextProduct = currentIndex >= 0 && currentIndex < siblings.length - 1 ? siblings[currentIndex + 1] : siblings[0];
   res.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
   res.render('public/product', {
     title: product.name,
     product: { ...product, category_name: category?.name || '—', category_slug: category?.slug || 'diversos', brand_name: brand?.name || '—' },
-    images, videos, documents, related, categories,
-    prevProduct: prevProduct && prevProduct.id !== product.id ? prevProduct : null,
-    nextProduct: nextProduct && nextProduct.id !== product.id ? nextProduct : null
+    images, videos, documents, related, categories
   });
 }));
 
