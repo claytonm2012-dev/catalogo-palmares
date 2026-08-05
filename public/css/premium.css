@@ -552,10 +552,12 @@ img{max-width:100%;display:block}
 .pg-track.no-transition{transition:none}
 .pg-slide{flex:0 0 100%;width:100%;height:100%;position:relative}
 .pg-slide .pv-img,.pg-slide .ph-visual{width:100%;height:100%}
-/* z-index:75 — at some desktop widths (~900-960px) this arrow's position
-   over the image geometrically overlaps the unrelated .product-nav
-   prev/next-PRODUCT buttons (z-index:70, fixed to the viewport edges); this
-   makes sure a click there always changes the image, never the product. */
+/* Skeleton behind each slide's <img> while its bytes are still downloading —
+   removed (via JS, on load/error) so a slow network never reads as a blank
+   white box. Harmless once the image paints since it sits behind it. */
+.pg-slide::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#eef1f5 25%,#e4e8ee 37%,#eef1f5 63%);background-size:400% 100%;animation:pgSkeleton 1.4s ease infinite}
+.pg-slide.pg-loaded::before{display:none}
+@keyframes pgSkeleton{0%{background-position:100% 50%}100%{background-position:0 50%}}
 .pg-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:none;background:rgba(10,26,47,0.55);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:75;transition:background .2s ease,opacity .2s ease;opacity:.8;font-size:14px}
 .pg-arrow:hover{background:rgba(10,26,47,0.85);opacity:1}
 .pg-prev{left:12px}

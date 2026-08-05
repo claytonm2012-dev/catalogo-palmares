@@ -213,6 +213,16 @@
     const modal = document.getElementById('galleryModal');
     let index = 0;
 
+    slides.forEach(slide => {
+      const img = slide.querySelector('img');
+      if (!img) { slide.classList.add('pg-loaded'); return; } // placeholder tone, no <img> to wait for
+      if (img.complete) slide.classList.add('pg-loaded');
+      else {
+        img.addEventListener('load', () => slide.classList.add('pg-loaded'));
+        img.addEventListener('error', () => slide.classList.add('pg-loaded'));
+      }
+    });
+
     function render(withTransition){
       track.classList.toggle('no-transition', !withTransition);
       track.style.transform = `translateX(${-index * 100}%)`;
