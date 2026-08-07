@@ -1,14 +1,20 @@
 {
-  "pastas_encontradas": 113,
-  "pastas_processadas": 113,
-  "produtos_criados": 110,
-  "produtos_ja_existentes": 3,
-  "imagens_enviadas": 449,
-  "imagens_ja_existentes_ignoradas": 13,
+  "pastas_encontradas": 32,
+  "pastas_processadas": 32,
+  "produtos_criados": 30,
+  "produtos_ja_existentes": 0,
+  "imagens_enviadas": 131,
+  "imagens_ja_existentes_ignoradas": 0,
   "arquivos_ignorados_por_nao_serem_imagem": 0,
-  "qr_codes_ok": 113,
+  "qr_codes_ok": 30,
   "qr_codes_com_problema": [],
-  "pastas_sem_imagem_valida": [],
+  "pastas_sem_imagem_valida": [
+    "19855",
+    "19856"
+  ],
   "erros": [],
-  "pastas_sem_produto_no_banco_apos_importacao": []
+  "pastas_sem_produto_no_banco_apos_importacao": [
+    "19855",
+    "19856"
+  ]
 }
