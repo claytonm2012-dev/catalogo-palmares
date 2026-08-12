@@ -140,8 +140,12 @@ router.get('/categoria/:slug', ah(async (req, res) => {
 
 router.get('/pesquisa', ah(async (req, res) => {
   const query = (req.query.q || '').trim().toLowerCase();
-  const products = (await db.listProducts({ status: 'active' }, [{ field: 'id', direction: 'desc' }], 10))
-    .filter(product => [product.name, product.sku, product.description].some(value => (value || '').toLowerCase().includes(query)));
+  // Busca em todo o catalogo ativo antes de limitar — antes o limite de 10 era aplicado
+  // na query e SO DEPOIS filtrado por texto, entao a busca so enxergava os 10 produtos
+  // mais recentes em vez do catalogo inteiro.
+  const products = (await db.listProducts({ status: 'active' }, [{ field: 'id', direction: 'desc' }]))
+    .filter(product => [product.name, product.sku, product.description].some(value => (value || '').toLowerCase().includes(query)))
+    .slice(0, 10);
   res.json(products);
 }));
 
