@@ -80,7 +80,7 @@ async function initialize() {
     const baseSettings = [
       { key: 'site_title', value: 'Grupo Palmares' },
       { key: 'site_url', value: 'https://grupopalmares.com.br/' },
-      { key: 'catalog_url', value: 'https://catalogo.grupopalmares.com.br/' },
+      { key: 'catalog_url', value: 'https://catalogo-palmares.vercel.app/' },
       { key: 'whatsapp', value: '(35) 99171-0177' },
       { key: 'phone', value: '(35) 3529-0700' },
       { key: 'email', value: 'contato@grupopalmares.com.br' },
