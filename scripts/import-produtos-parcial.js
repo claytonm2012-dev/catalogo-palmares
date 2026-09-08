@@ -45,7 +45,10 @@ async function mapWithConcurrency(items, limit, fn) {
 
 // Encontra toda pasta-folha (sem subpastas) dentro de rootDir, em qualquer profundidade.
 // O nome da pasta-folha e tratado como SKU do produto.
-function findLeafFolders(rootDir) {
+// mixedDirWarnings acumula pastas que tem subpastas E imagens soltas no mesmo nivel —
+// essas imagens soltas nao pertencem a nenhuma pasta-folha e seriam perdidas silenciosamente
+// se nao fossem reportadas aqui.
+function findLeafFolders(rootDir, mixedDirWarnings = []) {
   const leaves = [];
   function walk(dir) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -53,6 +56,10 @@ function findLeafFolders(rootDir) {
     if (subdirs.length === 0) {
       leaves.push({ sku: path.basename(dir), folderPath: dir });
       return;
+    }
+    const looseImages = entries.filter(e => e.isFile() && isImageName(e.name)).map(e => e.name);
+    if (looseImages.length) {
+      mixedDirWarnings.push({ dir, looseImages });
     }
     for (const sub of subdirs) walk(path.join(dir, sub.name));
   }
@@ -201,8 +208,26 @@ async function main() {
     throw new Error(`Diretorio de origem nao encontrado: ${SOURCE_DIR}`);
   }
 
-  let leaves = findLeafFolders(SOURCE_DIR);
+  const mixedDirWarnings = [];
+  let leaves = findLeafFolders(SOURCE_DIR, mixedDirWarnings);
   console.log(`Pastas-folha (produtos) encontradas em "${SOURCE_DIR}": ${leaves.length}`);
+
+  // rootDir sem nenhuma subpasta e tratado como uma unica pasta-folha (SKU = nome do
+  // proprio rootDir) — na pratica normalmente indica que PARCIAL_IMPORT_SOURCE aponta
+  // para um nivel errado da arvore. So um aviso: nao interrompe, pode ser intencional
+  // (ex.: testar com uma unica pasta de produto).
+  if (leaves.length === 1 && leaves[0].folderPath === SOURCE_DIR) {
+    console.log(`\n[ATENCAO] "${SOURCE_DIR}" nao tem subpastas — sera importado como um UNICO produto (SKU "${leaves[0].sku}"). Se a intencao era importar varios produtos, confira se PARCIAL_IMPORT_SOURCE aponta para o nivel certo da arvore de pastas.`);
+  }
+
+  // Pastas que tem subpastas E imagens soltas no mesmo nivel: essas imagens soltas nao
+  // pertencem a nenhuma pasta-folha e ficariam de fora da importacao sem nenhum aviso.
+  if (mixedDirWarnings.length) {
+    console.log('\n[ATENCAO] Pastas com imagens soltas junto de subpastas — essas imagens NAO sao importadas (nao pertencem a nenhuma pasta-folha/SKU):');
+    for (const { dir, looseImages } of mixedDirWarnings) {
+      console.log(`  ${dir}: ${looseImages.join(', ')}`);
+    }
+  }
 
   // Duas pastas-folha diferentes com o mesmo nome de SKU nao podem ser processadas —
   // misturaria imagens de origem incerta no mesmo produto. Aborta e reporta em vez de adivinhar.
@@ -236,7 +261,8 @@ async function main() {
     totalFolders: leaves.length,
     created: [], existing: [], imagesUploaded: 0, imagesSkipped: 0,
     qrOk: [], qrFailed: [], noImages: [], ignoredNonImages: [], errors: [],
-    duplicateSkus: Array.from(duplicateSkus.entries()).map(([sku, folders]) => ({ sku, folders }))
+    duplicateSkus: Array.from(duplicateSkus.entries()).map(([sku, folders]) => ({ sku, folders })),
+    mixedDirWarnings
   };
 
   // Busca todos os SKUs existentes de uma vez (1 query) em vez de 1 query por pasta dentro
@@ -262,6 +288,7 @@ async function main() {
   const summary = {
     pastas_folha_encontradas: report.totalFolders,
     skus_com_pasta_duplicada_ignorados: report.duplicateSkus,
+    imagens_soltas_ignoradas_por_pasta_ter_subpastas: report.mixedDirWarnings,
     pastas_processadas: report.totalFolders - report.errors.length,
     produtos_criados: report.created.length,
     produtos_ja_existentes: report.existing.length,
