@@ -1,9 +1,11 @@
 {
   "version": 2,
   "builds": [
-    { "src": "app.js", "use": "@vercel/node" }
+    { "src": "public/**", "use": "@vercel/static" },
+    { "src": "app.js", "use": "@vercel/node", "config": { "excludeFiles": "public/**" } }
   ],
   "routes": [
+    { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "app.js" }
   ],
   "regions": ["gru1"]

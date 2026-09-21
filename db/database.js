@@ -22,14 +22,39 @@ function applyFilters(query, filters = {}) {
   return q;
 }
 
-async function list(table, filters = {}, orderBy = [], limit = null, columns = '*') {
+const LIST_PAGE_SIZE = 1000;
+
+function buildListQuery(table, filters, orderBy, columns) {
   let q = supabase.from(table).select(columns);
   q = applyFilters(q, filters);
   orderBy.forEach(rule => { q = q.order(rule.field, { ascending: rule.direction !== 'desc' }); });
-  if (limit) q = q.limit(limit);
-  const { data, error } = await q;
-  if (error) throw error;
-  return data || [];
+  return q;
+}
+
+async function list(table, filters = {}, orderBy = [], limit = null, columns = '*') {
+  if (limit) {
+    const { data, error } = await buildListQuery(table, filters, orderBy, columns).limit(limit);
+    if (error) throw error;
+    return data || [];
+  }
+
+  // Sem limite explicito: o PostgREST tem um teto padrao de linhas por resposta
+  // (1000) — sem paginar aqui, qualquer listagem (produtos, busca, admin,
+  // navegacao anterior/proximo, contagem por categoria) corta silenciosamente
+  // tudo que passar da primeira pagina assim que a tabela ultrapassa 1000 linhas.
+  // "id" garante ordenacao estavel entre paginas mesmo quando o chamador nao pede
+  // nenhuma ordenacao especifica.
+  const rules = orderBy.some(r => r.field === 'id') ? orderBy : [...orderBy, { field: 'id', direction: 'asc' }];
+  let all = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await buildListQuery(table, filters, rules, columns).range(from, from + LIST_PAGE_SIZE - 1);
+    if (error) throw error;
+    all = all.concat(data || []);
+    if (!data || data.length < LIST_PAGE_SIZE) break;
+    from += LIST_PAGE_SIZE;
+  }
+  return all;
 }
 
 async function findOne(table, filters = {}) {
