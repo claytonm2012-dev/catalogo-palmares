@@ -1,0 +1,2706 @@
+{
+  "generated_at": "2026-10-06T00:32:54.961Z",
+  "bucket": "product-images",
+  "bucket_total_files": 1868,
+  "bucket_total_bytes": 1565154043,
+  "selected_products": 77,
+  "selected_files": 385,
+  "selected_bytes": 785956728,
+  "files": [
+    {
+      "path": "products/21806/001.png",
+      "sku": "21806",
+      "product_id": 940,
+      "size": 1580414,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21806/002.png",
+      "sku": "21806",
+      "product_id": 940,
+      "size": 2420805,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21806/003.png",
+      "sku": "21806",
+      "product_id": 940,
+      "size": 2054922,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21806/004.png",
+      "sku": "21806",
+      "product_id": 940,
+      "size": 3337489,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21806/005.png",
+      "sku": "21806",
+      "product_id": 940,
+      "size": 4202216,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21477/001.png",
+      "sku": "21477",
+      "product_id": 933,
+      "size": 1945541,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21477/002.png",
+      "sku": "21477",
+      "product_id": 933,
+      "size": 2804638,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21477/003.png",
+      "sku": "21477",
+      "product_id": 933,
+      "size": 2425745,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21477/004.png",
+      "sku": "21477",
+      "product_id": 933,
+      "size": 2567599,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21477/005.png",
+      "sku": "21477",
+      "product_id": 933,
+      "size": 3443295,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21799/001.png",
+      "sku": "21799",
+      "product_id": 935,
+      "size": 1668836,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21799/002.png",
+      "sku": "21799",
+      "product_id": 935,
+      "size": 2363132,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21799/003.png",
+      "sku": "21799",
+      "product_id": 935,
+      "size": 1996642,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21799/004.png",
+      "sku": "21799",
+      "product_id": 935,
+      "size": 2850574,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21799/005.png",
+      "sku": "21799",
+      "product_id": 935,
+      "size": 4097845,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21478/001.png",
+      "sku": "21478",
+      "product_id": 934,
+      "size": 2207986,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21478/002.png",
+      "sku": "21478",
+      "product_id": 934,
+      "size": 2622486,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21478/003.png",
+      "sku": "21478",
+      "product_id": 934,
+      "size": 2176362,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21478/004.png",
+      "sku": "21478",
+      "product_id": 934,
+      "size": 2589800,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21478/005.png",
+      "sku": "21478",
+      "product_id": 934,
+      "size": 3324311,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18414/001.png",
+      "sku": "18414",
+      "product_id": 886,
+      "size": 1923555,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18414/002.png",
+      "sku": "18414",
+      "product_id": 886,
+      "size": 2317141,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18414/003.png",
+      "sku": "18414",
+      "product_id": 886,
+      "size": 2092945,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18414/004.png",
+      "sku": "18414",
+      "product_id": 886,
+      "size": 2339531,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18414/005.png",
+      "sku": "18414",
+      "product_id": 886,
+      "size": 4167746,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14911/001.png",
+      "sku": "14911",
+      "product_id": 878,
+      "size": 1762569,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14911/002.png",
+      "sku": "14911",
+      "product_id": 878,
+      "size": 2582422,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14911/003.png",
+      "sku": "14911",
+      "product_id": 878,
+      "size": 2176436,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14911/004.png",
+      "sku": "14911",
+      "product_id": 878,
+      "size": 2013739,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14911/005.png",
+      "sku": "14911",
+      "product_id": 878,
+      "size": 3816573,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21804/001.png",
+      "sku": "21804",
+      "product_id": 938,
+      "size": 1284155,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21804/002.png",
+      "sku": "21804",
+      "product_id": 938,
+      "size": 2371484,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21804/003.png",
+      "sku": "21804",
+      "product_id": 938,
+      "size": 2027685,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21804/004.png",
+      "sku": "21804",
+      "product_id": 938,
+      "size": 2791341,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21804/005.png",
+      "sku": "21804",
+      "product_id": 938,
+      "size": 3836102,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21801/001.png",
+      "sku": "21801",
+      "product_id": 936,
+      "size": 1427656,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21801/002.png",
+      "sku": "21801",
+      "product_id": 936,
+      "size": 2296543,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21801/003.png",
+      "sku": "21801",
+      "product_id": 936,
+      "size": 2095617,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21801/004.png",
+      "sku": "21801",
+      "product_id": 936,
+      "size": 2497719,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21801/005.png",
+      "sku": "21801",
+      "product_id": 936,
+      "size": 3915568,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21279/001.png",
+      "sku": "21279",
+      "product_id": 930,
+      "size": 1494552,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21279/002.png",
+      "sku": "21279",
+      "product_id": 930,
+      "size": 2357896,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21279/003.png",
+      "sku": "21279",
+      "product_id": 930,
+      "size": 1793196,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21279/004.png",
+      "sku": "21279",
+      "product_id": 930,
+      "size": 2653074,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21279/005.png",
+      "sku": "21279",
+      "product_id": 930,
+      "size": 3900624,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21808/001.png",
+      "sku": "21808",
+      "product_id": 942,
+      "size": 1334479,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21808/002.png",
+      "sku": "21808",
+      "product_id": 942,
+      "size": 2259488,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21808/003.png",
+      "sku": "21808",
+      "product_id": 942,
+      "size": 1734679,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21808/004.png",
+      "sku": "21808",
+      "product_id": 942,
+      "size": 2925079,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21808/005.png",
+      "sku": "21808",
+      "product_id": 942,
+      "size": 3790517,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21805/001.png",
+      "sku": "21805",
+      "product_id": 939,
+      "size": 1315077,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21805/002.png",
+      "sku": "21805",
+      "product_id": 939,
+      "size": 2211868,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21805/003.png",
+      "sku": "21805",
+      "product_id": 939,
+      "size": 1778055,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21805/004.png",
+      "sku": "21805",
+      "product_id": 939,
+      "size": 2740405,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21805/005.png",
+      "sku": "21805",
+      "product_id": 939,
+      "size": 3707397,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22234/001.png",
+      "sku": "22234",
+      "product_id": 950,
+      "size": 1430985,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22234/002.png",
+      "sku": "22234",
+      "product_id": 950,
+      "size": 2183526,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22234/003.png",
+      "sku": "22234",
+      "product_id": 950,
+      "size": 1770791,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22234/004.png",
+      "sku": "22234",
+      "product_id": 950,
+      "size": 2814487,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22234/005.png",
+      "sku": "22234",
+      "product_id": 950,
+      "size": 3513632,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21848/001.png",
+      "sku": "21848",
+      "product_id": 943,
+      "size": 1613285,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21848/002.png",
+      "sku": "21848",
+      "product_id": 943,
+      "size": 2079041,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21848/003.png",
+      "sku": "21848",
+      "product_id": 943,
+      "size": 1703656,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21848/004.png",
+      "sku": "21848",
+      "product_id": 943,
+      "size": 2393514,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21848/005.png",
+      "sku": "21848",
+      "product_id": 943,
+      "size": 3923435,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22235/001.png",
+      "sku": "22235",
+      "product_id": 951,
+      "size": 1361248,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22235/002.png",
+      "sku": "22235",
+      "product_id": 951,
+      "size": 2073829,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22235/003.png",
+      "sku": "22235",
+      "product_id": 951,
+      "size": 1714891,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22235/004.png",
+      "sku": "22235",
+      "product_id": 951,
+      "size": 2746833,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22235/005.png",
+      "sku": "22235",
+      "product_id": 951,
+      "size": 3751906,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21807/001.png",
+      "sku": "21807",
+      "product_id": 941,
+      "size": 1290601,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21807/002.png",
+      "sku": "21807",
+      "product_id": 941,
+      "size": 2286548,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21807/003.png",
+      "sku": "21807",
+      "product_id": 941,
+      "size": 1817748,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21807/004.png",
+      "sku": "21807",
+      "product_id": 941,
+      "size": 2524704,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21807/005.png",
+      "sku": "21807",
+      "product_id": 941,
+      "size": 3710058,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22238/001.png",
+      "sku": "22238",
+      "product_id": 954,
+      "size": 1426792,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22238/002.png",
+      "sku": "22238",
+      "product_id": 954,
+      "size": 2086797,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22238/003.png",
+      "sku": "22238",
+      "product_id": 954,
+      "size": 1848623,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22238/004.png",
+      "sku": "22238",
+      "product_id": 954,
+      "size": 2528328,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22238/005.png",
+      "sku": "22238",
+      "product_id": 954,
+      "size": 3688666,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18412/001.png",
+      "sku": "18412",
+      "product_id": 885,
+      "size": 1564584,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18412/002.png",
+      "sku": "18412",
+      "product_id": 885,
+      "size": 2188187,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18412/003.png",
+      "sku": "18412",
+      "product_id": 885,
+      "size": 2014171,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18412/004.png",
+      "sku": "18412",
+      "product_id": 885,
+      "size": 2076964,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18412/005.png",
+      "sku": "18412",
+      "product_id": 885,
+      "size": 3727452,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21802/001.png",
+      "sku": "21802",
+      "product_id": 937,
+      "size": 1466790,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21802/002.png",
+      "sku": "21802",
+      "product_id": 937,
+      "size": 2430298,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21802/003.png",
+      "sku": "21802",
+      "product_id": 937,
+      "size": 2043679,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21802/004.png",
+      "sku": "21802",
+      "product_id": 937,
+      "size": 2501620,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21802/005.png",
+      "sku": "21802",
+      "product_id": 937,
+      "size": 3085832,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22240/001.png",
+      "sku": "22240",
+      "product_id": 956,
+      "size": 1325903,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22240/002.png",
+      "sku": "22240",
+      "product_id": 956,
+      "size": 2081312,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22240/003.png",
+      "sku": "22240",
+      "product_id": 956,
+      "size": 1810990,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22240/004.png",
+      "sku": "22240",
+      "product_id": 956,
+      "size": 2575436,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22240/005.png",
+      "sku": "22240",
+      "product_id": 956,
+      "size": 3732178,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22236/001.png",
+      "sku": "22236",
+      "product_id": 952,
+      "size": 1373038,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22236/002.png",
+      "sku": "22236",
+      "product_id": 952,
+      "size": 2198381,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22236/003.png",
+      "sku": "22236",
+      "product_id": 952,
+      "size": 1797407,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22236/004.png",
+      "sku": "22236",
+      "product_id": 952,
+      "size": 2508744,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22236/005.png",
+      "sku": "22236",
+      "product_id": 952,
+      "size": 3524927,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18415/001.png",
+      "sku": "18415",
+      "product_id": 888,
+      "size": 1735723,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18415/002.png",
+      "sku": "18415",
+      "product_id": 888,
+      "size": 2019475,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18415/003.png",
+      "sku": "18415",
+      "product_id": 888,
+      "size": 1994542,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18415/004.png",
+      "sku": "18415",
+      "product_id": 888,
+      "size": 1841407,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18415/005.png",
+      "sku": "18415",
+      "product_id": 888,
+      "size": 3685099,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20789/001.png",
+      "sku": "20789",
+      "product_id": 907,
+      "size": 1401057,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20789/002.png",
+      "sku": "20789",
+      "product_id": 907,
+      "size": 2290491,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20789/003.png",
+      "sku": "20789",
+      "product_id": 907,
+      "size": 1754697,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20789/004.png",
+      "sku": "20789",
+      "product_id": 907,
+      "size": 2210134,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20789/005.png",
+      "sku": "20789",
+      "product_id": 907,
+      "size": 3591142,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22239/001.png",
+      "sku": "22239",
+      "product_id": 955,
+      "size": 1200499,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22239/002.png",
+      "sku": "22239",
+      "product_id": 955,
+      "size": 2299240,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22239/003.png",
+      "sku": "22239",
+      "product_id": 955,
+      "size": 1715377,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22239/004.png",
+      "sku": "22239",
+      "product_id": 955,
+      "size": 2304419,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22239/005.png",
+      "sku": "22239",
+      "product_id": 955,
+      "size": 3634327,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22175/001.png",
+      "sku": "22175",
+      "product_id": 947,
+      "size": 1297347,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22175/002.png",
+      "sku": "22175",
+      "product_id": 947,
+      "size": 1881834,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22175/003.png",
+      "sku": "22175",
+      "product_id": 947,
+      "size": 1894549,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22175/004.png",
+      "sku": "22175",
+      "product_id": 947,
+      "size": 2488971,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22175/005.png",
+      "sku": "22175",
+      "product_id": 947,
+      "size": 3536357,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20787/001.png",
+      "sku": "20787",
+      "product_id": 906,
+      "size": 987380,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20787/002.png",
+      "sku": "20787",
+      "product_id": 906,
+      "size": 2311024,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20787/003.png",
+      "sku": "20787",
+      "product_id": 906,
+      "size": 1930258,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20787/004.png",
+      "sku": "20787",
+      "product_id": 906,
+      "size": 2104952,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20787/005.png",
+      "sku": "20787",
+      "product_id": 906,
+      "size": 3544748,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21095/001.png",
+      "sku": "21095",
+      "product_id": 915,
+      "size": 1136902,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21095/002.png",
+      "sku": "21095",
+      "product_id": 915,
+      "size": 2371049,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21095/003.png",
+      "sku": "21095",
+      "product_id": 915,
+      "size": 1810735,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21095/004.png",
+      "sku": "21095",
+      "product_id": 915,
+      "size": 1956745,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21095/005.png",
+      "sku": "21095",
+      "product_id": 915,
+      "size": 3441273,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21341/001.png",
+      "sku": "21341",
+      "product_id": 931,
+      "size": 1708074,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21341/002.png",
+      "sku": "21341",
+      "product_id": 931,
+      "size": 1973711,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21341/003.png",
+      "sku": "21341",
+      "product_id": 931,
+      "size": 1754056,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21341/004.png",
+      "sku": "21341",
+      "product_id": 931,
+      "size": 2037503,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21341/005.png",
+      "sku": "21341",
+      "product_id": 931,
+      "size": 3115902,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22176/001.png",
+      "sku": "22176",
+      "product_id": 948,
+      "size": 1526031,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22176/002.png",
+      "sku": "22176",
+      "product_id": 948,
+      "size": 1908492,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22176/003.png",
+      "sku": "22176",
+      "product_id": 948,
+      "size": 2072490,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22176/004.png",
+      "sku": "22176",
+      "product_id": 948,
+      "size": 1806317,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22176/005.png",
+      "sku": "22176",
+      "product_id": 948,
+      "size": 3089707,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22177/001.png",
+      "sku": "22177",
+      "product_id": 949,
+      "size": 1391088,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22177/002.png",
+      "sku": "22177",
+      "product_id": 949,
+      "size": 1912452,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22177/003.png",
+      "sku": "22177",
+      "product_id": 949,
+      "size": 1948209,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22177/004.png",
+      "sku": "22177",
+      "product_id": 949,
+      "size": 1805236,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22177/005.png",
+      "sku": "22177",
+      "product_id": 949,
+      "size": 3284653,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20834/001.png",
+      "sku": "20834",
+      "product_id": 913,
+      "size": 1239213,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20834/002.png",
+      "sku": "20834",
+      "product_id": 913,
+      "size": 2140042,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20834/003.png",
+      "sku": "20834",
+      "product_id": 913,
+      "size": 1848354,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20834/004.png",
+      "sku": "20834",
+      "product_id": 913,
+      "size": 2253633,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20834/005.png",
+      "sku": "20834",
+      "product_id": 913,
+      "size": 2845093,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20464/001.png",
+      "sku": "20464",
+      "product_id": 905,
+      "size": 1416992,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20464/002.png",
+      "sku": "20464",
+      "product_id": 905,
+      "size": 1898781,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20464/003.png",
+      "sku": "20464",
+      "product_id": 905,
+      "size": 1623922,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20464/004.png",
+      "sku": "20464",
+      "product_id": 905,
+      "size": 1891883,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20464/005.png",
+      "sku": "20464",
+      "product_id": 905,
+      "size": 3334605,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20171/001.png",
+      "sku": "20171",
+      "product_id": 895,
+      "size": 1421091,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20171/002.png",
+      "sku": "20171",
+      "product_id": 895,
+      "size": 1915781,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20171/003.png",
+      "sku": "20171",
+      "product_id": 895,
+      "size": 1659858,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20171/004.png",
+      "sku": "20171",
+      "product_id": 895,
+      "size": 1763897,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20171/005.png",
+      "sku": "20171",
+      "product_id": 895,
+      "size": 3398876,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20247/001.png",
+      "sku": "20247",
+      "product_id": 900,
+      "size": 1423161,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20247/002.png",
+      "sku": "20247",
+      "product_id": 900,
+      "size": 1842398,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20247/003.png",
+      "sku": "20247",
+      "product_id": 900,
+      "size": 1629261,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20247/004.png",
+      "sku": "20247",
+      "product_id": 900,
+      "size": 1822496,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20247/005.png",
+      "sku": "20247",
+      "product_id": 900,
+      "size": 3343536,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11817/001.png",
+      "sku": "11817",
+      "product_id": 1058,
+      "size": 1569494,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11817/002.png",
+      "sku": "11817",
+      "product_id": 1058,
+      "size": 2537229,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11817/003.png",
+      "sku": "11817",
+      "product_id": 1058,
+      "size": 2642941,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11817/004.png",
+      "sku": "11817",
+      "product_id": 1058,
+      "size": 2540571,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11817/005.png",
+      "sku": "11817",
+      "product_id": 1058,
+      "size": 758647,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18408/001.png",
+      "sku": "18408",
+      "product_id": 884,
+      "size": 1440848,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18408/002.png",
+      "sku": "18408",
+      "product_id": 884,
+      "size": 1943403,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18408/003.png",
+      "sku": "18408",
+      "product_id": 884,
+      "size": 2011292,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18408/004.png",
+      "sku": "18408",
+      "product_id": 884,
+      "size": 1941885,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18408/005.png",
+      "sku": "18408",
+      "product_id": 884,
+      "size": 2681357,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21210/001.png",
+      "sku": "21210",
+      "product_id": 919,
+      "size": 1455353,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21210/002.png",
+      "sku": "21210",
+      "product_id": 919,
+      "size": 1653218,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21210/003.png",
+      "sku": "21210",
+      "product_id": 919,
+      "size": 1512877,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21210/004.png",
+      "sku": "21210",
+      "product_id": 919,
+      "size": 1790155,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21210/005.png",
+      "sku": "21210",
+      "product_id": 919,
+      "size": 3564499,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9636/001.png",
+      "sku": "9636",
+      "product_id": 1067,
+      "size": 1048563,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9636/002.png",
+      "sku": "9636",
+      "product_id": 1067,
+      "size": 2210234,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9636/003.png",
+      "sku": "9636",
+      "product_id": 1067,
+      "size": 2996564,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9636/004.png",
+      "sku": "9636",
+      "product_id": 1067,
+      "size": 3068429,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9636/005.png",
+      "sku": "9636",
+      "product_id": 1067,
+      "size": 525087,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22103/001.png",
+      "sku": "22103",
+      "product_id": 945,
+      "size": 1270988,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22103/002.png",
+      "sku": "22103",
+      "product_id": 945,
+      "size": 1862273,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22103/003.png",
+      "sku": "22103",
+      "product_id": 945,
+      "size": 1614653,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22103/004.png",
+      "sku": "22103",
+      "product_id": 945,
+      "size": 1643795,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22103/005.png",
+      "sku": "22103",
+      "product_id": 945,
+      "size": 3443138,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11815/001.png",
+      "sku": "11815",
+      "product_id": 1057,
+      "size": 1419436,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11815/002.png",
+      "sku": "11815",
+      "product_id": 1057,
+      "size": 2467118,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11815/003.png",
+      "sku": "11815",
+      "product_id": 1057,
+      "size": 2921623,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11815/004.png",
+      "sku": "11815",
+      "product_id": 1057,
+      "size": 2320285,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11815/005.png",
+      "sku": "11815",
+      "product_id": 1057,
+      "size": 694839,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21342/001.png",
+      "sku": "21342",
+      "product_id": 932,
+      "size": 1244049,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21342/002.png",
+      "sku": "21342",
+      "product_id": 932,
+      "size": 1726925,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21342/003.png",
+      "sku": "21342",
+      "product_id": 932,
+      "size": 1735211,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21342/004.png",
+      "sku": "21342",
+      "product_id": 932,
+      "size": 1874791,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21342/005.png",
+      "sku": "21342",
+      "product_id": 932,
+      "size": 3186849,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21208/001.png",
+      "sku": "21208",
+      "product_id": 917,
+      "size": 1449625,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21208/002.png",
+      "sku": "21208",
+      "product_id": 917,
+      "size": 1735672,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21208/003.png",
+      "sku": "21208",
+      "product_id": 917,
+      "size": 1604411,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21208/004.png",
+      "sku": "21208",
+      "product_id": 917,
+      "size": 1641501,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21208/005.png",
+      "sku": "21208",
+      "product_id": 917,
+      "size": 3320548,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21219/001.png",
+      "sku": "21219",
+      "product_id": 927,
+      "size": 1245799,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21219/002.png",
+      "sku": "21219",
+      "product_id": 927,
+      "size": 1745142,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21219/003.png",
+      "sku": "21219",
+      "product_id": 927,
+      "size": 1819986,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21219/004.png",
+      "sku": "21219",
+      "product_id": 927,
+      "size": 2010477,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21219/005.png",
+      "sku": "21219",
+      "product_id": 927,
+      "size": 2848923,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9634/001.png",
+      "sku": "9634",
+      "product_id": 1065,
+      "size": 1042346,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9634/002.png",
+      "sku": "9634",
+      "product_id": 1065,
+      "size": 2205772,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9634/003.png",
+      "sku": "9634",
+      "product_id": 1065,
+      "size": 3215735,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9634/004.png",
+      "sku": "9634",
+      "product_id": 1065,
+      "size": 2673603,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9634/005.png",
+      "sku": "9634",
+      "product_id": 1065,
+      "size": 519675,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18407/001.png",
+      "sku": "18407",
+      "product_id": 883,
+      "size": 1370549,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18407/002.png",
+      "sku": "18407",
+      "product_id": 883,
+      "size": 1862439,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18407/003.png",
+      "sku": "18407",
+      "product_id": 883,
+      "size": 1695172,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18407/004.png",
+      "sku": "18407",
+      "product_id": 883,
+      "size": 1931286,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18407/005.png",
+      "sku": "18407",
+      "product_id": 883,
+      "size": 2763186,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20790/001.png",
+      "sku": "20790",
+      "product_id": 908,
+      "size": 1109800,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20790/002.png",
+      "sku": "20790",
+      "product_id": 908,
+      "size": 1795408,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20790/003.png",
+      "sku": "20790",
+      "product_id": 908,
+      "size": 1923138,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20790/004.png",
+      "sku": "20790",
+      "product_id": 908,
+      "size": 1976236,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20790/005.png",
+      "sku": "20790",
+      "product_id": 908,
+      "size": 2656816,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21217/001.png",
+      "sku": "21217",
+      "product_id": 926,
+      "size": 1266013,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21217/002.png",
+      "sku": "21217",
+      "product_id": 926,
+      "size": 1705027,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21217/003.png",
+      "sku": "21217",
+      "product_id": 926,
+      "size": 1733899,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21217/004.png",
+      "sku": "21217",
+      "product_id": 926,
+      "size": 1821090,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21217/005.png",
+      "sku": "21217",
+      "product_id": 926,
+      "size": 2822305,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11819/001.png",
+      "sku": "11819",
+      "product_id": 1059,
+      "size": 1483397,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11819/002.png",
+      "sku": "11819",
+      "product_id": 1059,
+      "size": 2272114,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11819/003.png",
+      "sku": "11819",
+      "product_id": 1059,
+      "size": 2536391,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11819/004.png",
+      "sku": "11819",
+      "product_id": 1059,
+      "size": 2312938,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11819/005.png",
+      "sku": "11819",
+      "product_id": 1059,
+      "size": 731749,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20249/001.png",
+      "sku": "20249",
+      "product_id": 902,
+      "size": 1370483,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20249/002.png",
+      "sku": "20249",
+      "product_id": 902,
+      "size": 1932601,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20249/003.png",
+      "sku": "20249",
+      "product_id": 902,
+      "size": 1830124,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20249/004.png",
+      "sku": "20249",
+      "product_id": 902,
+      "size": 1766677,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20249/005.png",
+      "sku": "20249",
+      "product_id": 902,
+      "size": 2408023,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21211/001.png",
+      "sku": "21211",
+      "product_id": 920,
+      "size": 1381167,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21211/002.png",
+      "sku": "21211",
+      "product_id": 920,
+      "size": 1803903,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21211/003.png",
+      "sku": "21211",
+      "product_id": 920,
+      "size": 1618463,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21211/004.png",
+      "sku": "21211",
+      "product_id": 920,
+      "size": 1796040,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21211/005.png",
+      "sku": "21211",
+      "product_id": 920,
+      "size": 2699523,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9639/001.png",
+      "sku": "9639",
+      "product_id": 1070,
+      "size": 1199342,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9639/002.png",
+      "sku": "9639",
+      "product_id": 1070,
+      "size": 2089441,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9639/003.png",
+      "sku": "9639",
+      "product_id": 1070,
+      "size": 2689975,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9639/004.png",
+      "sku": "9639",
+      "product_id": 1070,
+      "size": 2689046,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9639/005.png",
+      "sku": "9639",
+      "product_id": 1070,
+      "size": 595459,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21213/001.png",
+      "sku": "21213",
+      "product_id": 922,
+      "size": 1357838,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21213/002.png",
+      "sku": "21213",
+      "product_id": 922,
+      "size": 1821606,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21213/003.png",
+      "sku": "21213",
+      "product_id": 922,
+      "size": 1655906,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21213/004.png",
+      "sku": "21213",
+      "product_id": 922,
+      "size": 1540176,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21213/005.png",
+      "sku": "21213",
+      "product_id": 922,
+      "size": 2886147,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21220/001.png",
+      "sku": "21220",
+      "product_id": 928,
+      "size": 1245542,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21220/002.png",
+      "sku": "21220",
+      "product_id": 928,
+      "size": 1525620,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21220/003.png",
+      "sku": "21220",
+      "product_id": 928,
+      "size": 1707483,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21220/004.png",
+      "sku": "21220",
+      "product_id": 928,
+      "size": 1839138,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21220/005.png",
+      "sku": "21220",
+      "product_id": 928,
+      "size": 2927974,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20166/001.png",
+      "sku": "20166",
+      "product_id": 891,
+      "size": 1323359,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20166/002.png",
+      "sku": "20166",
+      "product_id": 891,
+      "size": 1579003,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20166/003.png",
+      "sku": "20166",
+      "product_id": 891,
+      "size": 1711184,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20166/004.png",
+      "sku": "20166",
+      "product_id": 891,
+      "size": 1793851,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20166/005.png",
+      "sku": "20166",
+      "product_id": 891,
+      "size": 2824963,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2431/001.png",
+      "sku": "2431",
+      "product_id": 1063,
+      "size": 1138074,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2431/002.png",
+      "sku": "2431",
+      "product_id": 1063,
+      "size": 2244651,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2431/003.png",
+      "sku": "2431",
+      "product_id": 1063,
+      "size": 3006472,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2431/004.png",
+      "sku": "2431",
+      "product_id": 1063,
+      "size": 2231175,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2431/005.png",
+      "sku": "2431",
+      "product_id": 1063,
+      "size": 559365,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11812/001.png",
+      "sku": "11812",
+      "product_id": 1056,
+      "size": 1539722,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11812/002.png",
+      "sku": "11812",
+      "product_id": 1056,
+      "size": 2325626,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11812/003.png",
+      "sku": "11812",
+      "product_id": 1056,
+      "size": 2562641,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11812/004.png",
+      "sku": "11812",
+      "product_id": 1056,
+      "size": 2009221,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11812/005.png",
+      "sku": "11812",
+      "product_id": 1056,
+      "size": 723171,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18405/001.png",
+      "sku": "18405",
+      "product_id": 882,
+      "size": 1321540,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18405/002.png",
+      "sku": "18405",
+      "product_id": 882,
+      "size": 1905662,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18405/003.png",
+      "sku": "18405",
+      "product_id": 882,
+      "size": 1644181,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18405/004.png",
+      "sku": "18405",
+      "product_id": 882,
+      "size": 1882370,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18405/005.png",
+      "sku": "18405",
+      "product_id": 882,
+      "size": 2366427,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9637/001.png",
+      "sku": "9637",
+      "product_id": 1068,
+      "size": 1042519,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9637/002.png",
+      "sku": "9637",
+      "product_id": 1068,
+      "size": 2096623,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9637/003.png",
+      "sku": "9637",
+      "product_id": 1068,
+      "size": 3098222,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9637/004.png",
+      "sku": "9637",
+      "product_id": 1068,
+      "size": 2338298,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9637/005.png",
+      "sku": "9637",
+      "product_id": 1068,
+      "size": 523942,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9635/001.png",
+      "sku": "9635",
+      "product_id": 1066,
+      "size": 1163627,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9635/002.png",
+      "sku": "9635",
+      "product_id": 1066,
+      "size": 2158668,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9635/003.png",
+      "sku": "9635",
+      "product_id": 1066,
+      "size": 2461638,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9635/004.png",
+      "sku": "9635",
+      "product_id": 1066,
+      "size": 2708173,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/9635/005.png",
+      "sku": "9635",
+      "product_id": 1066,
+      "size": 594922,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20833/001.png",
+      "sku": "20833",
+      "product_id": 912,
+      "size": 1270613,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20833/002.png",
+      "sku": "20833",
+      "product_id": 912,
+      "size": 1890096,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20833/003.png",
+      "sku": "20833",
+      "product_id": 912,
+      "size": 1627555,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20833/004.png",
+      "sku": "20833",
+      "product_id": 912,
+      "size": 1917432,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20833/005.png",
+      "sku": "20833",
+      "product_id": 912,
+      "size": 2291778,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20831/001.png",
+      "sku": "20831",
+      "product_id": 910,
+      "size": 1407168,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20831/002.png",
+      "sku": "20831",
+      "product_id": 910,
+      "size": 1810033,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20831/003.png",
+      "sku": "20831",
+      "product_id": 910,
+      "size": 1694369,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20831/004.png",
+      "sku": "20831",
+      "product_id": 910,
+      "size": 1774631,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20831/005.png",
+      "sku": "20831",
+      "product_id": 910,
+      "size": 2293299,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22241/001.png",
+      "sku": "22241",
+      "product_id": 957,
+      "size": 1129809,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22241/002.png",
+      "sku": "22241",
+      "product_id": 957,
+      "size": 1764579,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22241/003.png",
+      "sku": "22241",
+      "product_id": 957,
+      "size": 1818164,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22241/004.png",
+      "sku": "22241",
+      "product_id": 957,
+      "size": 2235093,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22241/005.png",
+      "sku": "22241",
+      "product_id": 957,
+      "size": 1990684,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20248/001.png",
+      "sku": "20248",
+      "product_id": 901,
+      "size": 1363594,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20248/002.png",
+      "sku": "20248",
+      "product_id": 901,
+      "size": 1800435,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20248/003.png",
+      "sku": "20248",
+      "product_id": 901,
+      "size": 1498354,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20248/004.png",
+      "sku": "20248",
+      "product_id": 901,
+      "size": 1561583,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20248/005.png",
+      "sku": "20248",
+      "product_id": 901,
+      "size": 2713254,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/16087/001.png",
+      "sku": "16087",
+      "product_id": 880,
+      "size": 1320832,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/16087/002.png",
+      "sku": "16087",
+      "product_id": 880,
+      "size": 1873249,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/16087/003.png",
+      "sku": "16087",
+      "product_id": 880,
+      "size": 1613426,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/16087/004.png",
+      "sku": "16087",
+      "product_id": 880,
+      "size": 1641185,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/16087/005.png",
+      "sku": "16087",
+      "product_id": 880,
+      "size": 2487836,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21214/001.png",
+      "sku": "21214",
+      "product_id": 923,
+      "size": 1254346,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21214/002.png",
+      "sku": "21214",
+      "product_id": 923,
+      "size": 1832741,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21214/003.png",
+      "sku": "21214",
+      "product_id": 923,
+      "size": 1503383,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21214/004.png",
+      "sku": "21214",
+      "product_id": 923,
+      "size": 1706777,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21214/005.png",
+      "sku": "21214",
+      "product_id": 923,
+      "size": 2616489,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21207/001.png",
+      "sku": "21207",
+      "product_id": 916,
+      "size": 1294955,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21207/002.png",
+      "sku": "21207",
+      "product_id": 916,
+      "size": 1792817,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21207/003.png",
+      "sku": "21207",
+      "product_id": 916,
+      "size": 1438612,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21207/004.png",
+      "sku": "21207",
+      "product_id": 916,
+      "size": 1982161,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21207/005.png",
+      "sku": "21207",
+      "product_id": 916,
+      "size": 2401261,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2432/001.png",
+      "sku": "2432",
+      "product_id": 1064,
+      "size": 1187878,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2432/002.png",
+      "sku": "2432",
+      "product_id": 1064,
+      "size": 2154760,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2432/003.png",
+      "sku": "2432",
+      "product_id": 1064,
+      "size": 2646770,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2432/004.png",
+      "sku": "2432",
+      "product_id": 1064,
+      "size": 2294457,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/2432/005.png",
+      "sku": "2432",
+      "product_id": 1064,
+      "size": 597024,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21209/001.png",
+      "sku": "21209",
+      "product_id": 918,
+      "size": 1251401,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21209/002.png",
+      "sku": "21209",
+      "product_id": 918,
+      "size": 1650180,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21209/003.png",
+      "sku": "21209",
+      "product_id": 918,
+      "size": 1700199,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21209/004.png",
+      "sku": "21209",
+      "product_id": 918,
+      "size": 1636564,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21209/005.png",
+      "sku": "21209",
+      "product_id": 918,
+      "size": 2631238,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20172/001.png",
+      "sku": "20172",
+      "product_id": 896,
+      "size": 1314946,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20172/002.png",
+      "sku": "20172",
+      "product_id": 896,
+      "size": 1701589,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20172/003.png",
+      "sku": "20172",
+      "product_id": 896,
+      "size": 1629590,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20172/004.png",
+      "sku": "20172",
+      "product_id": 896,
+      "size": 1852502,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20172/005.png",
+      "sku": "20172",
+      "product_id": 896,
+      "size": 2344898,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11852/001.png",
+      "sku": "11852",
+      "product_id": 1062,
+      "size": 1470358,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11852/002.png",
+      "sku": "11852",
+      "product_id": 1062,
+      "size": 1859903,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11852/003.png",
+      "sku": "11852",
+      "product_id": 1062,
+      "size": 2645714,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11852/004.png",
+      "sku": "11852",
+      "product_id": 1062,
+      "size": 2136722,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11852/005.png",
+      "sku": "11852",
+      "product_id": 1062,
+      "size": 715281,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21216/001.png",
+      "sku": "21216",
+      "product_id": 925,
+      "size": 1172376,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21216/002.png",
+      "sku": "21216",
+      "product_id": 925,
+      "size": 1620941,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21216/003.png",
+      "sku": "21216",
+      "product_id": 925,
+      "size": 1675685,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21216/004.png",
+      "sku": "21216",
+      "product_id": 925,
+      "size": 1728763,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21216/005.png",
+      "sku": "21216",
+      "product_id": 925,
+      "size": 2599110,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22237/001.png",
+      "sku": "22237",
+      "product_id": 953,
+      "size": 1018203,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22237/002.png",
+      "sku": "22237",
+      "product_id": 953,
+      "size": 1734097,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22237/003.png",
+      "sku": "22237",
+      "product_id": 953,
+      "size": 1927366,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22237/004.png",
+      "sku": "22237",
+      "product_id": 953,
+      "size": 2095523,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/22237/005.png",
+      "sku": "22237",
+      "product_id": 953,
+      "size": 2011171,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11851/001.png",
+      "sku": "11851",
+      "product_id": 1061,
+      "size": 1451483,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11851/002.png",
+      "sku": "11851",
+      "product_id": 1061,
+      "size": 1837654,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11851/003.png",
+      "sku": "11851",
+      "product_id": 1061,
+      "size": 2642907,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11851/004.png",
+      "sku": "11851",
+      "product_id": 1061,
+      "size": 2050993,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/11851/005.png",
+      "sku": "11851",
+      "product_id": 1061,
+      "size": 692643,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18422/001.png",
+      "sku": "18422",
+      "product_id": 889,
+      "size": 1276061,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18422/002.png",
+      "sku": "18422",
+      "product_id": 889,
+      "size": 1729637,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18422/003.png",
+      "sku": "18422",
+      "product_id": 889,
+      "size": 1613540,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18422/004.png",
+      "sku": "18422",
+      "product_id": 889,
+      "size": 1651871,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/18422/005.png",
+      "sku": "18422",
+      "product_id": 889,
+      "size": 2374897,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20169/001.png",
+      "sku": "20169",
+      "product_id": 894,
+      "size": 1177281,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20169/002.png",
+      "sku": "20169",
+      "product_id": 894,
+      "size": 1904211,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20169/003.png",
+      "sku": "20169",
+      "product_id": 894,
+      "size": 2139972,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20169/004.png",
+      "sku": "20169",
+      "product_id": 894,
+      "size": 1840829,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20169/005.png",
+      "sku": "20169",
+      "product_id": 894,
+      "size": 1571061,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14896/001.png",
+      "sku": "14896",
+      "product_id": 872,
+      "size": 1100250,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14896/002.png",
+      "sku": "14896",
+      "product_id": 872,
+      "size": 1769954,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14896/003.png",
+      "sku": "14896",
+      "product_id": 872,
+      "size": 1699997,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14896/004.png",
+      "sku": "14896",
+      "product_id": 872,
+      "size": 1748337,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/14896/005.png",
+      "sku": "14896",
+      "product_id": 872,
+      "size": 2301194,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21228/001.png",
+      "sku": "21228",
+      "product_id": 929,
+      "size": 1186795,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21228/002.png",
+      "sku": "21228",
+      "product_id": 929,
+      "size": 1672021,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21228/003.png",
+      "sku": "21228",
+      "product_id": 929,
+      "size": 1606774,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21228/004.png",
+      "sku": "21228",
+      "product_id": 929,
+      "size": 1801876,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/21228/005.png",
+      "sku": "21228",
+      "product_id": 929,
+      "size": 2339190,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20176/001.png",
+      "sku": "20176",
+      "product_id": 899,
+      "size": 1141887,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20176/002.png",
+      "sku": "20176",
+      "product_id": 899,
+      "size": 1797081,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20176/003.png",
+      "sku": "20176",
+      "product_id": 899,
+      "size": 1516208,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20176/004.png",
+      "sku": "20176",
+      "product_id": 899,
+      "size": 1650168,
+      "mimetype": "image/png"
+    },
+    {
+      "path": "products/20176/005.png",
+      "sku": "20176",
+      "product_id": 899,
+      "size": 2484465,
+      "mimetype": "image/png"
+    }
+  ]
+}

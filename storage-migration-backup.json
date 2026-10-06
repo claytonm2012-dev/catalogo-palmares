@@ -1,0 +1,2163 @@
+{
+  "generated_at": "2026-10-06T00:32:54.961Z",
+  "bucket": "product-images",
+  "note": "Estado ANTERIOR a migracao. Rollback: restaurar products.main_image e product_images.url (por id) para os valores abaixo.",
+  "products": [
+    {
+      "product_id": 940,
+      "sku": "21806",
+      "slug": "produto-21806",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21806/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1045,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21806/002.png"
+        },
+        {
+          "product_image_id": 1046,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21806/003.png"
+        },
+        {
+          "product_image_id": 1047,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21806/004.png"
+        },
+        {
+          "product_image_id": 1048,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21806/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 933,
+      "sku": "21477",
+      "slug": "produto-21477",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21477/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1025,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21477/002.png"
+        },
+        {
+          "product_image_id": 1026,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21477/003.png"
+        },
+        {
+          "product_image_id": 1027,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21477/004.png"
+        },
+        {
+          "product_image_id": 1028,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21477/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 935,
+      "sku": "21799",
+      "slug": "produto-21799",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21799/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1029,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21799/002.png"
+        },
+        {
+          "product_image_id": 1030,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21799/003.png"
+        },
+        {
+          "product_image_id": 1031,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21799/004.png"
+        },
+        {
+          "product_image_id": 1032,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21799/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 934,
+      "sku": "21478",
+      "slug": "produto-21478",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21478/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1033,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21478/002.png"
+        },
+        {
+          "product_image_id": 1035,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21478/003.png"
+        },
+        {
+          "product_image_id": 1037,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21478/004.png"
+        },
+        {
+          "product_image_id": 1039,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21478/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 886,
+      "sku": "18414",
+      "slug": "produto-18414",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18414/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 837,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18414/002.png"
+        },
+        {
+          "product_image_id": 839,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18414/003.png"
+        },
+        {
+          "product_image_id": 841,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18414/004.png"
+        },
+        {
+          "product_image_id": 842,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18414/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 878,
+      "sku": "14911",
+      "slug": "produto-14911",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14911/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 809,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14911/002.png"
+        },
+        {
+          "product_image_id": 810,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14911/003.png"
+        },
+        {
+          "product_image_id": 811,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14911/004.png"
+        },
+        {
+          "product_image_id": 812,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14911/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 938,
+      "sku": "21804",
+      "slug": "produto-21804",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21804/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1051,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21804/002.png"
+        },
+        {
+          "product_image_id": 1052,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21804/003.png"
+        },
+        {
+          "product_image_id": 1054,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21804/004.png"
+        },
+        {
+          "product_image_id": 1056,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21804/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 936,
+      "sku": "21801",
+      "slug": "produto-21801",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21801/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1034,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21801/002.png"
+        },
+        {
+          "product_image_id": 1036,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21801/003.png"
+        },
+        {
+          "product_image_id": 1038,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21801/004.png"
+        },
+        {
+          "product_image_id": 1040,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21801/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 930,
+      "sku": "21279",
+      "slug": "produto-21279",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21279/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1013,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21279/002.png"
+        },
+        {
+          "product_image_id": 1014,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21279/003.png"
+        },
+        {
+          "product_image_id": 1015,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21279/004.png"
+        },
+        {
+          "product_image_id": 1017,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21279/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 942,
+      "sku": "21808",
+      "slug": "produto-21808",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21808/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1061,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21808/002.png"
+        },
+        {
+          "product_image_id": 1062,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21808/003.png"
+        },
+        {
+          "product_image_id": 1063,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21808/004.png"
+        },
+        {
+          "product_image_id": 1064,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21808/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 939,
+      "sku": "21805",
+      "slug": "produto-21805",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21805/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1049,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21805/002.png"
+        },
+        {
+          "product_image_id": 1050,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21805/003.png"
+        },
+        {
+          "product_image_id": 1053,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21805/004.png"
+        },
+        {
+          "product_image_id": 1055,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21805/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 950,
+      "sku": "22234",
+      "slug": "produto-22234",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22234/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1093,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22234/002.png"
+        },
+        {
+          "product_image_id": 1094,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22234/003.png"
+        },
+        {
+          "product_image_id": 1095,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22234/004.png"
+        },
+        {
+          "product_image_id": 1096,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22234/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 943,
+      "sku": "21848",
+      "slug": "produto-21848",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21848/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1069,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21848/002.png"
+        },
+        {
+          "product_image_id": 1070,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21848/003.png"
+        },
+        {
+          "product_image_id": 1071,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21848/004.png"
+        },
+        {
+          "product_image_id": 1072,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21848/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 951,
+      "sku": "22235",
+      "slug": "produto-22235",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22235/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1097,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22235/002.png"
+        },
+        {
+          "product_image_id": 1098,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22235/003.png"
+        },
+        {
+          "product_image_id": 1099,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22235/004.png"
+        },
+        {
+          "product_image_id": 1100,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22235/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 941,
+      "sku": "21807",
+      "slug": "produto-21807",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21807/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1057,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21807/002.png"
+        },
+        {
+          "product_image_id": 1058,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21807/003.png"
+        },
+        {
+          "product_image_id": 1059,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21807/004.png"
+        },
+        {
+          "product_image_id": 1060,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21807/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 954,
+      "sku": "22238",
+      "slug": "produto-22238",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22238/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1109,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22238/002.png"
+        },
+        {
+          "product_image_id": 1110,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22238/003.png"
+        },
+        {
+          "product_image_id": 1111,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22238/004.png"
+        },
+        {
+          "product_image_id": 1112,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22238/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 885,
+      "sku": "18412",
+      "slug": "produto-18412",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18412/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 833,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18412/002.png"
+        },
+        {
+          "product_image_id": 834,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18412/003.png"
+        },
+        {
+          "product_image_id": 835,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18412/004.png"
+        },
+        {
+          "product_image_id": 836,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18412/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 937,
+      "sku": "21802",
+      "slug": "produto-21802",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21802/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1041,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21802/002.png"
+        },
+        {
+          "product_image_id": 1042,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21802/003.png"
+        },
+        {
+          "product_image_id": 1043,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21802/004.png"
+        },
+        {
+          "product_image_id": 1044,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21802/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 956,
+      "sku": "22240",
+      "slug": "produto-22240",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22240/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1117,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22240/002.png"
+        },
+        {
+          "product_image_id": 1118,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22240/003.png"
+        },
+        {
+          "product_image_id": 1119,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22240/004.png"
+        },
+        {
+          "product_image_id": 1120,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22240/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 952,
+      "sku": "22236",
+      "slug": "produto-22236",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22236/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1101,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22236/002.png"
+        },
+        {
+          "product_image_id": 1102,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22236/003.png"
+        },
+        {
+          "product_image_id": 1103,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22236/004.png"
+        },
+        {
+          "product_image_id": 1104,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22236/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 888,
+      "sku": "18415",
+      "slug": "produto-18415",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18415/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 845,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18415/002.png"
+        },
+        {
+          "product_image_id": 846,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18415/003.png"
+        },
+        {
+          "product_image_id": 847,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18415/004.png"
+        },
+        {
+          "product_image_id": 848,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18415/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 907,
+      "sku": "20789",
+      "slug": "produto-20789",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20789/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 921,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20789/002.png"
+        },
+        {
+          "product_image_id": 922,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20789/003.png"
+        },
+        {
+          "product_image_id": 923,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20789/004.png"
+        },
+        {
+          "product_image_id": 924,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20789/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 955,
+      "sku": "22239",
+      "slug": "produto-22239",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22239/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1113,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22239/002.png"
+        },
+        {
+          "product_image_id": 1114,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22239/003.png"
+        },
+        {
+          "product_image_id": 1115,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22239/004.png"
+        },
+        {
+          "product_image_id": 1116,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22239/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 947,
+      "sku": "22175",
+      "slug": "produto-22175",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22175/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1081,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22175/002.png"
+        },
+        {
+          "product_image_id": 1082,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22175/003.png"
+        },
+        {
+          "product_image_id": 1083,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22175/004.png"
+        },
+        {
+          "product_image_id": 1084,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22175/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 906,
+      "sku": "20787",
+      "slug": "produto-20787",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20787/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 917,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20787/002.png"
+        },
+        {
+          "product_image_id": 918,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20787/003.png"
+        },
+        {
+          "product_image_id": 919,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20787/004.png"
+        },
+        {
+          "product_image_id": 920,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20787/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 915,
+      "sku": "21095",
+      "slug": "produto-21095",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21095/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 953,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21095/002.png"
+        },
+        {
+          "product_image_id": 954,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21095/003.png"
+        },
+        {
+          "product_image_id": 955,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21095/004.png"
+        },
+        {
+          "product_image_id": 956,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21095/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 931,
+      "sku": "21341",
+      "slug": "produto-21341",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21341/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1021,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21341/002.png"
+        },
+        {
+          "product_image_id": 1022,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21341/003.png"
+        },
+        {
+          "product_image_id": 1023,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21341/004.png"
+        },
+        {
+          "product_image_id": 1024,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21341/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 948,
+      "sku": "22176",
+      "slug": "produto-22176",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22176/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1085,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22176/002.png"
+        },
+        {
+          "product_image_id": 1086,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22176/003.png"
+        },
+        {
+          "product_image_id": 1087,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22176/004.png"
+        },
+        {
+          "product_image_id": 1088,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22176/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 949,
+      "sku": "22177",
+      "slug": "produto-22177",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22177/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1089,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22177/002.png"
+        },
+        {
+          "product_image_id": 1090,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22177/003.png"
+        },
+        {
+          "product_image_id": 1091,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22177/004.png"
+        },
+        {
+          "product_image_id": 1092,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22177/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 913,
+      "sku": "20834",
+      "slug": "produto-20834",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20834/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 947,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20834/002.png"
+        },
+        {
+          "product_image_id": 949,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20834/003.png"
+        },
+        {
+          "product_image_id": 951,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20834/004.png"
+        },
+        {
+          "product_image_id": 952,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20834/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 905,
+      "sku": "20464",
+      "slug": "produto-20464",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20464/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 913,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20464/002.png"
+        },
+        {
+          "product_image_id": 914,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20464/003.png"
+        },
+        {
+          "product_image_id": 915,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20464/004.png"
+        },
+        {
+          "product_image_id": 916,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20464/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 895,
+      "sku": "20171",
+      "slug": "produto-20171",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20171/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 879,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20171/002.png"
+        },
+        {
+          "product_image_id": 881,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20171/003.png"
+        },
+        {
+          "product_image_id": 883,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20171/004.png"
+        },
+        {
+          "product_image_id": 884,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20171/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 900,
+      "sku": "20247",
+      "slug": "produto-20247",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20247/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 897,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20247/002.png"
+        },
+        {
+          "product_image_id": 898,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20247/003.png"
+        },
+        {
+          "product_image_id": 899,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20247/004.png"
+        },
+        {
+          "product_image_id": 900,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20247/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1058,
+      "sku": "11817",
+      "slug": "produto-11817",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11817/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1265,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11817/002.png"
+        },
+        {
+          "product_image_id": 1266,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11817/003.png"
+        },
+        {
+          "product_image_id": 1267,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11817/004.png"
+        },
+        {
+          "product_image_id": 1268,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11817/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 884,
+      "sku": "18408",
+      "slug": "produto-18408",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18408/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 825,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18408/002.png"
+        },
+        {
+          "product_image_id": 828,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18408/003.png"
+        },
+        {
+          "product_image_id": 830,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18408/004.png"
+        },
+        {
+          "product_image_id": 832,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18408/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 919,
+      "sku": "21210",
+      "slug": "produto-21210",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21210/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 969,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21210/002.png"
+        },
+        {
+          "product_image_id": 970,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21210/003.png"
+        },
+        {
+          "product_image_id": 971,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21210/004.png"
+        },
+        {
+          "product_image_id": 972,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21210/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1067,
+      "sku": "9636",
+      "slug": "produto-9636",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9636/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1297,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9636/002.png"
+        },
+        {
+          "product_image_id": 1298,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9636/003.png"
+        },
+        {
+          "product_image_id": 1299,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9636/004.png"
+        },
+        {
+          "product_image_id": 1300,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9636/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 945,
+      "sku": "22103",
+      "slug": "produto-22103",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22103/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1073,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22103/002.png"
+        },
+        {
+          "product_image_id": 1074,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22103/003.png"
+        },
+        {
+          "product_image_id": 1075,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22103/004.png"
+        },
+        {
+          "product_image_id": 1076,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22103/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1057,
+      "sku": "11815",
+      "slug": "produto-11815",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11815/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1260,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11815/002.png"
+        },
+        {
+          "product_image_id": 1261,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11815/003.png"
+        },
+        {
+          "product_image_id": 1262,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11815/004.png"
+        },
+        {
+          "product_image_id": 1263,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11815/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 932,
+      "sku": "21342",
+      "slug": "produto-21342",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21342/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1016,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21342/002.png"
+        },
+        {
+          "product_image_id": 1018,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21342/003.png"
+        },
+        {
+          "product_image_id": 1019,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21342/004.png"
+        },
+        {
+          "product_image_id": 1020,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21342/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 917,
+      "sku": "21208",
+      "slug": "produto-21208",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21208/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 961,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21208/002.png"
+        },
+        {
+          "product_image_id": 962,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21208/003.png"
+        },
+        {
+          "product_image_id": 963,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21208/004.png"
+        },
+        {
+          "product_image_id": 964,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21208/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 927,
+      "sku": "21219",
+      "slug": "produto-21219",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21219/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1001,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21219/002.png"
+        },
+        {
+          "product_image_id": 1002,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21219/003.png"
+        },
+        {
+          "product_image_id": 1003,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21219/004.png"
+        },
+        {
+          "product_image_id": 1004,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21219/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1065,
+      "sku": "9634",
+      "slug": "produto-9634",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9634/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1289,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9634/002.png"
+        },
+        {
+          "product_image_id": 1290,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9634/003.png"
+        },
+        {
+          "product_image_id": 1291,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9634/004.png"
+        },
+        {
+          "product_image_id": 1292,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9634/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 883,
+      "sku": "18407",
+      "slug": "produto-18407",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18407/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 824,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18407/002.png"
+        },
+        {
+          "product_image_id": 827,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18407/003.png"
+        },
+        {
+          "product_image_id": 829,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18407/004.png"
+        },
+        {
+          "product_image_id": 831,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18407/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 908,
+      "sku": "20790",
+      "slug": "produto-20790",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20790/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 929,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20790/002.png"
+        },
+        {
+          "product_image_id": 930,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20790/003.png"
+        },
+        {
+          "product_image_id": 932,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20790/004.png"
+        },
+        {
+          "product_image_id": 934,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20790/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 926,
+      "sku": "21217",
+      "slug": "produto-21217",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21217/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 997,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21217/002.png"
+        },
+        {
+          "product_image_id": 998,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21217/003.png"
+        },
+        {
+          "product_image_id": 999,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21217/004.png"
+        },
+        {
+          "product_image_id": 1000,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21217/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1059,
+      "sku": "11819",
+      "slug": "produto-11819",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11819/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1269,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11819/002.png"
+        },
+        {
+          "product_image_id": 1270,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11819/003.png"
+        },
+        {
+          "product_image_id": 1271,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11819/004.png"
+        },
+        {
+          "product_image_id": 1272,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11819/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 902,
+      "sku": "20249",
+      "slug": "produto-20249",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20249/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 905,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20249/002.png"
+        },
+        {
+          "product_image_id": 906,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20249/003.png"
+        },
+        {
+          "product_image_id": 907,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20249/004.png"
+        },
+        {
+          "product_image_id": 908,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20249/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 920,
+      "sku": "21211",
+      "slug": "produto-21211",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21211/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 973,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21211/002.png"
+        },
+        {
+          "product_image_id": 974,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21211/003.png"
+        },
+        {
+          "product_image_id": 975,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21211/004.png"
+        },
+        {
+          "product_image_id": 977,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21211/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1070,
+      "sku": "9639",
+      "slug": "produto-9639",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9639/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1309,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9639/002.png"
+        },
+        {
+          "product_image_id": 1310,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9639/003.png"
+        },
+        {
+          "product_image_id": 1311,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9639/004.png"
+        },
+        {
+          "product_image_id": 1312,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9639/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 922,
+      "sku": "21213",
+      "slug": "produto-21213",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21213/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 981,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21213/002.png"
+        },
+        {
+          "product_image_id": 982,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21213/003.png"
+        },
+        {
+          "product_image_id": 983,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21213/004.png"
+        },
+        {
+          "product_image_id": 984,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21213/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 928,
+      "sku": "21220",
+      "slug": "produto-21220",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21220/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1005,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21220/002.png"
+        },
+        {
+          "product_image_id": 1006,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21220/003.png"
+        },
+        {
+          "product_image_id": 1007,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21220/004.png"
+        },
+        {
+          "product_image_id": 1008,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21220/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 891,
+      "sku": "20166",
+      "slug": "produto-20166",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20166/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 856,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20166/002.png"
+        },
+        {
+          "product_image_id": 858,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20166/003.png"
+        },
+        {
+          "product_image_id": 859,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20166/004.png"
+        },
+        {
+          "product_image_id": 860,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20166/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1063,
+      "sku": "2431",
+      "slug": "produto-2431",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2431/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1281,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2431/002.png"
+        },
+        {
+          "product_image_id": 1282,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2431/003.png"
+        },
+        {
+          "product_image_id": 1283,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2431/004.png"
+        },
+        {
+          "product_image_id": 1284,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2431/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1056,
+      "sku": "11812",
+      "slug": "produto-11812",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11812/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1252,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11812/002.png"
+        },
+        {
+          "product_image_id": 1253,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11812/003.png"
+        },
+        {
+          "product_image_id": 1256,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11812/004.png"
+        },
+        {
+          "product_image_id": 1258,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11812/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 882,
+      "sku": "18405",
+      "slug": "produto-18405",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18405/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 821,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18405/002.png"
+        },
+        {
+          "product_image_id": 822,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18405/003.png"
+        },
+        {
+          "product_image_id": 823,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18405/004.png"
+        },
+        {
+          "product_image_id": 826,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18405/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1068,
+      "sku": "9637",
+      "slug": "produto-9637",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9637/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1301,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9637/002.png"
+        },
+        {
+          "product_image_id": 1303,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9637/003.png"
+        },
+        {
+          "product_image_id": 1305,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9637/004.png"
+        },
+        {
+          "product_image_id": 1307,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9637/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1066,
+      "sku": "9635",
+      "slug": "produto-9635",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9635/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1293,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9635/002.png"
+        },
+        {
+          "product_image_id": 1294,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9635/003.png"
+        },
+        {
+          "product_image_id": 1295,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9635/004.png"
+        },
+        {
+          "product_image_id": 1296,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/9635/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 912,
+      "sku": "20833",
+      "slug": "produto-20833",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20833/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 945,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20833/002.png"
+        },
+        {
+          "product_image_id": 946,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20833/003.png"
+        },
+        {
+          "product_image_id": 948,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20833/004.png"
+        },
+        {
+          "product_image_id": 950,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20833/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 910,
+      "sku": "20831",
+      "slug": "produto-20831",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20831/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 931,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20831/002.png"
+        },
+        {
+          "product_image_id": 933,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20831/003.png"
+        },
+        {
+          "product_image_id": 935,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20831/004.png"
+        },
+        {
+          "product_image_id": 936,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20831/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 957,
+      "sku": "22241",
+      "slug": "produto-22241",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22241/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1121,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22241/002.png"
+        },
+        {
+          "product_image_id": 1122,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22241/003.png"
+        },
+        {
+          "product_image_id": 1123,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22241/004.png"
+        },
+        {
+          "product_image_id": 1124,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22241/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 901,
+      "sku": "20248",
+      "slug": "produto-20248",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20248/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 893,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20248/002.png"
+        },
+        {
+          "product_image_id": 894,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20248/003.png"
+        },
+        {
+          "product_image_id": 895,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20248/004.png"
+        },
+        {
+          "product_image_id": 896,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20248/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 880,
+      "sku": "16087",
+      "slug": "produto-16087",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/16087/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 813,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/16087/002.png"
+        },
+        {
+          "product_image_id": 814,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/16087/003.png"
+        },
+        {
+          "product_image_id": 815,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/16087/004.png"
+        },
+        {
+          "product_image_id": 816,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/16087/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 923,
+      "sku": "21214",
+      "slug": "produto-21214",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21214/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 985,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21214/002.png"
+        },
+        {
+          "product_image_id": 987,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21214/003.png"
+        },
+        {
+          "product_image_id": 989,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21214/004.png"
+        },
+        {
+          "product_image_id": 991,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21214/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 916,
+      "sku": "21207",
+      "slug": "produto-21207",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21207/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 957,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21207/002.png"
+        },
+        {
+          "product_image_id": 958,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21207/003.png"
+        },
+        {
+          "product_image_id": 959,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21207/004.png"
+        },
+        {
+          "product_image_id": 960,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21207/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1064,
+      "sku": "2432",
+      "slug": "produto-2432",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2432/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1285,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2432/002.png"
+        },
+        {
+          "product_image_id": 1286,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2432/003.png"
+        },
+        {
+          "product_image_id": 1287,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2432/004.png"
+        },
+        {
+          "product_image_id": 1288,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/2432/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 918,
+      "sku": "21209",
+      "slug": "produto-21209",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21209/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 965,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21209/002.png"
+        },
+        {
+          "product_image_id": 966,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21209/003.png"
+        },
+        {
+          "product_image_id": 967,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21209/004.png"
+        },
+        {
+          "product_image_id": 968,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21209/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 896,
+      "sku": "20172",
+      "slug": "produto-20172",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20172/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 873,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20172/002.png"
+        },
+        {
+          "product_image_id": 874,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20172/003.png"
+        },
+        {
+          "product_image_id": 875,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20172/004.png"
+        },
+        {
+          "product_image_id": 877,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20172/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1062,
+      "sku": "11852",
+      "slug": "produto-11852",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11852/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1273,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11852/002.png"
+        },
+        {
+          "product_image_id": 1274,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11852/003.png"
+        },
+        {
+          "product_image_id": 1275,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11852/004.png"
+        },
+        {
+          "product_image_id": 1277,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11852/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 925,
+      "sku": "21216",
+      "slug": "produto-21216",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21216/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 993,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21216/002.png"
+        },
+        {
+          "product_image_id": 994,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21216/003.png"
+        },
+        {
+          "product_image_id": 995,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21216/004.png"
+        },
+        {
+          "product_image_id": 996,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21216/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 953,
+      "sku": "22237",
+      "slug": "produto-22237",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22237/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1105,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22237/002.png"
+        },
+        {
+          "product_image_id": 1106,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22237/003.png"
+        },
+        {
+          "product_image_id": 1107,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22237/004.png"
+        },
+        {
+          "product_image_id": 1108,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/22237/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 1061,
+      "sku": "11851",
+      "slug": "produto-11851",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11851/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1276,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11851/002.png"
+        },
+        {
+          "product_image_id": 1278,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11851/003.png"
+        },
+        {
+          "product_image_id": 1279,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11851/004.png"
+        },
+        {
+          "product_image_id": 1280,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/11851/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 889,
+      "sku": "18422",
+      "slug": "produto-18422",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18422/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 849,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18422/002.png"
+        },
+        {
+          "product_image_id": 850,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18422/003.png"
+        },
+        {
+          "product_image_id": 851,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18422/004.png"
+        },
+        {
+          "product_image_id": 852,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/18422/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 894,
+      "sku": "20169",
+      "slug": "produto-20169",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20169/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 869,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20169/002.png"
+        },
+        {
+          "product_image_id": 870,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20169/003.png"
+        },
+        {
+          "product_image_id": 871,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20169/004.png"
+        },
+        {
+          "product_image_id": 872,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20169/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 872,
+      "sku": "14896",
+      "slug": "produto-14896",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14896/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 781,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14896/002.png"
+        },
+        {
+          "product_image_id": 782,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14896/003.png"
+        },
+        {
+          "product_image_id": 783,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14896/004.png"
+        },
+        {
+          "product_image_id": 784,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/14896/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 929,
+      "sku": "21228",
+      "slug": "produto-21228",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21228/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 1009,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21228/002.png"
+        },
+        {
+          "product_image_id": 1010,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21228/003.png"
+        },
+        {
+          "product_image_id": 1011,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21228/004.png"
+        },
+        {
+          "product_image_id": 1012,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/21228/005.png"
+        }
+      ]
+    },
+    {
+      "product_id": 899,
+      "sku": "20176",
+      "slug": "produto-20176",
+      "old_main_image": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20176/001.png",
+      "old_gallery": [
+        {
+          "product_image_id": 889,
+          "sort_order": 0,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20176/002.png"
+        },
+        {
+          "product_image_id": 890,
+          "sort_order": 1,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20176/003.png"
+        },
+        {
+          "product_image_id": 891,
+          "sort_order": 2,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20176/004.png"
+        },
+        {
+          "product_image_id": 892,
+          "sort_order": 3,
+          "url": "https://bvufvvdpghqlbqangzcv.supabase.co/storage/v1/object/public/product-images/products/20176/005.png"
+        }
+      ]
+    }
+  ]
+}
