@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1d' }));
 
 app.use(async (req, res, next) => {
   try {
-    await database.ready;
+    await database.ensureReady();
     const settings = await database.getSettingsMap();
     res.locals.settings = settings;
     const digits = (settings.whatsapp || '').replace(/\D/g, '');
@@ -38,7 +38,25 @@ app.use((req, res) => {
   res.status(404).render('public/404', { title: 'Página não encontrada' });
 });
 
+// Erro do banco por indisponibilidade do Supabase (projeto restrito/fora do ar),
+// e nao por bug do app: vira 503 com pagina propria, sem cache na CDN.
+const OUTAGE_MESSAGE = /service for this project is restricted|exceed_\w+_quota|fetch failed|ECONNREFUSED|ENOTFOUND|ETIMEDOUT|EAI_AGAIN/i;
+function isDatabaseUnavailable(err) {
+  if (database.getOutage()) return true;
+  return !!err && OUTAGE_MESSAGE.test(`${err.message || ''} ${err.details || ''}`);
+}
+
 app.use((err, req, res, next) => {
+  if (isDatabaseUnavailable(err)) {
+    const outage = database.getOutage();
+    console.error(`[db] Supabase indisponível${outage ? ` (HTTP ${outage.status})` : ''} em ${req.method} ${req.originalUrl}`);
+    res.set('Cache-Control', 'no-store');
+    res.set('Retry-After', '300');
+    if (req.path === '/pesquisa' || !req.accepts('html')) {
+      return res.status(503).json({ error: 'Catálogo temporariamente indisponível. Tente novamente em alguns minutos.' });
+    }
+    return res.status(503).render('public/unavailable', { title: 'Catálogo temporariamente indisponível' });
+  }
   console.error(err);
   if (err && err.code === '23505') {
     return res.status(409).send('Já existe um registro com esse valor único (SKU/slug/e-mail duplicado).');

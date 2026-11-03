@@ -9,8 +9,33 @@ if (!supabaseUrl || !serviceKey) {
   throw new Error('SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY precisam estar definidos (.env)');
 }
 
+// Registra quando o Supabase recusa o servico (402 = projeto restrito por cota,
+// 502/503/504/52x ou falha de rede = fora do ar). Os erros que o supabase-js
+// devolve nesses casos podem vir sem mensagem (ex.: count com head:true), entao
+// o app consulta este estado pra mostrar a pagina de indisponibilidade.
+const OUTAGE_WINDOW_MS = 30 * 1000;
+let lastOutage = null;
+
+async function trackedFetch(input, init) {
+  try {
+    const res = await fetch(input, init);
+    if (res.status === 402 || [502, 503, 504].includes(res.status) || res.status >= 520) {
+      lastOutage = { status: res.status, at: Date.now() };
+    }
+    return res;
+  } catch (err) {
+    lastOutage = { status: 0, at: Date.now() };
+    throw err;
+  }
+}
+
+function getOutage() {
+  return lastOutage && Date.now() - lastOutage.at < OUTAGE_WINDOW_MS ? lastOutage : null;
+}
+
 const supabase = createClient(supabaseUrl, serviceKey, {
-  auth: { persistSession: false, autoRefreshToken: false }
+  auth: { persistSession: false, autoRefreshToken: false },
+  global: { fetch: trackedFetch }
 });
 
 function applyFilters(query, filters = {}) {
@@ -315,13 +340,27 @@ async function reorderProductImage(imageId, direction) {
   return image;
 }
 
-const ready = initialize().catch(err => {
-  console.error('[db] Falha ao inicializar dados padrão no Supabase:', err.message);
-  throw err;
-});
+// A inicializacao roda uma vez por processo. Se falhar (ex.: Supabase restrito
+// com HTTP 402), a promise e descartada pra que a proxima requisicao tente de
+// novo — antes ela ficava rejeitada sem handler e derrubava o processo com
+// ERR_UNHANDLED_REJECTION, e mesmo com o banco de volta nunca se recuperava.
+let readyPromise = null;
+function ensureReady() {
+  if (!readyPromise) {
+    readyPromise = initialize().catch(err => {
+      const outage = getOutage();
+      console.error('[db] Falha ao inicializar dados padrão no Supabase:', err.message || (outage ? `HTTP ${outage.status}` : err));
+      readyPromise = null;
+      throw err;
+    });
+  }
+  return readyPromise;
+}
+ensureReady().catch(() => {}); // falha ja logada acima; nao derruba o servidor
 
 module.exports = {
-  ready,
+  ensureReady,
+  getOutage,
   supabase,
   list,
   findOne,
