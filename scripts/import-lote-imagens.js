@@ -42,6 +42,35 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SER
 const sha256 = buf => crypto.createHash('sha256').update(buf).digest('hex');
 const isImageName = name => /\.(jpe?g|png|webp)$/i.test(name);
 const naturalSort = (a, b) => a.localeCompare(b, undefined, { numeric: true });
+// Capa: arquivo marcado como destaque/principal vem primeiro; o resto em ordem natural.
+const COVER_RE = /destaque|principal/i;
+const imageOrder = (a, b) => (COVER_RE.test(b) - COVER_RE.test(a)) || naturalSort(a, b);
+// SKUs separados para revisao manual (LOTE_REVIEW=SKU1,SKU2): nao sao alterados.
+const REVIEW = new Set((process.env.LOTE_REVIEW || '').split(',').map(s => s.trim()).filter(Boolean));
+
+// Toda pasta-folha (sem subpastas), em qualquer profundidade, e um produto; o nome
+// da folha e o SKU — pastas intermediarias (paginas do catalogo) nunca viram SKU.
+function findLeafFolders(rootDir, mixed) {
+  const leaves = [];
+  (function walk(dir) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    const subdirs = entries.filter(e => e.isDirectory());
+    if (!subdirs.length) { if (dir !== rootDir) leaves.push({ sku: path.basename(dir), folder: dir }); return; }
+    const loose = entries.filter(e => e.isFile()).map(e => e.name);
+    if (loose.length) mixed.push({ dir: path.relative(rootDir, dir) || '.', arquivos: loose });
+    subdirs.forEach(s => walk(path.join(dir, s.name)));
+  })(rootDir);
+  return leaves;
+}
+
+// dHash 64 bits para achar a mesma foto salva com outro nome/compressao.
+async function dHash(buffer) {
+  const px = await sharp(buffer).flatten({ background: '#fff' }).greyscale().resize(9, 8, { fit: 'fill' }).raw().toBuffer();
+  let bits = '';
+  for (let y = 0; y < 8; y++) for (let x = 0; x < 8; x++) bits += px[y * 9 + x] > px[y * 9 + x + 1] ? '1' : '0';
+  return bits;
+}
+const hamming = (a, b) => [...a].reduce((n, c, i) => n + (c !== b[i]), 0);
 const mb = bytes => Number((bytes / (1024 * 1024)).toFixed(2));
 
 async function optimizeImage(buffer) {
@@ -111,10 +140,18 @@ async function main() {
   if (!SOURCE_DIR || !fs.existsSync(SOURCE_DIR)) throw new Error(`Defina LOTE_SOURCE com a pasta de origem (atual: ${SOURCE_DIR})`);
   console.log(`Modo: ${MODE.toUpperCase()} | origem: ${SOURCE_DIR}`);
 
-  const entries = fs.readdirSync(SOURCE_DIR, { withFileTypes: true });
-  const looseFiles = entries.filter(e => e.isFile()).map(e => e.name);
-  const folders = entries.filter(e => e.isDirectory()).map(e => e.name).sort(naturalSort);
-  const badNames = folders.filter(n => !/^[A-Za-z0-9_-]+$/.test(n));
+  const mixed = [];
+  const leaves = findLeafFolders(SOURCE_DIR, mixed);
+  const looseFiles = mixed;
+  const folderBySku = new Map();
+  const dupSkus = new Map();
+  for (const l of leaves) {
+    if (folderBySku.has(l.sku)) dupSkus.set(l.sku, [...(dupSkus.get(l.sku) || [folderBySku.get(l.sku)]), l.folder]);
+    else folderBySku.set(l.sku, l.folder);
+  }
+  const folders = [...folderBySku.keys()].sort(naturalSort);
+  // Nome de folha que nao e codigo numerico nao e tratado como SKU (vai para revisao).
+  const badNames = folders.filter(n => !/^\d+$/.test(n) || dupSkus.has(n));
   const skus = folders.filter(n => !badNames.includes(n));
 
   const products = await fetchAll('products', 'sku', skus, '*');
@@ -133,13 +170,14 @@ async function main() {
   const seenSourceHash = new Map();
 
   for (const sku of skus) {
-    const folder = path.join(SOURCE_DIR, sku);
+    const folder = folderBySku.get(sku);
     const dirEntries = fs.readdirSync(folder, { withFileTypes: true });
-    const files = dirEntries.filter(d => d.isFile() && isImageName(d.name)).map(d => d.name).sort(naturalSort);
+    const files = dirEntries.filter(d => d.isFile() && isImageName(d.name)).map(d => d.name).sort(imageOrder);
     const ignored = dirEntries.filter(d => !(d.isFile() && isImageName(d.name))).map(d => d.name);
     const existing = bySku.get(sku) || null;
-    const item = { sku, slug: existing ? existing.slug : `produto-${sku}`, name: existing ? existing.name : `Produto ${sku}`, existing: !!existing, productId: existing ? existing.id : null, files: [], ignored, status: null };
+    const item = { sku, origem: path.relative(SOURCE_DIR, folder), slug: existing ? existing.slug : `produto-${sku}`, name: existing ? existing.name : `Produto ${sku}`, existing: !!existing, productId: existing ? existing.id : null, files: [], ignored, status: null };
     if (!files.length) { totals.emptyFolders.push(sku); item.status = 'pasta_sem_imagens'; plan.push(item); continue; }
+    if (REVIEW.has(sku)) { item.status = 'revisao_manual'; item.files = files.map(f => ({ source: f, action: 'revisao_manual' })); plan.push(item); continue; }
 
     const productDir = path.join(PUBLIC_PRODUCTS_DIR, sku);
     let sigs = null;
@@ -154,6 +192,8 @@ async function main() {
     }
 
     const seenInFolder = new Set();
+    const seenDHash = [];
+    let newIndex = 0;
     for (let i = 0; i < files.length; i++) {
       const filename = files[i];
       const buffer = fs.readFileSync(path.join(folder, filename));
@@ -162,6 +202,11 @@ async function main() {
       item.files.push(file);
       if (seenInFolder.has(srcHash)) { file.action = 'duplicada_na_pasta'; totals.duplicatesSkipped++; continue; }
       seenInFolder.add(srcHash);
+      let dh = null;
+      try { dh = await dHash(buffer); } catch (err) { /* invalida: tratada abaixo */ }
+      const twin = dh && seenDHash.find(s => hamming(s.h, dh) <= 3);
+      if (twin) { file.action = `quase_identica_a_${twin.f}`; totals.duplicatesSkipped++; continue; }
+      if (dh) seenDHash.push({ h: dh, f: filename });
       if (seenSourceHash.has(srcHash)) totals.crossSkuDuplicates.push(`${sku}/${filename} = ${seenSourceHash.get(srcHash)}`);
       else seenSourceHash.set(srcHash, `${sku}/${filename}`);
 
@@ -174,7 +219,7 @@ async function main() {
       if (existing && sigs.localHashes.has(outHash)) { file.action = 'ja_existe_local'; totals.duplicatesSkipped++; continue; }
 
       // Produto novo: NN segue a ordem natural da pasta. Produto existente: proximo NN livre.
-      const index = existing ? nextIndex++ : i + 1;
+      const index = existing ? nextIndex++ : ++newIndex;
       const destName = `${String(index).padStart(2, '0')}.webp`;
       const destPath = path.join(productDir, destName);
       if (fs.existsSync(destPath) && sha256(fs.readFileSync(destPath)) !== outHash) {
@@ -196,7 +241,9 @@ async function main() {
   const newFiles = plan.flatMap(p => p.files.filter(f => f.action === 'nova'));
   const summary = {
     gerado_em: new Date().toISOString(), modo: MODE, origem: SOURCE_DIR,
-    pastas_encontradas: folders.length, arquivos_soltos_ignorados: looseFiles, pastas_com_nome_invalido: badNames,
+    pastas_folha_encontradas: leaves.length, pastas_encontradas: folders.length, arquivos_soltos_ignorados: looseFiles,
+    pastas_com_nome_invalido: badNames, skus_em_mais_de_uma_pasta: Object.fromEntries(dupSkus),
+    revisao_manual: plan.filter(p => p.status === 'revisao_manual').map(p => p.sku),
     pastas_vazias: totals.emptyFolders, imagens_na_origem: plan.reduce((s, p) => s + p.files.length, 0),
     produtos_novos: created.length, produtos_existentes: plan.filter(p => p.existing).length,
     produtos_existentes_com_imagens_novas: appended.length, produtos_existentes_sem_alteracao: plan.filter(p => p.status === 'sem_alteracao').length,
