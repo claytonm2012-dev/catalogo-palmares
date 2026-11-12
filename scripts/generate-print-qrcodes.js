@@ -25,7 +25,11 @@ const ROOT = path.resolve(process.env.QR_OUTPUT_DIR || path.join(__dirname, '..'
 const LIMIT = Number(process.env.QR_LIMIT) || Infinity;
 // Testes parciais: QR_ONLY=SKU1,SKU2 gera so esses SKUs.
 const ONLY = process.env.QR_ONLY ? new Set(process.env.QR_ONLY.split(",")) : null;
-const DIRS = { png: 'PNG_300DPI', svg: 'SVG_VETORIAL', label: 'ETIQUETAS_300DPI' };
+// Lotes de entrega: QR_NO_LABELS=1 gera so PNG+SVG (sem etiqueta com numero) e
+// QR_DIR_SUFFIX (ex.: _SEM_NUMEROS) e acrescentado ao nome das pastas.
+const NO_LABELS = process.env.QR_NO_LABELS === '1';
+const DIR_SUFFIX = process.env.QR_DIR_SUFFIX || '';
+const DIRS = { png: `PNG_300DPI${DIR_SUFFIX}`, svg: `SVG_VETORIAL${DIR_SUFFIX}`, ...(NO_LABELS ? {} : { label: 'ETIQUETAS_300DPI' }) };
 const BACKUP_DIR = path.join(ROOT, 'BACKUP_ORIGINAIS');
 const SIZE = 2000;
 const DPI = 300;
@@ -220,6 +224,7 @@ async function main() {
     bySku.set(sku, p);
     byFile.set(fileKey, p);
   }
+  if (ONLY) pending.splice(0, pending.length, ...pending.filter(p => ONLY.has(p.sku)));
   const conflicted = new Set(pending.filter(x => x.motivo.startsWith('conflito')).map(x => x.sku.toLowerCase()));
   const items = [...bySku.values()].filter(p => !conflicted.has(p.sku.trim().toLowerCase())).map(p => {
     const sku = p.sku.trim();
@@ -232,7 +237,7 @@ async function main() {
 
   let done = 0;
   const rows = await mapWithConcurrency(items, 4, async item => {
-    const rel = { png: `${DIRS.png}/${item.sku}.png`, svg: `${DIRS.svg}/${item.sku}.svg`, label: `${DIRS.label}/${item.sku}.png` };
+    const rel = { png: `${DIRS.png}/${item.sku}.png`, svg: `${DIRS.svg}/${item.sku}.svg`, label: NO_LABELS ? '' : `${DIRS.label}/${item.sku}.png` };
     const problems = [];
     const row = { ...item, ...rel, dims: '', dpi: '', decode: '', urlCheck: '', version: '' };
     try {
@@ -241,13 +246,13 @@ async function main() {
       const png = await renderPng(geo);
       fs.writeFileSync(path.join(ROOT, rel.png), png);
       fs.writeFileSync(path.join(ROOT, rel.svg), renderSvg(geo), 'utf8');
-      fs.writeFileSync(path.join(ROOT, rel.label), await renderLabel(png, item.sku));
+      if (!NO_LABELS) fs.writeFileSync(path.join(ROOT, rel.label), await renderLabel(png, item.sku));
 
       // Tudo abaixo e relido do disco.
       const pngBuf = fs.readFileSync(path.join(ROOT, rel.png));
       const svgBuf = fs.readFileSync(path.join(ROOT, rel.svg));
-      const labelBuf = fs.readFileSync(path.join(ROOT, rel.label));
-      if (!pngBuf.length || !svgBuf.length || !labelBuf.length) problems.push('arquivo vazio');
+      const labelBuf = NO_LABELS ? null : fs.readFileSync(path.join(ROOT, rel.label));
+      if (!pngBuf.length || !svgBuf.length || (labelBuf && !labelBuf.length)) problems.push('arquivo vazio');
       const meta = await sharp(pngBuf).metadata();
       row.dims = `${meta.width}x${meta.height}`;
       if (meta.width !== SIZE || meta.height !== SIZE) problems.push(`PNG ${row.dims}`);
@@ -258,6 +263,7 @@ async function main() {
       const pngImg = await gray(pngBuf);
       problems.push(...checkPixels(pngImg, geo));
       const decoded = decodeGray(pngImg);
+      row.decodedUrl = decoded || '';
       row.decode = decoded === item.url ? 'OK' : `FALHA: ${decoded}`;
       if (decoded !== item.url) problems.push('decodificacao do PNG');
 
@@ -275,6 +281,7 @@ async function main() {
       }
       if (decodeGray(svgImg) !== item.url) problems.push('decodificacao do SVG');
 
+      if (labelBuf) {
       const labelMeta = await sharp(labelBuf).metadata();
       const labelDpi = pngDpi(labelBuf);
       if (labelMeta.width !== SIZE || labelMeta.height !== LABEL_HEIGHT) problems.push(`etiqueta ${labelMeta.width}x${labelMeta.height}`);
@@ -286,6 +293,7 @@ async function main() {
       if (qrDiff) problems.push(`QR da etiqueta difere do PNG em ${qrDiff} pixels`);
       problems.push(...checkLabelText(labelImg, item.sku));
       if (decodeGray(labelImg) !== item.url) problems.push('decodificacao da etiqueta');
+      }
       row.sha256 = sha256(pngBuf);
     } catch (err) {
       problems.push(`erro: ${err.message}`);
@@ -327,10 +335,10 @@ async function main() {
   });
 
   rows.forEach(r => { r.status = r.problems.length ? 'REPROVADO' : 'APROVADO'; });
-  const header = ['SKU', 'Nome do produto', 'Slug real', 'URL publica', 'PNG', 'SVG', 'Etiqueta', 'Dimensoes', 'DPI', 'Decodificacao', 'Verificacao da URL', 'Status final', 'Detalhes'];
-  const lines = rows.map(r => [r.sku, r.name, r.slug, r.url, r.png, r.svg, r.label, r.dims, r.dpi, r.decode, r.urlCheck, r.status,
+  const header = ['SKU', 'Nome do produto', 'Slug real', 'URL publica', 'PNG', 'SVG', 'Etiqueta', 'Dimensoes', 'DPI', 'Decodificacao', 'URL decodificada', 'Verificacao da URL', 'Status final', 'Detalhes'];
+  const lines = rows.map(r => [r.sku, r.name, r.slug, r.url, r.png, r.svg, r.label, r.dims, r.dpi, r.decode, r.decodedUrl, r.urlCheck, r.status,
     [r.version, r.demo ? 'produto de demonstracao (SKU DEMO)' : '', ...r.problems].filter(Boolean).join(' | ')]);
-  pending.forEach(p => lines.push([p.sku, '', '', '', '', '', '', '', '', '', '', 'PENDENTE', `produto id ${p.id}: ${p.motivo}`]));
+  pending.forEach(p => lines.push([p.sku, '', '', '', '', '', '', '', '', '', '', '', 'PENDENTE', `produto id ${p.id}: ${p.motivo}`]));
   fs.writeFileSync(path.join(ROOT, 'relatorio-validacao.csv'), '﻿' + [header, ...lines].map(l => l.map(csv).join(';')).join('\r\n') + '\r\n', 'utf8');
 
   const summary = {
